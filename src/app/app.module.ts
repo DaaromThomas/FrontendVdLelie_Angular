@@ -8,6 +8,7 @@ import { MainComponentComponent } from './main-component/main-component.componen
 import { OrderScreenComponentComponent } from './main-component/order-screen-component/order-screen-component.component';
 import { ProductsComponentComponent } from './main-component/order-screen-component/products-component/products-component.component';
 import { FilterComponentComponent } from './main-component/order-screen-component/filter-component/filter-component.component';
+import { ScanOrderComponent } from './scan-order/scan-order.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { FilterComponentComponent } from './main-component/order-screen-componen
     MainComponentComponent,
     OrderScreenComponentComponent,
     ProductsComponentComponent,
-    FilterComponentComponent
+    FilterComponentComponent,
   ],
   imports: [
     BrowserModule,
