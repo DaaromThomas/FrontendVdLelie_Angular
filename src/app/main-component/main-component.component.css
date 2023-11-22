@@ -1,0 +1,6 @@
+/* Add this if you want the main component to fill the remaining height */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
