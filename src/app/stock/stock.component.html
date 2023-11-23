@@ -1,7 +1,20 @@
-<ul>
+<table>
+    <tr>
+        <th>Group</th>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Minimum Amount</th>
+        <th>Location</th>
+    </tr>
     @for (product of stock; track $index) {
-        <li>Placeholder</li>
+        <tr>
+            <td>{{product.getGroup()}}</td>
+            <td>{{product.getName()}}</td>
+            <td>{{product.getAmountInStock()}}</td>
+            <td>{{product.getMinAmount()}}</td>
+            <td>{{product.getLocation()}}</td>
+        </tr>
     } @empty {
-        <li>The list is empty</li>
+        <p>the list is empty</p>
     }
-</ul>
+</table>
