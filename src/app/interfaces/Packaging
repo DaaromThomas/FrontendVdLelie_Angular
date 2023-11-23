@@ -1,0 +1,30 @@
+export class Packaging {
+    private id: string;
+    private amountInStock: number;
+    private minAmount: number;
+    private name: string;
+
+    public constructor(id: string, amountInStock: number, minAmount: number, name: string) {
+        this.id = id;
+        this.amountInStock = amountInStock;
+        this.minAmount = minAmount;
+        this.name = name;
+    }
+
+    public getID(): string {
+        return this.id
+    }
+
+    public getName(): string {
+        return this.name;
+    }
+
+    public getAmountInStock(): number {
+        return this.amountInStock;
+    }
+
+    public getMinAmount(): number {
+        return this.minAmount;
+    }
+
+}
