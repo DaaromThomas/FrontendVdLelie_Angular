@@ -10,8 +10,8 @@
         <tr>
             <td>{{product.getGroup()}}</td>
             <td>{{product.getName()}}</td>
-            <td>{{product.getAmountInStock()}}</td>
-            <td>{{product.getMinAmount()}}</td>
+            <td class="editable" contenteditable="true">{{product.getAmountInStock()}}</td>
+            <td class="editable" contenteditable="true">{{product.getMinAmount()}}</td>
             <td>{{product.getLocation()}}</td>
         </tr>
     } @empty {
