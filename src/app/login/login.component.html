@@ -1,6 +1,6 @@
 <form [formGroup] = "login">
-  <input class="form-control" formControlName="username">
-  <input class="form-control" formControlName="password">
+  <input placeholder="Enter Username" class="form-control" formControlName="username">
+  <input placeholder="Enter password"class="form-control" formControlName="password">
 </form>
 
-<button (click)="onClick()">login shizzle</button>
+<button type="submit" (click)="onClick()">login</button>
