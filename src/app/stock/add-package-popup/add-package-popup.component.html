@@ -1,5 +1,5 @@
 <div id="product-add-dialog" class="container">
-    <h1 class="title">New Product</h1>
+    <h1 class="title">New Package</h1>
     <h3 class="error-message">{{ error }}</h3>
     <form [formGroup]="newPackage" class="form">
       <div class="form-group">
@@ -22,6 +22,7 @@
         <input class="input" id="amountInStock-input" formControlName="minAmount">
       </div>
     </form>
-    <button class="done-button" (click)="done()">Done</button>
+    <button class="done-button" (click)="done()">✔Done</button> 
+    <button class="close-button" (click)="close()">❌Discard</button>
   </div>
   

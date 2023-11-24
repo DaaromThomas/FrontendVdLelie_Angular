@@ -46,7 +46,7 @@ export class StockComponent {
       packaging.amount,
       packaging.minAmount,
       packaging.name,
-      'some-location'
+      'current-location'
     );
     return newPackage;
   }

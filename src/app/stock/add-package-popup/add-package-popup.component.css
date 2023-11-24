@@ -44,3 +44,13 @@
     box-sizing: border-box;
     margin-bottom: 10px;
 }
+
+.done-button {
+    background-color: #4a9194;
+    border-radius: 10px;
+}
+
+.close-button {
+    background-color: #f4812b;
+    border-radius: 10px;
+}

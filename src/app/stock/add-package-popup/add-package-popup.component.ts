@@ -32,6 +32,10 @@ export class AddPackagePopupComponent {
     }
   }
 
+  close(): void {
+    this.popupClosed.emit(false);
+  }
+
   error: string = '';
   checkNewPackage(): any {
     const packaging = this.newPackage.value;
