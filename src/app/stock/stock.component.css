@@ -1,6 +1,13 @@
 .container{
-    flex: 1 1 auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    background-color: #eeeeee;
+}
 
+.spacer{
+    padding-top: 5%;
 }
 
 td {
@@ -15,8 +22,14 @@ th {
 }
 
 table, th, td {
+    margin-left: auto;
+    margin-right: auto;
     border: 1px solid black;
     border-collapse: collapse;
+}
+
+tr {
+    background-color: #ffffff;
 }
 
 tr:hover {
@@ -28,11 +41,18 @@ td.editable:hover{
     color: white;
 }
 
+button {
+    float: right;
+    border-radius: 10px;
+}
+
 .add-package{
     width: fit-content;
     height: 100%;
     display: flex;
     justify-content: center;
     align-self: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 

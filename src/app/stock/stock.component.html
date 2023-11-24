@@ -1,4 +1,10 @@
+<div class="spacer"></div>
 <div class="container">
+    <button (click)="displayPackagePopup()">New Package</button>
+    <div class="add-package" *ngIf="displayPackage">
+        <app-add-package-popup class="package-popup" (addPackage)="addPackage($event)" (popupClosed)="onPopupClosed($event)"></app-add-package-popup>
+    </div>
+    <div class="spacer"></div>
     <table>
         <tbody>
             <tr>
@@ -21,8 +27,4 @@
             }
         </tbody>
     </table>
-    <button (click)="displayPackagePopup()">New Product</button>
-    <div class="add-package" *ngIf="displayPackage">
-        <app-add-package-popup class="package-popup" (addPackage)="addPackage($event)" (popupClosed)="onPopupClosed($event)"></app-add-package-popup>
-    </div>
 </div>
