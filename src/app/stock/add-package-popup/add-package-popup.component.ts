@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { DataStorageService } from '../../services/data-storage.service';
+import { Packaging } from '../../interfaces/packaging.model';
 
 @Component({
   selector: 'app-add-package-popup',
@@ -16,6 +18,8 @@ export class AddPackagePopupComponent {
 
   @Output() popupClosed: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() addPackage: EventEmitter<any> = new EventEmitter<any>();
+
+  constructor(private storageService: DataStorageService){}
   
   done(): void {
     const newPackage = this.checkNewPackage();
@@ -24,6 +28,7 @@ export class AddPackagePopupComponent {
     } else {
       this.popupClosed.emit(false);
       this.addPackage.emit(newPackage);
+      this.savePackage(newPackage);
     }
   }
 
@@ -46,6 +51,10 @@ export class AddPackagePopupComponent {
   
     this.error = `${propertyName} is undefined.`;
     return undefined;
+  }
+
+  savePackage(packaging: Packaging){
+    this.storageService.storePackage(packaging);
   }
   
 }

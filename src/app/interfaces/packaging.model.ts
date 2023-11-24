@@ -23,7 +23,7 @@ export class Packaging {
         return this.name;
     }
 
-    public getAmountInStock(): number {
+    public getAmount(): number {
         return this.amountInStock;
     }
 
