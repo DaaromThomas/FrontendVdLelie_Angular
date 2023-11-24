@@ -11,13 +11,11 @@ export class AuthInterceptor implements HttpInterceptor {
     if(req.url.includes('/login')){
       return next.handle(req);
     }
-    const authToken = this.login.getJwtTOken();
 
       const authReq = req.clone({
-        headers: req.headers.set('Authorization', 'Bearer '+ authToken.token)
+        headers: req.headers.set('Authorization', 'Bearer '+ this.login.getJwtTOken().token)
       });
 
-    // send cloned request with header to the next handler.
     return next.handle(authReq);
   }
 }
