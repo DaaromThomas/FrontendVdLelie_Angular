@@ -1,15 +1,13 @@
-/* app-component.css */
-.app-container {
-    display: flex;
-}
-
 .app-nav-bar {
     width: 15%;
     height: 100vh;
     box-sizing: border-box;
 }
 
-.app-main-component {
-    flex: 1;
-    height: 100vh;
+.app-container {
+    display: flex;
+}
+
+.router-outlet{
+    width: 85%;
 }

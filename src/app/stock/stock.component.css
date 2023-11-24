@@ -1,3 +1,8 @@
+.container{
+    flex: 1 1 auto;
+
+}
+
 td {
     text-align: center;
     padding: 5px 15px;
@@ -22,3 +27,12 @@ td.editable:hover{
     background-color: #2c636c;
     color: white;
 }
+
+.add-package{
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+

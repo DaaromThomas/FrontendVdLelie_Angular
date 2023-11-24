@@ -1,21 +1,28 @@
-<app-add-product-popup></app-add-product-popup>
-<table>
-    <tr>
-        <th>Group</th>
-        <th>Name</th>
-        <th>Amount</th>
-        <th>Minimum Amount</th>
-        <th>Location</th>
-    </tr>
-    @for (product of stock; track $index) {
-        <tr>
-            <td>{{product.getGroup()}}</td>
-            <td>{{product.getName()}}</td>
-            <td class="editable" contenteditable="true">{{product.getAmountInStock()}}</td>
-            <td class="editable" contenteditable="true">{{product.getMinAmount()}}</td>
-            <td>{{product.getLocation()}}</td>
-        </tr>
-    } @empty {
-        <p>the list is empty</p>
-    }
-</table>
+<div class="container">
+    <table>
+        <tbody>
+            <tr>
+                <th>Group</th>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Minimum Amount</th>
+                <th>Location</th>
+            </tr>
+            @for (product of stock; track $index) {
+                <tr>
+                    <td>{{product.getGroup()}}</td>
+                    <td>{{product.getName()}}</td>
+                    <td class="editable" contenteditable="true">{{product.getAmountInStock()}}</td>
+                    <td class="editable" contenteditable="true">{{product.getMinAmount()}}</td>
+                    <td>{{product.getLocation()}}</td>
+                </tr>
+            } @empty {
+                <p>the list is empty</p>
+            }
+        </tbody>
+    </table>
+    <button (click)="displayPackagePopup()">New Product</button>
+    <div class="add-package" *ngIf="displayPackage">
+        <app-add-package-popup class="package-popup" (addPackage)="addPackage($event)" (popupClosed)="onPopupClosed($event)"></app-add-package-popup>
+    </div>
+</div>
