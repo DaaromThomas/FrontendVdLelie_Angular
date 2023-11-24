@@ -11,10 +11,43 @@ import { DataStorageService } from '../services/data-storage.service';
 })
 export class StockComponent {
   displayPackage: boolean = false;
+  tableWrapperClass: string = 'table-wrapper';
 
   stock: Packaging[] = [
     new Packaging('dozen', '1', 2, 1, 'Rode Doos', 'Rotterdam'),
-    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos', 'Amsterdam')
+    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos', 'Amsterdam'),
+    new Packaging('dozen', '1', 2, 1, 'Rode Doos', 'Rotterdam'),
+    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos', 'Amsterdam'),
+    new Packaging('dozen', '1', 2, 1, 'Rode Doos', 'Rotterdam'),
+    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos', 'Amsterdam'),
+    new Packaging('dozen', '1', 2, 1, 'Rode Doos', 'Rotterdam'),
+    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos', 'Amsterdam'),
+    new Packaging('dozen', '1', 2, 1, 'Rode Doos', 'Rotterdam'),
+    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos', 'Amsterdam'),
+    new Packaging('dozen', '1', 2, 1, 'Rode Doos', 'Rotterdam'),
+    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos', 'Amsterdam'),
+    new Packaging('dozen', '1', 2, 1, 'Rode Doos', 'Rotterdam'),
+    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos', 'Amsterdam'),
+    new Packaging('dozen', '1', 2, 1, 'Rode Doos', 'Rotterdam'),
+    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos', 'Amsterdam'),
+    new Packaging('dozen', '1', 2, 1, 'Rode Doos', 'Rotterdam'),
+    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos', 'Amsterdam'),
+    new Packaging('dozen', '1', 2, 1, 'Rode Doos', 'Rotterdam'),
+    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos', 'Amsterdam'),
+    new Packaging('dozen', '1', 2, 1, 'Rode Doos', 'Rotterdam'),
+    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos', 'Amsterdam'),
+    new Packaging('dozen', '1', 2, 1, 'Rode Doos', 'Rotterdam'),
+    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos', 'Amsterdam'),
+    new Packaging('dozen', '1', 2, 1, 'Rode Doos', 'Rotterdam'),
+    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos', 'Amsterdam'),
+    new Packaging('dozen', '1', 2, 1, 'Rode Doos', 'Rotterdam'),
+    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos', 'Amsterdam'),
+    new Packaging('dozen', '1', 2, 1, 'Rode Doos', 'Rotterdam'),
+    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos', 'Amsterdam'),
+    new Packaging('dozen', '1', 2, 1, 'Rode Doos', 'Rotterdam'),
+    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos', 'Amsterdam'),
+    new Packaging('dozen', '1', 2, 1, 'Rode Doos', 'Rotterdam'),
+    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos', 'Amsterdam'),
   ];
 
   mockLocations: string[] = [
@@ -25,10 +58,12 @@ export class StockComponent {
 
   displayPackagePopup() {
     this.displayPackage = true;
+    this.tableWrapperClass = this.displayPackage ? 'table-wrapper-expanded' : 'table-wrapper';
   }
 
   onPopupClosed(isClosed: boolean) {
     this.displayPackage = isClosed;
+    this.tableWrapperClass = this.displayPackage ? 'table-wrapper-expanded' : 'table-wrapper';
   }
 
   

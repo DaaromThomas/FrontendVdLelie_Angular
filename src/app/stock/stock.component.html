@@ -5,26 +5,31 @@
         <app-add-package-popup class="package-popup" (addPackage)="addPackage($event)" (popupClosed)="onPopupClosed($event)"></app-add-package-popup>
     </div>
     <div class="spacer"></div>
-    <table>
-        <tbody>
-            <tr>
-                <th>Group</th>
-                <th>Name</th>
-                <th>Amount</th>
-                <th>Minimum Amount</th>
-                <th>Location</th>
-            </tr>
-            @for (product of stock; track $index) {
+    <div [class]="tableWrapperClass">
+        <table>
+            <thead>
                 <tr>
-                    <td>{{product.getGroup()}}</td>
-                    <td>{{product.getName()}}</td>
-                    <td class="editable" contenteditable="true">{{product.getAmount()}}</td>
-                    <td class="editable" contenteditable="true">{{product.getMinAmount()}}</td>
-                    <td>{{product.getLocation()}}</td>
+                    <th>Group</th>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Minimum Amount</th>
+                    <th>Location</th>
                 </tr>
-            } @empty {
-                <p>the list is empty</p>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @for (product of stock; track $index) {
+                    <tr>
+                        <td>{{product.getGroup()}}</td>
+                        <td>{{product.getName()}}</td>
+                        <td class="editable" contenteditable="true">{{product.getAmount()}}</td>
+                        <td class="editable" contenteditable="true">{{product.getMinAmount()}}</td>
+                        <td>{{product.getLocation()}}</td>
+                    </tr>
+                } @empty {
+                    <p>the list is empty</p>
+                }
+            </tbody>
+        </table>
+    </div>
+    
 </div>
