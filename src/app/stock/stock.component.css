@@ -84,3 +84,8 @@ button {
     margin-right: auto;
 }
 
+.filter {
+    float: right;
+    padding-right: 5%;
+    padding-top: 5%;
+}
