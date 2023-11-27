@@ -9,6 +9,7 @@ import { Packaging } from '../../interfaces/packaging.model';
   styleUrl: './add-package-popup.component.css'
 })
 export class AddPackagePopupComponent {
+  amountErrorHidden = true;
   newPackage: FormGroup = new FormGroup({
     name: new FormControl(''),
     group: new FormControl(''),
@@ -22,10 +23,14 @@ export class AddPackagePopupComponent {
   constructor(private storageService: DataStorageService){}
   
   done(): void {
+    this.amountErrorHidden = true;
     const newPackage = this.checkNewPackage();
     if(newPackage === undefined){
 
     } else {
+      if(this.checkAmount(newPackage)){
+        this.amountErrorHidden = false;
+      }
       this.popupClosed.emit(false);
       this.addPackage.emit(newPackage);
       this.savePackage(newPackage);
@@ -49,16 +54,35 @@ export class AddPackagePopupComponent {
       propertyName = 'amount';
     } else if (!packaging.minAmount) {
       propertyName = 'minAmount';
-    } else {
-      return packaging;
     }
   
-    this.error = `${propertyName} is undefined.`;
-    return undefined;
+    if (propertyName) {
+      this.error = `${propertyName} is undefined.`;
+      return { error: this.error, propertyName };
+    }
+  
+    return packaging;
   }
+  
 
   savePackage(packaging: Packaging){
     this.storageService.storePackage(packaging);
   }
+
+  checkAmount(packaging: Packaging): boolean {
+    const amount = packaging.getAmount;
+    console.log(amount);
+  
+    if (isNaN(amount)) {
+      this.error = 'Amount must be a number.';
+      return false;
+    }
+  
+    return true;
+  }
+  
+  
+  
+  
   
 }

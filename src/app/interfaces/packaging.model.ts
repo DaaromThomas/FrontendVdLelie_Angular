@@ -1,7 +1,7 @@
 export class Packaging {
     private group: string;
     private id: string;
-    private amountInStock: number;
+    public amountInStock: number;
     private minAmount: number;
     private name: string;
     private location: string;
@@ -15,27 +15,27 @@ export class Packaging {
         this.location = location
     }
 
-    public getID(): string {
+    public get getID(): string {
         return this.id
     }
 
-    public getName(): string {
+    public get getName(): string {
         return this.name;
     }
 
-    public getAmount(): number {
+    public get getAmount(): number {
         return this.amountInStock;
     }
 
-    public getMinAmount(): number {
+    public get getMinAmount(): number {
         return this.minAmount;
     }
 
-    public getLocation(): string {
+    public get getLocation(): string {
         return this.location;
     }
 
-    public getGroup(): string {
+    public get getGroup(): string {
         return this.group;
     }
 

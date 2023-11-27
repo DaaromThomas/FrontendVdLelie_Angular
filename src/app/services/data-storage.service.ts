@@ -11,10 +11,10 @@ export class DataStorageService {
     constructor(private http: HttpClient) {}
 
     storePackage(newPackage: Packaging) {
-        const name: string = newPackage.getName();
-        const group = newPackage.getGroup();
-        const amount = newPackage.getAmount();
-        const minAmount = newPackage.getMinAmount();
+        const name: string = newPackage.getName;
+        const group = newPackage.getGroup;
+        const amount = newPackage.getAmount;
+        const minAmount = newPackage.getMinAmount;
     
         console.log(name);
     
