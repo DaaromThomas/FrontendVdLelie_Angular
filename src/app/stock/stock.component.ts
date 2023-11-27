@@ -71,7 +71,6 @@ export class StockComponent {
 
   
   addPackage(packaging: Packaging){
-    console.log("addPackage()");
     const newPackage: Packaging = this.createPackaging(packaging);
     this.http.storePackage(newPackage);
     this.stock.push(newPackage);
@@ -92,7 +91,6 @@ export class StockComponent {
   setLocationFilter(location: Event) {
     let filterValue = (event?.target as HTMLInputElement).value;
     this.locationFilter = filterValue;
-    console.log(this.locationFilter)
   }
    
 }

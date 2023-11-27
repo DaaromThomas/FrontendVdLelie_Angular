@@ -1,22 +1,15 @@
 export class Packaging {
-    private group: string;
-    private id: string;
-    public amountInStock: number;
-    private minAmount: number;
-    private name: string;
-    private location: string;
+    constructor(
+        private readonly group: string,
+        private readonly id: string,
+        private readonly amount: number,
+        private readonly minAmount: number,
+        private readonly name: string,
+        private readonly location: string
+    ) {}
 
-    public constructor(group: string, id: string, amountInStock: number, minAmount: number, name: string, location: string) {
-        this.group = group;
-        this.id = id;
-        this.amountInStock = amountInStock;
-        this.minAmount = minAmount;
-        this.name = name;
-        this.location = location
-    }
-
-    public get getID(): string {
-        return this.id
+    public get getId(): string {
+        return this.id;
     }
 
     public get getName(): string {
@@ -24,7 +17,7 @@ export class Packaging {
     }
 
     public get getAmount(): number {
-        return this.amountInStock;
+        return this.amount;
     }
 
     public get getMinAmount(): number {
@@ -38,5 +31,4 @@ export class Packaging {
     public get getGroup(): string {
         return this.group;
     }
-
 }
