@@ -1,0 +1,41 @@
+th, td {
+  border-color: #061E4A;
+  border-width: 2px;
+  border-style: solid;
+}
+
+th {
+    height: 30px;
+    background-color: #061E4A;
+    color: white;
+}
+
+tr:hover{
+    background-color: #60c9b3;
+}
+
+thead, body {
+
+}
+
+table {
+    border-collapse: collapse;
+    width: 70%;
+    table-layout: fixed;
+}
+
+.container {
+    display: block;
+    margin-left: 10px;
+    margin-right: auto;
+
+}
+
+.textbox{
+    border: 2px solid black;
+    width: 15%;
+    height: 11%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
