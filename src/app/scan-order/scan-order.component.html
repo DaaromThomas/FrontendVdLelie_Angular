@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let product of products; index as i">
+      <tr *ngFor="let product of products; index as i" (click)="selectProduct(i)" [ngClass]="{'selected': i==selectedIndex}" >
         <td>{{product.name}}</td>
         <td>{{product.prefferedPackage}}</td>
         <td>0</td>

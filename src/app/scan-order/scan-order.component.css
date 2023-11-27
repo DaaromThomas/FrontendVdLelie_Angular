@@ -12,6 +12,7 @@ th {
 
 tr:hover{
     background-color: #60c9b3;
+    cursor: pointer;
 }
 
 thead, body {
@@ -38,4 +39,8 @@ table {
     padding: 10px;
     margin-top: 10px;
     margin-left: 10px;
+}
+
+.selected{
+    background-color: #60c9b3;
 }

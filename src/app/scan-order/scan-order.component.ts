@@ -22,10 +22,19 @@ export class ScanOrderComponent {
     "Recommended Packaging",
     "Amount available"
   ];
-  // private scanOrderService: ScanOrderService = new ScanOrderService();
+  selectedIndex = -1;
 
   constructor(private scanOrderService: ScanOrderService){
 
+  }
+
+  selectProduct(index: number){
+    if(this.selectedIndex == index){
+      this.selectedIndex=-1;
+    }
+    else{
+      this.selectedIndex = index;
+    }
   }
 
   getOrders(){
