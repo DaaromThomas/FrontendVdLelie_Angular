@@ -1,5 +1,5 @@
 // stock.component.ts
-import { Component } from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
 import { Packaging } from '../interfaces/packaging.model';
 import { HttpClient } from '@angular/common/http';
 import { DataStorageService } from '../services/data-storage.service';
@@ -57,7 +57,7 @@ export class StockComponent {
     'Rotterdam', 'Amsterdam', 'Brabant'
   ];
 
-  constructor(private http: DataStorageService){}
+  constructor(private renderer: Renderer2, private http: DataStorageService){}
 
   displayPackagePopup() {
     this.displayPackage = true;
@@ -92,5 +92,33 @@ export class StockComponent {
     let filterValue = (event?.target as HTMLInputElement).value;
     this.locationFilter = filterValue;
   }
-   
+
+  previousValue: string = '';
+
+  onFocusChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target.textContent != null) {
+      this.previousValue = target.textContent;
+    }
+  }
+
+  onInputChange(event: Event) {
+  const target = event.target as HTMLInputElement;
+  const initialValue = target.textContent;
+  if (initialValue !== null) {
+    const newValue = initialValue.replace(/[^0-9]*/g, '');
+    target.textContent = newValue;
+    if (initialValue !== target.textContent) {
+      event.stopPropagation();
+    }
+  }
+  }
+
+  onBlurChange(event: Event) {
+  const target = event.target as HTMLInputElement;
+  if (target.textContent === null || target.textContent.trim() === '') {
+    target.textContent = this.previousValue;
+  }
+  }
+
 }
