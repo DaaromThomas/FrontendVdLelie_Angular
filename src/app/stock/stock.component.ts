@@ -1,5 +1,5 @@
 // stock.component.ts
-import { Component, Renderer2 } from '@angular/core';
+import { Component } from '@angular/core';
 import { Packaging } from '../interfaces/packaging.model';
 import { DataStorageService } from '../services/data-storage.service';
 
@@ -54,7 +54,7 @@ export class StockComponent {
     'Rotterdam', 'Amsterdam', 'Brabant'
   ];
 
-  constructor(private renderer: Renderer2, private http: DataStorageService){}
+  constructor(private http: DataStorageService){}
 
   displayPackagePopup() {
     this.displayPackage = true;
