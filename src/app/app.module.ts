@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LoginModule } from './login/login.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { AuthInterceptor } from './login/AuthInterceptor';
+import { AuthInterceptor } from './login/Auth/AuthInterceptor';
 
 @NgModule({
   declarations: [
