@@ -1,14 +1,28 @@
-<form [formGroup]="login">
-  <input
-    placeholder="Enter Username"
-    class="form-control"
-    formControlName="username"
-  />
-  <input
-    placeholder="Enter password"
-    class="form-control"
-    formControlName="password"
-  />
-</form>
-
-<button type="submit" (click)="onClick()">login</button>
+<div class="login-container">
+  <form [formGroup]="login" class="login-form">
+    <h2>Login</h2>
+    <div class="form-group">
+      <input
+        type="text"
+        placeholder="Enter Username"
+        class="form-control"
+        formControlName="username"
+      />
+    </div>
+    <div class="form-group">
+      <div class="password-container">
+        <input
+          #passwordInput
+          type="password"
+          placeholder="Enter Password"
+          class="form-control"
+          formControlName="password"
+        />
+        <span class="toggle-password" (click)="togglePasswordVisibility()">
+          <img src="assets/eye.png" alt="Toggle Password Visibility" />
+        </span>
+      </div>
+    </div>
+    <button type="submit" (click)="onClick()" class="login-button">Login</button>
+  </form>
+</div>
