@@ -25,12 +25,11 @@ export class LoginService {
     );
   }
   handleRes(res: any) {
-
     if(res.status = 200){
       this.Jwttoken = res.token;
       this.router.navigateByUrl('/scan-order');
     }
-    if(res.status = 403){
+    if(res.status = 401){
       this.wrongPassWordChange.next(true)
     }
 
