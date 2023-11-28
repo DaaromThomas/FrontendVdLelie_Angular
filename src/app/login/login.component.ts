@@ -9,6 +9,8 @@ import { Login } from './login.interface';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
+  wrongPassword = false;
+  subscription: any;
   showPassword: boolean = false;
   @ViewChild('passwordInput', { static: false })
   passwordInput!: ElementRef;
@@ -18,8 +20,11 @@ export class LoginComponent {
     password: new FormControl(''),
   });
 
-  constructor(private loginService: LoginService) {}
-
+  constructor(private loginService: LoginService) {
+    this.subscription = loginService.wrongPassWordChange.subscribe(
+      (data) => (this.wrongPassword = data)
+    );
+  }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
@@ -30,4 +35,8 @@ export class LoginComponent {
   onClick() {
     this.loginService.loginRequest(this.login.value as Login);
   }
+
+  ngOnDestroy() {
+     this.subscription.unsubscribe();
+   }
 }
