@@ -4,10 +4,13 @@
     box-sizing: border-box;
 }
 
-.app-container {
-    display: flex;
-}
 
-.router-outlet{
-    width: 85%;
+.app-main-component {
+    flex: 1;
+    height: 100vh;
+}
+.router-outlet-container {
+  flex: 1;
+  width: 100%;
+
 }

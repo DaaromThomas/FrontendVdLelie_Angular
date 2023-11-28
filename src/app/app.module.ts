@@ -1,14 +1,15 @@
-import { NgModule } from "@angular/core";
-import { AppComponent } from "./app.component";
-import { NavBarComponent } from "./nav-bar/nav-bar.component";
-import { BrowserModule, provideClientHydration } from "@angular/platform-browser";
-import { AppRoutingModule } from "./app-routing.module";
-import { LoginModule } from "./login/login.module";
+import { NgModule } from '@angular/core';
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import {ScanOrderModule} from "./scan-order/scan-order.module";
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { HttpClient } from '@angular/common/http';
+import {CommonModule} from "@angular/common";
+import { LoginModule } from './login/login.module';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './login/Auth/AuthInterceptor';
 import { StockModule } from "./stock/stock.module";
-import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
-import { AuthInterceptor } from "./login/AuthInterceptor";
-
-
 
 @NgModule({
   declarations: [
@@ -18,10 +19,12 @@ import { AuthInterceptor } from "./login/AuthInterceptor";
   imports: [
     BrowserModule,
     AppRoutingModule,
+    CommonModule,
+    ScanOrderModule,
     LoginModule,
     HttpClientModule,
     StockModule,
-    HttpClientModule
+
   ],
   providers: [
     provideClientHydration(),
