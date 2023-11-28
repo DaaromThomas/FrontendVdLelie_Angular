@@ -1,1 +1,40 @@
-<p>scan-order works!</p>
+<div class="textbox">
+  <label for="name">Scan order: </label><br>
+  <input id="name" type="text" class="form-control" (input)="onInputOrderNumber($event)"><br>
+  <button id="hello" name="hello" (click)="getOrders()">Load product</button><br>
+  <label for="hello" class="error">{{getErrorMessage}}</label>
+</div><br><br><br>
+
+<div class="container">
+  <table>
+    <thead>
+      <tr>
+        <th *ngFor="let name of productColumns">{{name}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products; index as i" (click)="selectProduct(i)" [ngClass]="{'selected': i==selectedIndex}" >
+        <td>{{product.name}}</td>
+        <td>{{product.prefferedPackage}}</td>
+        <td>0</td>
+      </tr>
+    </tbody>
+  </table>
+</div><br><br><br>
+
+<div class="container">
+  <table>
+    <thead>
+    <tr>
+      <th>packaging</th>
+      <th>amount</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let package of packaging; index as i">
+      <td>{{package}}</td>
+      <td>2</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
