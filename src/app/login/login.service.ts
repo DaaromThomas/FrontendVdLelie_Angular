@@ -7,22 +7,22 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class LoginService {
-  Jwttoken:any
-  constructor(private http: HttpClient ) {
+  Jwttoken: any;
+  constructor(private http: HttpClient) {}
+
+  loginRequest(login: Login) {
+    this.http
+      .post('http://localhost:8080/login', login)
+      .subscribe((data) => (this.Jwttoken = data));
   }
 
-
-  loginRequest(login: Login){
-    this.http.post('http://localhost:8080/login', login).subscribe(data => this.Jwttoken = data);
-  }
-
-  isLoggedIn():boolean{
-    if(this.Jwttoken === undefined){
+  isLoggedIn(): boolean {
+    if (this.Jwttoken === undefined) {
       return false;
     }
     return true;
   }
-  getJwtTOken(){
-    return this.Jwttoken
+  getJwtTOken() {
+    return this.Jwttoken;
   }
 }
