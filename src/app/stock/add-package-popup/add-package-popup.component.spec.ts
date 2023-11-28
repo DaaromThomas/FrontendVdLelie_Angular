@@ -40,4 +40,54 @@ describe('AddPackagePopupComponent', () => {
 
     expect(result).toBeTrue();
   });
+
+  it('should return true when packaging is OK', () =>{
+    const packaging: Packaging = new Packaging('TestGroup', 'TestID1', 300, 50, 'TestName', 'TestLocation');
+
+    const result = component.checkNewPackage(packaging);
+
+    expect(result).toBeTrue();
+  });
+
+  it('should not emit events when done() is called with errors', () => {
+    spyOn(component.popupClosed, 'emit');
+    spyOn(component.addPackage, 'emit');
+    spyOn(component, 'savePackage');
+
+    // Set form values to simulate an invalid form (e.g., missing required field)
+    component.newPackage.setValue({
+      name: '',
+      group: 'TestGroup',
+      amount: '10',
+      minAmount: '5',
+    });
+
+    component.done();
+
+    expect(component.popupClosed.emit).not.toHaveBeenCalled();
+    expect(component.addPackage.emit).not.toHaveBeenCalled();
+    expect(component.savePackage).not.toHaveBeenCalled();
+    expect(component.amountErrorHidden).toBeTrue();
+  });
+
+  it('should emit events when done() is called without errors', () => {
+    spyOn(component.popupClosed, 'emit');
+    spyOn(component.addPackage, 'emit');
+    spyOn(component, 'savePackage');
+
+    // Set form values to simulate an invalid form (e.g., missing required field)
+    component.newPackage.setValue({
+      name: 'TestName',
+      group: 'TestGroup',
+      amount: '10',
+      minAmount: '5',
+    });
+
+    component.done();
+
+    expect(component.popupClosed.emit).toHaveBeenCalled();
+    expect(component.addPackage.emit).toHaveBeenCalled();
+    expect(component.savePackage).toHaveBeenCalled();
+    expect(component.amountErrorHidden).toBeFalse;
+  });
 });

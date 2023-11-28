@@ -37,7 +37,7 @@ export class AddPackagePopupComponent {
       'TestLocation');
 
     if(packaging === undefined){
-
+        
     } else if(this.checkNewPackage(packaging)){
       if(this.checkAmount(packaging)){
         this.amountErrorHidden = false;
