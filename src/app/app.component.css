@@ -13,3 +13,7 @@
     flex: 1;
     height: 100vh;
 }
+.router-outlet-container {
+  flex: 1;
+  width: 100%;
+}

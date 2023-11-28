@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import {CommonModule} from "@angular/common";
 import { LoginModule } from './login/login.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { AuthInterceptor } from './login/AuthInterceptor';
+import { AuthInterceptor } from './login/Auth/AuthInterceptor';
 
 @NgModule({
   declarations: [
