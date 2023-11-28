@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScanOrderComponent } from './scan-order.component';
+import { StockComponent } from './stock.component';
 import { HttpClientModule } from '@angular/common/http';
 
-describe('ScanOrderComponent', () => {
-  let component: ScanOrderComponent;
-  let fixture: ComponentFixture<ScanOrderComponent>;
+describe('StockComponent', () => {
+  let component: StockComponent;
+  let fixture: ComponentFixture<StockComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ScanOrderComponent],
-      imports: [HttpClientModule],
+      declarations: [StockComponent],
+      imports: [HttpClientModule]
     })
     .compileComponents();
-
-    fixture = TestBed.createComponent(ScanOrderComponent);
+    
+    fixture = TestBed.createComponent(StockComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -22,6 +22,4 @@ describe('ScanOrderComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-
 });
