@@ -1,7 +1,8 @@
 <div class="textbox">
   <label for="name">Scan order: </label><br>
-  <input id="name" type="text"><br>
-  <button name="hello" (click)="getOrders()">Load product</button>
+  <input id="name" type="text" class="form-control" (input)="onInputOrderNumber($event)"><br>
+  <button id="hello" name="hello" (click)="getOrders()">Load product</button><br>
+  <label for="hello" class="error">{{getErrorMessage}}</label>
 </div><br><br><br>
 
 <div class="container">

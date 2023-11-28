@@ -11,7 +11,7 @@ describe('ScanOrderComponent', () => {
       declarations: [ScanOrderComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(ScanOrderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -20,4 +20,6 @@ describe('ScanOrderComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+
 });

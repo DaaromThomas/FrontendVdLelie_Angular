@@ -34,8 +34,8 @@ table {
 
 .textbox{
     border: 2px solid black;
-    width: 15%;
-    height: 11%;
+    width: 220px;
+    height: 13%;
     padding: 10px;
     margin-top: 10px;
     margin-left: 10px;
@@ -43,4 +43,8 @@ table {
 
 .selected{
     background-color: #60c9b3;
+}
+
+.error{
+    color: darkred;
 }
