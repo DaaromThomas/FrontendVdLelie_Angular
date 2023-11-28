@@ -16,9 +16,7 @@ export class DataStorageService {
         const group = newPackage.getGroup;
         const amount = newPackage.getAmount;
         const minAmount = newPackage.getMinAmount;
-    
-        console.log(name);
-    
+        
         const httpOptions = {
             params: new HttpParams()
                 .set('stockId', '4c491e42-46ed-4876-aa7b-4b4a10b91c32')
@@ -29,9 +27,7 @@ export class DataStorageService {
         };
     
         return this.http.post("http://localhost:8080/packages", {}, httpOptions)
-            .subscribe(data => {
-                console.log(data);
-            });
+            .subscribe(data => {});
     }
     
 }
