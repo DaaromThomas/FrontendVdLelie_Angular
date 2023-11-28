@@ -1,8 +1,11 @@
+.app-container {
+  display: flex;
+}
+
 .app-nav-bar {
     width: 15%;
     height: 100vh;
     box-sizing: border-box;
-    display: block;
 }
 
 
