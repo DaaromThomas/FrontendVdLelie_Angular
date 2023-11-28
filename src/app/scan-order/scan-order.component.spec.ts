@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ScanOrderComponent } from './scan-order.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ScanOrderComponent', () => {
   let component: ScanOrderComponent;
@@ -8,7 +9,8 @@ describe('ScanOrderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ScanOrderComponent]
+      declarations: [ScanOrderComponent],
+      imports: [HttpClientModule],
     })
     .compileComponents();
     

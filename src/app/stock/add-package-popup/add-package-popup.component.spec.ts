@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AddPackagePopupComponent } from './add-package-popup.component';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Packaging } from '../../interfaces/packaging.model';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('AddPackagePopupComponent', () => {
   let component: AddPackagePopupComponent;
@@ -8,16 +11,33 @@ describe('AddPackagePopupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AddPackagePopupComponent]
+      declarations: [AddPackagePopupComponent],
+      imports: [HttpClientModule, ReactiveFormsModule],
     })
     .compileComponents();
     
     fixture = TestBed.createComponent(AddPackagePopupComponent);
     component = fixture.componentInstance;
+
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  it('should return false when checkAmount is runned and packaging is OK', () => {
+    const packaging: Packaging = new Packaging('TestGroup', 'TestID1', 300, 50, 'TestName', 'TestLocation');
+
+    const result = component.checkAmount(packaging);
+
+    expect(result).toBeFalse();
+  });
+
+  it('should return true when checkAmount is runned and packaging.amount is less then packaging.minAmount', () => {
+    const packaging: Packaging = new Packaging('TestGroup', 'TestID1', 40, 50, 'TestName', 'TestLocation');
+
+    const result = component.checkAmount(packaging);
+
+    expect(result).toBeTrue();
   });
 });

@@ -1,10 +1,7 @@
 // stock.component.ts
 import { Component } from '@angular/core';
 import { Packaging } from '../interfaces/packaging.model';
-import { HttpClient } from '@angular/common/http';
 import { DataStorageService } from '../services/data-storage.service';
-import { FormControl } from '@angular/forms';
-import { eventNames } from 'process';
 
 @Component({
   selector: 'app-stock',

@@ -1,17 +1,19 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { LoginModule } from './login/login.module';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { AuthInterceptor } from './login/AuthInterceptor';
-import { StockModule } from './stock/stock.module';
+import { NgModule } from "@angular/core";
+import { AppComponent } from "./app.component";
+import { NavBarComponent } from "./nav-bar/nav-bar.component";
+import { BrowserModule, provideClientHydration } from "@angular/platform-browser";
+import { AppRoutingModule } from "./app-routing.module";
+import { LoginModule } from "./login/login.module";
+import { StockModule } from "./stock/stock.module";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { AuthInterceptor } from "./login/AuthInterceptor";
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavBarComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,

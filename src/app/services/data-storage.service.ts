@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Packaging } from "../interfaces/packaging.model";
+import { HttpClientModule } from '@angular/common/http';
 
 
 @Injectable({
