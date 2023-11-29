@@ -1,59 +1,46 @@
-.container{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 90%;
+.container {
+    width: 100%;
+    height: 100vh;
     background-color: #eeeeee;
 }
 
-.spacer{
+.spacer {
     padding-top: 5%;
 }
 
 .table-wrapper {
-    display: block;
     width: 100%;
     height: 75vh;
     overflow: auto;
- }
-
- /* .table-wrapper-expanded {
     display: block;
-    width: 100%;
-    height: 20vh;
-    overflow: auto;
- } */
-
-td {
-    text-align: center;
-    padding: 5px 15px;
- }
+}
 
 th {
     background-color: #4a5b73;
     color: white;
-    padding: 0px 15px;
+    padding: 0 15px;
     position: sticky;
     top: 0;
     z-index: 100;
- }
+}
+
+td, th {
+    text-align: center;
+    padding: 5px 15px;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
 
 table {
-    width: 100%;
+    width: 1300px;
     border-collapse: collapse;
     display: table;
- }
+    margin: auto;
+}
 
 tbody {
     max-height: 80%;
     overflow: auto;
-}
-
-table, th, td {
-    margin-left: auto;
-    margin-right: auto;
-    border: 1px solid black;
-    border-collapse: collapse;
 }
 
 tr {
@@ -64,7 +51,7 @@ tr:hover {
     background-color: #60c9b3;
 }
 
-td.editable:hover{
+td.editable:hover {
     background-color: #2c636c;
     color: white;
 }
@@ -72,6 +59,8 @@ td.editable:hover{
 button {
     float: right;
     border-radius: 10px;
+    margin-top: 1%;
+    margin-right: 10%;
 }
 
 .add-package {
@@ -80,8 +69,7 @@ button {
     display: flex;
     justify-content: center;
     align-self: center;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
     position: absolute;
     top: 25%;
     left: 50%;
@@ -90,12 +78,19 @@ button {
 }
 
 .filter {
-    float: right;
+    /* float: right;
     padding-right: 5%;
-    padding-top: 5%;
+    padding-top: 5%; */
+
+    margin-top: 1%;
+    margin-right: 1%;
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.blur-effect{
+.blur-effect {
     filter: blur(1.5px);
     pointer-events: none;
 }
@@ -109,4 +104,4 @@ button {
     background-color: rgba(168, 168, 168, 0.268);
     filter: blur(5px);
     z-index: 998;
-  }
+}
