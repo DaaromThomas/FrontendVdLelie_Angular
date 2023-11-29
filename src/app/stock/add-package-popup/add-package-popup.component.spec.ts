@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddPackagePopupComponent } from './add-package-popup.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Packaging } from '../../interfaces/packaging.model';
+import { Packaging } from '../../models/packaging.model';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClientModule } from '@angular/common/http';
 

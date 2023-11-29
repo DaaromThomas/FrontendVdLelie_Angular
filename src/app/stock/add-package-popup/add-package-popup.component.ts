@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { DataStorageService } from "../../services/data-storage.service";
-import { Packaging } from "../../interfaces/packaging.model";
+import { Packaging } from "../../models/packaging.model";
 
 
 @Component({

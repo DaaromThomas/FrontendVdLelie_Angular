@@ -1,14 +1,16 @@
 <div class="filter">
     <input type="text" autocomplete="on" list="mockLocations" (input)="setLocationFilter($event)">
     <datalist id="mockLocations">
-        @for (location of mockLocations; track $index) {
+        @for (location of locationNames; track $index) {
             <option [value]="location"></option>
         }
     </datalist>
 </div>
 <div class="spacer"></div>
 <div class="container">
-    <button (click)="onStockTest()">stock test</button>
+    <button (click)="onStockTest3()">stock test 3 revenge of the stock</button>
+    <button (click)="onStockTest2()">stock test 2 the stockening</button>
+    <!-- <button (click)="onStockTest()">stock test</button> -->
     <button (click)="displayPackagePopup()">New Package</button>
     <div class="add-package" *ngIf="displayPackage">
         <app-add-package-popup class="package-popup" (addPackage)="addPackage($event)" (popupClosed)="onPopupClosed($event)"></app-add-package-popup>
@@ -26,32 +28,30 @@
                 </tr>
             </thead>
             <tbody>
-                @if (mockLocations.includes(locationFilter)) {
-                    @for (product of stock; track $index) {
-                        @if (product.getLocation === locationFilter) {
+                @if (locationNames.includes(locationFilter)) {
+                    @for (package of packageList; track $index) {
+                        @if (package.getLocation === locationFilter) {
                             <tr>
-                                <td>{{product.getGroup}}</td>
-                                <td>{{product.getName}}</td>
-                                <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{product.getAmount}}</td>
-                                <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{product.getMinAmount}}</td>
-                                <td>{{product.getLocation}}</td>
+                                <td>{{package.getGroup}}</td>
+                                <td>{{package.getName}}</td>
+                                <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{package.getAmount}}</td>
+                                <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{package.getMinAmount}}</td>
+                                <td>{{package.getLocation}}</td>
                             </tr>
                         }
                     }
 
                 } @else {
 
-                    @for (product of stock; track $index) {
+                    @for (package of packageList; track $index) {
                         <tr>
-                            <td>{{product.getGroup}}</td>
-                            <td>{{product.getName}}</td>
-                            <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{product.getAmount}}</td>
-                            <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{product.getMinAmount}}</td>
-                            <td>{{product.getLocation}}</td>
+                            <td>{{package.getGroup}}</td>
+                            <td>{{package.getName}}</td>
+                            <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{package.getAmount}}</td>
+                            <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{package.getMinAmount}}</td>
+                            <td>{{package.getLocation}}</td>
                         </tr>
-                    } @empty {
-                        <p>the list is empty</p>
-                    } 
+                    }
                 }
             </tbody>
         </table>
