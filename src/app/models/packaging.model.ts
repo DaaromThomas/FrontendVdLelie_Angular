@@ -1,10 +1,10 @@
 export class Packaging {
     constructor(
-        private readonly group: string,
-        private readonly id: string,
         private readonly amount: number,
+        private readonly id: string,
         private readonly minAmount: number,
         private readonly name: string,
+        private readonly group: string,      
         private readonly location: string
     ) {}
 
