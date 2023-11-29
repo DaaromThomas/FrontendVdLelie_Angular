@@ -1,0 +1,59 @@
+<div class="filter">
+    <input type="text" autocomplete="on" list="mockLocations" (input)="setLocationFilter($event)">
+    <datalist id="mockLocations">
+        @for (location of mockLocations; track $index) {
+            <option [value]="location"></option>
+        }
+    </datalist>
+</div>
+<div class="spacer"></div>
+<div class="container">
+    <button (click)="displayPackagePopup()">New Package</button>
+    <div class="add-package" *ngIf="displayPackage">
+        <app-add-package-popup class="package-popup" (addPackage)="addPackage($event)" (popupClosed)="onPopupClosed($event)"></app-add-package-popup>
+    </div>
+    <div class="spacer"></div>
+    <div [class]="tableWrapperClass">
+        <table>
+            <thead>
+                <tr>
+                    <th>Group</th>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Minimum Amount</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (mockLocations.includes(locationFilter)) {
+                    @for (product of stock; track $index) {
+                        @if (product.getLocation === locationFilter) {
+                            <tr>
+                                <td>{{product.getGroup}}</td>
+                                <td>{{product.getName}}</td>
+                                <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{product.getAmount}}</td>
+                                <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{product.getMinAmount}}</td>
+                                <td>{{product.getLocation}}</td>
+                            </tr>
+                        }
+                    }
+
+                } @else {
+
+                    @for (product of stock; track $index) {
+                        <tr>
+                            <td>{{product.getGroup}}</td>
+                            <td>{{product.getName}}</td>
+                            <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{product.getAmount}}</td>
+                            <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{product.getMinAmount}}</td>
+                            <td>{{product.getLocation}}</td>
+                        </tr>
+                    } @empty {
+                        <p>the list is empty</p>
+                    } 
+                }
+            </tbody>
+        </table>
+    </div>
+    
+</div>

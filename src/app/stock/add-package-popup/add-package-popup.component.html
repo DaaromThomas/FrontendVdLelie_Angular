@@ -1,0 +1,29 @@
+<div id="product-add-dialog" class="container">
+    <h1 class="title">New Package</h1>
+    <h3 class="error-message">{{ error }}</h3>
+    <form [formGroup]="newPackage" class="form">
+      <div class="form-group">
+        <label for="name-input" class="label">Name: </label>
+        <input class="input" id="name-input" formControlName="name">
+      </div>
+  
+      <div class="form-group">
+        <label for="group-input" class="label">Group: </label>
+        <input class="input" id="group-input" formControlName="group">
+      </div>
+  
+      <div class="form-group">
+        <p [hidden]="amountErrorHidden">Is not a number</p>
+        <label for="amount-input" class="label">Amount: </label>
+        <input class="input" id="amount-input" formControlName="amount">
+      </div>
+  
+      <div class="form-group">
+        <label for="amountInStock-input" class="label">Minimal amount: </label>
+        <input class="input" id="amountInStock-input" formControlName="minAmount">
+      </div>
+    </form>
+    <button class="done-button" (click)="done()">✔Done</button> 
+    <button class="close-button" (click)="close()">❌Discard</button>
+  </div>
+  

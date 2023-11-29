@@ -1,0 +1,29 @@
+<div class="login-container">
+  <form [formGroup]="login" class="login-form">
+    <h2>Login</h2>
+    <h5 *ngIf="wrongPassword">Verkeerde gebruikersnaam of wachtwoord ingevoerd</h5>
+    <div class="form-group">
+      <input
+        type="text"
+        placeholder="Enter Username"
+        class="form-control"
+        formControlName="username"
+      />
+    </div>
+    <div class="form-group">
+      <div class="password-container">
+        <input
+          #passwordInput
+          type="password"
+          placeholder="Enter Password"
+          class="form-control"
+          formControlName="password"
+        />
+        <span class="toggle-password" (click)="togglePasswordVisibility()">
+          <img src="assets/eye.png" alt="Toggle Password Visibility" />
+        </span>
+      </div>
+    </div>
+    <button type="submit" (click)="onClick()" class="login-button">Login</button>
+  </form>
+</div>

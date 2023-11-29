@@ -1,29 +1,34 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-
+import {ScanOrderModule} from "./scan-order/scan-order.module";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { MainComponentComponent } from './main-component/main-component.component';
-import { OrderScreenComponentComponent } from './main-component/order-screen-component/order-screen-component.component';
-import { ProductsComponentComponent } from './main-component/order-screen-component/products-component/products-component.component';
-import { FilterComponentComponent } from './main-component/order-screen-component/filter-component/filter-component.component';
+import { HttpClient } from '@angular/common/http';
+import {CommonModule} from "@angular/common";
+import { LoginModule } from './login/login.module';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './login/Auth/AuthInterceptor';
+import { StockModule } from "./stock/stock.module";
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavBarComponent,
-    MainComponentComponent,
-    OrderScreenComponentComponent,
-    ProductsComponentComponent,
-    FilterComponentComponent
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CommonModule,
+    ScanOrderModule,
+    LoginModule,
+    HttpClientModule,
+    StockModule,
+
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

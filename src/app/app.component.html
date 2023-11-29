@@ -1,4 +1,6 @@
 <div class="app-container">
-  <app-nav-bar class="app-nav-bar"></app-nav-bar>
-  <app-main-component class="app-main-component"></app-main-component>
+  <app-nav-bar *ngIf="isLoggedIn()" class="app-nav-bar"></app-nav-bar>
+  <div class="router-outlet-container">
+    <router-outlet></router-outlet>
+  </div>
 </div>

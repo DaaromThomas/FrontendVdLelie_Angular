@@ -1,6 +1,5 @@
-/* app-component.css */
 .app-container {
-    display: flex;
+  display: flex;
 }
 
 .app-nav-bar {
@@ -9,7 +8,13 @@
     box-sizing: border-box;
 }
 
+
 .app-main-component {
     flex: 1;
     height: 100vh;
+}
+.router-outlet-container {
+  flex: 1;
+  width: 100%;
+
 }
