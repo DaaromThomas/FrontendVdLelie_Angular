@@ -8,6 +8,7 @@
 </div>
 <div class="spacer"></div>
 <div class="container">
+    <button (click)="onStockTest()">stock test</button>
     <button (click)="displayPackagePopup()">New Package</button>
     <div class="add-package" *ngIf="displayPackage">
         <app-add-package-popup class="package-popup" (addPackage)="addPackage($event)" (popupClosed)="onPopupClosed($event)"></app-add-package-popup>

@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
     providedIn: 'root'
 })
 export class DataStorageService {
+    baseurl: string = 'http://localhost:8080';
 
     constructor(private http: HttpClient) {}
 
@@ -28,6 +29,12 @@ export class DataStorageService {
     
         return this.http.post("http://localhost:8080/packages", {}, httpOptions)
             .subscribe(data => {});
+    }
+
+    getPackages() {
+        return this.http.get(this.baseurl+"/packages", {}).subscribe(data => {
+            console.log(data);
+        })
     }
     
 }

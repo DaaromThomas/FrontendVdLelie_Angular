@@ -118,4 +118,8 @@ export class StockComponent {
   }
   }
 
+  onStockTest()  {
+    this.http.getPackages();
+  }
+
 }
