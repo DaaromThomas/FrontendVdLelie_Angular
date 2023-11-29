@@ -10,9 +10,11 @@
 
 .table-wrapper {
     width: fit-content;
-    height: 75vh;
+    max-height: 75vh;
+    height: fit-content;
     overflow: auto;
     display: block;
+    margin: auto;
 }
 
 th {
