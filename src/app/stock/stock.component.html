@@ -24,13 +24,13 @@
                 <tbody>
                     @if (locationNames.includes(locationFilter)) {
                         @for (package of packageList; track $index) {
-                            @if (package.getLocation === locationFilter) {
+                            @if (package.location === locationFilter) {
                                 <tr>
-                                    <td>{{package.getGroup}}</td>
-                                    <td>{{package.getName}}</td>
-                                    <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{package.getAmount}}</td>
-                                    <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{package.getMinAmount}}</td>
-                                    <td>{{package.getLocation}}</td>
+                                    <td>{{package.packagingGroup}}</td>
+                                    <td>{{package.name}}</td>
+                                    <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{package.amountinstock}}</td>
+                                    <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{package.minAmount}}</td>
+                                    <td>{{package.location}}</td>
                                 </tr>
                             }
                         }
@@ -39,11 +39,11 @@
 
                         @for (package of packageList; track $index) {
                             <tr>
-                                <td>{{package.getGroup}}</td>
-                                <td>{{package.getName}}</td>
-                                <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{package.getAmount}}</td>
-                                <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{package.getMinAmount}}</td>
-                                <td>{{package.getLocation}}</td>
+                                <td>{{package.packagingGroup}}</td>
+                                <td>{{package.name}}</td>
+                                <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{package.amountinstock}}</td>
+                                <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{package.minAmount}}</td>
+                                <td>{{package.location}}</td>
                             </tr>
                         } @empty {
                             <p>the list is empty</p>
