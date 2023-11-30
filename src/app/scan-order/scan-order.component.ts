@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import {Order} from "./models/order";
+import {Order} from "../models/order";
 import {ScanOrderService} from "./services/scan-order.service";
-import * as http from "http";
-import {HttpClient, HttpHandler} from "@angular/common/http";
-import {Product} from "./models/product";
+import {Product} from "../models/product";
+import {Packaging} from "../models/packaging.model";
 
 
 @Component({
@@ -16,8 +14,7 @@ export class ScanOrderComponent {
 
   public orders: Order[] = [ new Order(13, "p", "asdf", 12)];
   public products: Product[] = [
-      new Product("test", new Order(13, "p", "asdf", 12), "test product", 123, "test type"),
-      new Product( "test package", new Order(14, "pp", "test order", 13), "test product 2", 123456, "test product type")
+
   ];
   public packaging: string[] = ["test package", "other package"];
   public productColumns: string[] = [
@@ -25,43 +22,51 @@ export class ScanOrderComponent {
     "Recommended Packaging",
     "Amount available"
   ];
-  selectedIndex = -1;
-  InputOrderNumber = '';
-  errorMessage = '';
+  public scannedProduct: Product = new Product("", new Packaging(0, "", 2, "-", "", ""), new Order(13, "p", "asdf", 12), "-", 123, "test type");
+  public InputProductNumber = '';
+  public errorMessage = '';
+  public packageName = '-';
 
-  constructor(private scanOrderService: ScanOrderService){
-
-  }
+  constructor(private scanOrderService: ScanOrderService){  }
 
   public get getErrorMessage(){
     return this.errorMessage;
   }
 
-  public selectProduct(index: number){
-    if(this.selectedIndex == index){
-      this.selectedIndex=-1;
-    }
-    else{
-      this.selectedIndex = index;
-    }
-  }
-
   public onInputOrderNumber(event: Event){
-    this.InputOrderNumber = (<HTMLInputElement>event.target).value;
+    this.InputProductNumber = (<HTMLInputElement>event.target).value;
   }
 
   public getOrders(){
-    if(this.InputOrderNumber === null || this.InputOrderNumber === ''){
+    if(this.InputProductNumber === null || this.InputProductNumber === ''){
       this.errorMessage="please scan a product";
-    } else if(isNaN(Number(this.InputOrderNumber))){
-      this.errorMessage = 'must be a valid ordernumber';
+    } else if(isNaN(Number(this.InputProductNumber))){
+      this.errorMessage = 'must be a valid product number';
     } else{
       this.errorMessage = '';
       this.scanOrderService.getProduct()
-          .subscribe((data: Product[]) => this.products = data);
-      console.log(this.orders);
+          .subscribe((data: any[]) => {
+            this.products = data;
+            let productNumberIndex = this.findProductNumber(Number(this.InputProductNumber));
+            if(productNumberIndex==-1){
+              this.errorMessage = 'Product not found';
+            }else{
+              this.errorMessage = '';
+              this.scannedProduct = data.at(productNumberIndex);
+              this.packageName = data.at(productNumberIndex).prefferedpackage.name;
+            }
+          });
     }
+  }
 
+  private findProductNumber(productNumber: number){
+    let products = this.products;
+    for(let i=0; i<products.length; i++){
+      if(products[i].productnumber==productNumber){
+        return i;
+      }
+    }
+    return -1;
   }
 
 
