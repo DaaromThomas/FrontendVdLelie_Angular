@@ -10,12 +10,15 @@ import { LoginModule } from './login/login.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './login/Auth/AuthInterceptor';
 import { StockModule } from "./stock/stock.module";
+import { GlobalErrorComponent } from './errors/global-error/global-error.component';
+import { ErrorInterceptor } from './errors/global-error/ErrorInterceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavBarComponent
-  ],
+    NavBarComponent,
+    GlobalErrorComponent,
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -28,7 +31,8 @@ import { StockModule } from "./stock/stock.module";
   ],
   providers: [
     provideClientHydration(),
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide:HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })
