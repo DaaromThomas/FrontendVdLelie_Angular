@@ -1,6 +1,8 @@
 // stock.component.ts
 import { Component } from '@angular/core';
-import { Packaging } from '../interfaces/packaging.model';
+import { Packaging } from '../models/packaging.model';
+import { Locations } from '../models/location.model';
+import { Stock } from '../models/stock.model';
 import { DataStorageService } from '../services/data-storage.service';
 import { AddPackagePopupComponent } from './add-package-popup/add-package-popup.component';
 
@@ -16,46 +18,10 @@ export class StockComponent {
   tableWrapperClass: string = 'table-wrapper';
   locationFilter: string = '';
 
-  stock: Packaging[] = [
-    new Packaging('dozen', '1', 2, 1, 'Rode Doos1', 'Rotterdam'),
-    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos2', 'Amsterdam'),
-    new Packaging('dozen', '1', 2, 1, 'Rode Doos3', 'Rotterdam'),
-    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos4', 'Amsterdam'),
-    new Packaging('dozen', '1', 2, 1, 'Rode Doos5', 'Rotterdam'),
-    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos6', 'Amsterdam'),
-    new Packaging('dozen', '1', 2, 1, 'Rode Doos7', 'Rotterdam'),
-    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos8', 'Amsterdam'),
-    new Packaging('dozen', '1', 2, 1, 'Rode Doos9', 'Rotterdam'),
-    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos10', 'Amsterdam'),
-    new Packaging('dozen', '1', 2, 1, 'Rode Doos11', 'Rotterdam'),
-    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos12', 'Amsterdam'),
-    new Packaging('dozen', '1', 2, 1, 'Rode Doos13', 'Rotterdam'),
-    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos14', 'Amsterdam'),
-    new Packaging('dozen', '1', 2, 1, 'Rode Doos15', 'Rotterdam'),
-    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos16', 'Amsterdam'),
-    new Packaging('dozen', '1', 2, 1, 'Rode Doos17', 'Rotterdam'),
-    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos18', 'Amsterdam'),
-    new Packaging('dozen', '1', 2, 1, 'Rode Doos19', 'Rotterdam'),
-    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos20', 'Amsterdam'),
-    new Packaging('dozen', '1', 2, 1, 'Rode Doos21', 'Rotterdam'),
-    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos22', 'Amsterdam'),
-    new Packaging('dozen', '1', 2, 1, 'Rode Doos23', 'Rotterdam'),
-    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos24', 'Amsterdam'),
-    new Packaging('dozen', '1', 2, 1, 'Rode Doos25', 'Rotterdam'),
-    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos26', 'Amsterdam'),
-    new Packaging('dozen', '1', 2, 1, 'Rode Doos27', 'Rotterdam'),
-    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos28', 'Amsterdam'),
-    new Packaging('dozen', '1', 2, 1, 'Rode Doos29', 'Rotterdam'),
-    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos30', 'Amsterdam'),
-    new Packaging('dozen', '1', 2, 1, 'Rode Doos31', 'Rotterdam'),
-    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos32', 'Amsterdam'),
-    new Packaging('dozen', '1', 2, 1, 'Rode Doos33', 'Rotterdam'),
-    new Packaging('dozen', '2', 20, 10, 'Blauwe Doos34', 'Amsterdam'),
-  ];
-
-  mockLocations: string[] = [
-    'Rotterdam', 'Amsterdam', 'Brabant'
-  ];
+  packageList: Packaging[] = [];
+  locationList: Locations[] = [];
+  stockList: Stock[] = [];
+  locationNames: string[] = [];
 
   constructor(private http: DataStorageService){}
 
@@ -73,7 +39,7 @@ export class StockComponent {
   addPackage(packaging: Packaging){
     const newPackage: Packaging = this.createPackaging(packaging);
     this.http.storePackage(newPackage);
-    this.stock.push(newPackage);
+    this.packageList.push(newPackage);
   }
 
   createPackaging(packaging: any): Packaging{
@@ -119,6 +85,60 @@ export class StockComponent {
   if (target.textContent === null || target.textContent.trim() === '') {
     target.textContent = this.previousValue;
   }
+  }
+
+  ngOnInit()  {
+    this.populateStock();
+  }
+
+  populateStock(): void {
+    this.http.getLocations().subscribe(data => this.fillLists(data))
+  }
+
+  getLocationName() {
+  }
+
+  fillLists (data: any) {
+    if (Array.isArray(data)) {
+      data.forEach(item => {
+        console.log(item.id)
+        let stock = new Stock(item.stock.id, item.stock.stocknumber)
+        item = new Locations(item.id, item.address, stock)
+        this.stockList.push(stock);
+        this.locationList.push(item);
+        this.locationNames.push(item.address)
+      })
+
+      this.http.getPackages().subscribe(data => this.fillPackageList(data))
+    }
+  }
+
+  fillPackageList (data: any) {
+    if (Array.isArray(data)) {
+      data.forEach(item => {
+        let locationName: string = '';
+        for (let location of this.locationList) {
+          let tempStock: Stock = location.getStock
+          if (tempStock.getId === item.stock.id ) {
+            locationName = location.getAddress;
+          }
+        }
+        item = new Packaging(item.amountinstock, item.id, item.minAmount, item.name, item.packagingGroup, locationName);
+        this.packageList.push(item);
+     });
+    }
+  }
+
+  onStockTest2() {
+    this.http.getPackages().subscribe(data => {
+      console.log(data)
+    });
+  }
+
+  onStockTest3() {
+    this.http.getLocations().subscribe(data => {
+      console.log(data)
+    })
   }
 
 }
