@@ -4,6 +4,8 @@ import { Packaging } from '../models/packaging.model';
 import { Locations } from '../models/location.model';
 import { Stock } from '../models/stock.model';
 import { DataStorageService } from '../services/data-storage.service';
+import { AddPackagePopupComponent } from './add-package-popup/add-package-popup.component';
+
 
 @Component({
   selector: 'app-stock',
@@ -12,6 +14,7 @@ import { DataStorageService } from '../services/data-storage.service';
 })
 export class StockComponent {
   displayPackage: boolean = false;
+  applyBlur: boolean = false;
   tableWrapperClass: string = 'table-wrapper';
   locationFilter: string = '';
 
@@ -24,12 +27,12 @@ export class StockComponent {
 
   displayPackagePopup() {
     this.displayPackage = true;
-    this.tableWrapperClass = this.displayPackage ? 'table-wrapper-expanded' : 'table-wrapper';
+    this.applyBlur = true;
   }
 
   onPopupClosed(isClosed: boolean) {
     this.displayPackage = isClosed;
-    this.tableWrapperClass = this.displayPackage ? 'table-wrapper-expanded' : 'table-wrapper';
+    this.applyBlur = isClosed;
   }
 
   

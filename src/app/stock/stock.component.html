@@ -1,36 +1,43 @@
-<div class="filter">
-    <input type="text" autocomplete="on" list="mockLocations" (input)="setLocationFilter($event)">
-    <datalist id="mockLocations">
-        @for (location of locationNames; track $index) {
-            <option [value]="location"></option>
-        }
-    </datalist>
-</div>
-<div class="spacer"></div>
-<div class="container">
-    <button (click)="onStockTest3()">stock test 3 revenge of the stock</button>
-    <button (click)="onStockTest2()">stock test 2 the stockening</button>
-    <!-- <button (click)="onStockTest()">stock test</button> -->
-    <button (click)="displayPackagePopup()">New Package</button>
-    <div class="add-package" *ngIf="displayPackage">
-        <app-add-package-popup class="package-popup" (addPackage)="addPackage($event)" (popupClosed)="onPopupClosed($event)"></app-add-package-popup>
+<div *ngIf="applyBlur" class="overlay" (click)="onPopupClosed(false)"></div>
+<div class="blur" [ngClass]="{'blur-effect': displayPackage}">
+    <div class="filter">
+        <input type="text" autocomplete="on" list="mockLocations" (input)="setLocationFilter($event)">
+        <datalist id="mockLocations">
+            @for (location of locationNames; track $index) {
+                <option [value]="location"></option>
+            }
+        </datalist>
     </div>
-    <div class="spacer"></div>
-    <div [class]="tableWrapperClass">
-        <table>
-            <thead>
-                <tr>
-                    <th>Group</th>
-                    <th>Name</th>
-                    <th>Amount</th>
-                    <th>Minimum Amount</th>
-                    <th>Location</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (locationNames.includes(locationFilter)) {
-                    @for (package of packageList; track $index) {
-                        @if (package.getLocation === locationFilter) {
+    <div class="container">   
+        <div class="spacer"></div>
+        <div [class]="tableWrapperClass">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Group</th>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Minimum Amount</th>
+                        <th>Location</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (locationNames.includes(locationFilter)) {
+                        @for (package of packageList; track $index) {
+                            @if (package.getLocation === locationFilter) {
+                                <tr>
+                                    <td>{{package.getGroup}}</td>
+                                    <td>{{package.getName}}</td>
+                                    <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{package.getAmount}}</td>
+                                    <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{package.getMinAmount}}</td>
+                                    <td>{{package.getLocation}}</td>
+                                </tr>
+                            }
+                        }
+    
+                    } @else {
+    
+                        @for (package of packageList; track $index) {
                             <tr>
                                 <td>{{package.getGroup}}</td>
                                 <td>{{package.getName}}</td>
@@ -38,23 +45,18 @@
                                 <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{package.getMinAmount}}</td>
                                 <td>{{package.getLocation}}</td>
                             </tr>
-                        }
+                        } @empty {
+                            <p>the list is empty</p>
+                        } 
                     }
-
-                } @else {
-
-                    @for (package of packageList; track $index) {
-                        <tr>
-                            <td>{{package.getGroup}}</td>
-                            <td>{{package.getName}}</td>
-                            <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{package.getAmount}}</td>
-                            <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{package.getMinAmount}}</td>
-                            <td>{{package.getLocation}}</td>
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+        <button (click)="displayPackagePopup()">New Package</button>
     </div>
-    
 </div>
+
+<div class="add-package" *ngIf="displayPackage">
+        <app-add-package-popup class="package-popup" (addPackage)="addPackage($event)" (popupClosed)="onPopupClosed($event)"></app-add-package-popup>
+</div>
+
