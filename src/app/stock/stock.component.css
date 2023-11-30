@@ -27,7 +27,7 @@ th {
 }
 
 td, th {
-    text-align: center;
+    text-align: left;
     padding: 5px 15px;
     border: 1px solid black;
     border-collapse: collapse;
