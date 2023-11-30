@@ -1,13 +1,15 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Packaging } from "../interfaces/packaging.model";
+import { Packaging } from "../models/packaging.model";
 import { HttpClientModule } from '@angular/common/http';
+import { Observable } from "rxjs";
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class DataStorageService {
+    baseurl: string = 'http://localhost:8080';
 
     constructor(private http: HttpClient) {}
 
@@ -26,8 +28,16 @@ export class DataStorageService {
                 .set('minAmount', minAmount)
         };
     
-        return this.http.post("http://localhost:8080/packages", {}, httpOptions)
+        return this.http.post(this.baseurl+"/packages", {}, httpOptions)
             .subscribe(data => {});
+    }
+
+    getPackages() {
+        return this.http.get(this.baseurl+"/packages", {});
+    }    
+
+    getLocations() {
+        return this.http.get(this.baseurl+'/locations', {});
     }
     
 }
