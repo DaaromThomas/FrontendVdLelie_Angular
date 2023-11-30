@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DataStorageService } from '../../services/data-storage.service';
-import { Packaging } from '../../models/packaging';
+import { Packaging } from '../../interfaces/packaging';
 
 @Component({
   selector: 'app-add-package-popup',

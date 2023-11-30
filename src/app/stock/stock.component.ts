@@ -3,9 +3,9 @@ import { Component } from '@angular/core';
 import { DataStorageService } from '../services/data-storage.service';
 import { AddPackagePopupComponent } from './add-package-popup/add-package-popup.component';
 
-import { Stock } from '../models/stock';
-import { Location } from '../models/location';
-import { Packaging } from '../models/packaging';
+import { Stock } from '../interfaces/stock';
+import { Location } from '../interfaces/location';
+import { Packaging } from '../interfaces/packaging';
 
 @Component({
   selector: 'app-stock',
