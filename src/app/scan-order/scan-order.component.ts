@@ -26,6 +26,7 @@ export class ScanOrderComponent {
   public InputProductNumber = '';
   public errorMessage = '';
   public packageName = '-';
+  public amountAvailable = 0;
 
   constructor(private scanOrderService: ScanOrderService){  }
 
@@ -54,6 +55,8 @@ export class ScanOrderComponent {
               this.errorMessage = '';
               this.scannedProduct = data.at(productNumberIndex);
               this.packageName = data.at(productNumberIndex).prefferedpackage.name;
+              this.amountAvailable = data.at(productNumberIndex).prefferedpackage.amountinstock;
+              console.log(data.at(productNumberIndex).prefferedpackage);
             }
           });
     }
