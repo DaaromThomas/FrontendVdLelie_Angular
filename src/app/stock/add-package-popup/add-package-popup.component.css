@@ -1,30 +1,47 @@
 .container {
-    width: 400px;
-    height: 400px;
+    width: 600px;
+    height: 500px;
     background-color: #9e9c9b;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
     overflow-x: hidden;
     border-radius: 15px;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
-  
+
+.values {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr; /* Adjust the values as needed */
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    row-gap: 5px;
+}
+
 .title {
     margin: 0;
     width: 100%;
-    text-align: center;
     background-color: cadetblue;
-    height: 70px;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.title-text {
+    width: max-content;
+    font-size: 50px;
 }
 
 .error-message {
     width: 100%;
     text-align: center;
     margin-bottom: 10px;
+    position: absolute;
+    top: 60%;
+    color: #cc0000;
 }
 
 .form {
@@ -33,14 +50,19 @@
     align-items: center;
 }
 
+.label-input {
+    display: flex;
+    align-items: center;
+}
+
 .label {
-    width: 100%;
+    width: 130px; /* Adjust the width as needed */
     box-sizing: border-box;
     margin-bottom: 5px;
 }
 
 .input {
-    width: 100%;
+    width: 60%; /* Use 100% width for flexible input width */
     box-sizing: border-box;
     margin-bottom: 10px;
 }
@@ -53,4 +75,12 @@
 .close-button {
     background-color: #f4812b;
     border-radius: 10px;
+}
+
+.grid-row1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
