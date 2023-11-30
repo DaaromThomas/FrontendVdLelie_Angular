@@ -45,8 +45,6 @@
                                 <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{package.minAmount}}</td>
                                 <td>{{package.location}}</td>
                             </tr>
-                        } @empty {
-                            <p>the list is empty</p>
                         }
                     }
                 </tbody>
