@@ -1,8 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Location } from '../interfaces/location';
 import { Packaging } from '../interfaces/packaging';
 
 @Injectable({
@@ -10,7 +7,6 @@ import { Packaging } from '../interfaces/packaging';
 })
 export class DataStorageService {
   baseurl: string = 'http://localhost:8080';
-  balls: Location[] = [];
   constructor(private http: HttpClient) {}
 
   storePackage(newPackage: Packaging) {
