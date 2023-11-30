@@ -1,14 +1,14 @@
 // stock.component.ts
 import { Component } from '@angular/core';
-import { Packaging } from '../models/packaging.model';
-import { Locations } from '../models/location.model';
-import { Stock } from '../models/stock.model';
 import { DataStorageService } from '../services/data-storage.service';
+import { Stock } from '../models/stock';
+import { Location } from '../models/location';
+import { Packaging } from '../models/packaging';
 
 @Component({
   selector: 'app-stock',
   templateUrl: './stock.component.html',
-  styleUrls: ['./stock.component.css']
+  styleUrls: ['./stock.component.css'],
 })
 export class StockComponent {
   displayPackage: boolean = false;
@@ -16,39 +16,30 @@ export class StockComponent {
   locationFilter: string = '';
 
   packageList: Packaging[] = [];
-  locationList: Locations[] = [];
+  locationList: Location[] = [];
   stockList: Stock[] = [];
   locationNames: string[] = [];
 
-  constructor(private http: DataStorageService){}
+  constructor(private http: DataStorageService) {}
 
   displayPackagePopup() {
     this.displayPackage = true;
-    this.tableWrapperClass = this.displayPackage ? 'table-wrapper-expanded' : 'table-wrapper';
+    this.tableWrapperClass = this.displayPackage
+      ? 'table-wrapper-expanded'
+      : 'table-wrapper';
   }
 
   onPopupClosed(isClosed: boolean) {
     this.displayPackage = isClosed;
-    this.tableWrapperClass = this.displayPackage ? 'table-wrapper-expanded' : 'table-wrapper';
+    this.tableWrapperClass = this.displayPackage
+      ? 'table-wrapper-expanded'
+      : 'table-wrapper';
   }
 
-  
-  addPackage(packaging: Packaging){
-    const newPackage: Packaging = this.createPackaging(packaging);
+  addPackage(packaging: Packaging) {
+    const newPackage: Packaging = packaging;
     this.http.storePackage(newPackage);
-    this.packageList.push(newPackage);
-  }
-
-  createPackaging(packaging: any): Packaging{
-    const newPackage: Packaging = new Packaging(
-      packaging.group,
-      'auto-generated-id',
-      packaging.amount,
-      packaging.minAmount,
-      packaging.name,
-      'current-location'
-    );
-    return newPackage;
+    this.packageList.push(packaging);
   }
 
   setLocationFilter(location: Event) {
@@ -66,76 +57,78 @@ export class StockComponent {
   }
 
   onInputChange(event: Event) {
-  const target = event.target as HTMLInputElement;
-  const initialValue = target.textContent;
-  if (initialValue !== null) {
-    const newValue = initialValue.replace(/[^0-9]*/g, '');
-    target.textContent = newValue;
-    if (initialValue !== target.textContent) {
-      event.stopPropagation();
+    const target = event.target as HTMLInputElement;
+    const initialValue = target.textContent;
+    if (initialValue !== null) {
+      const newValue = initialValue.replace(/[^0-9]*/g, '');
+      target.textContent = newValue;
+      if (initialValue !== target.textContent) {
+        event.stopPropagation();
+      }
     }
-  }
   }
 
   onBlurChange(event: Event) {
-  const target = event.target as HTMLInputElement;
-  if (target.textContent === null || target.textContent.trim() === '') {
-    target.textContent = this.previousValue;
-  }
+    const target = event.target as HTMLInputElement;
+    if (target.textContent === null || target.textContent.trim() === '') {
+      target.textContent = this.previousValue;
+    }
   }
 
-  ngOnInit()  {
+  ngOnInit() {
     this.populateStock();
   }
 
   populateStock(): void {
-    this.http.getLocations().subscribe(data => this.fillLists(data))
+    this.http
+      .getLocations()
+      .subscribe((data) => this.fillLists(data as Location[]));
   }
 
-  getLocationName() {
-  }
+  fillLists(locations: Location[]) {
+    if (Array.isArray(locations)) {
+      for (let location of locations) {
+        this.locationList.push(location);
+        this.locationNames.push(location.address);
+        this.stockList.push(location.stock);
+      }
 
-  fillLists (data: any) {
-    if (Array.isArray(data)) {
-      data.forEach(item => {
-        console.log(item.id)
-        let stock = new Stock(item.stock.id, item.stock.stocknumber)
-        item = new Locations(item.id, item.address, stock)
-        this.stockList.push(stock);
-        this.locationList.push(item);
-        this.locationNames.push(item.address)
-      })
-
-      this.http.getPackages().subscribe(data => this.fillPackageList(data))
+      this.http
+        .getPackages()
+        .subscribe((data) => this.fillPackageList(data as Packaging[]));
     }
   }
 
-  fillPackageList (data: any) {
-    if (Array.isArray(data)) {
-      data.forEach(item => {
-        let locationName: string = '';
-        for (let location of this.locationList) {
-          let tempStock: Stock = location.getStock
-          if (tempStock.getId === item.stock.id ) {
-            locationName = location.getAddress;
-          }
+  fillPackageList(packaging: Packaging[]) {
+    packaging.map(
+      (pack) => (pack.location = this.calculateLocation(pack.stock?.id))
+    );
+    this.packageList = packaging;
+  }
+
+  calculateLocation(stockId: string | undefined) {
+    if (stockId != undefined) {
+      let locationName: string = '';
+      for (let location of this.locationList) {
+        let tempStock: Stock = location.stock;
+        if (tempStock.id === stockId) {
+          locationName = location.address;
         }
-        item = new Packaging(item.amountinstock, item.id, item.minAmount, item.name, item.packagingGroup, locationName);
-        this.packageList.push(item);
-     });
+      }
+      return locationName;
     }
+    return 'undefined';
   }
 
   onStockTest2() {
-    this.http.getPackages().subscribe(data => {
-      console.log(data)
+    this.http.getPackages().subscribe((data) => {
+      console.log(data);
     });
   }
 
   onStockTest3() {
-    this.http.getLocations().subscribe(data => {
-      console.log(data)
-    })
+    this.http.getLocations().subscribe((data) => {
+      console.log(data);
+    });
   }
-
 }
