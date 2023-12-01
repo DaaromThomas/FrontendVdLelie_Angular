@@ -14,7 +14,7 @@ export class DataStorageService {
   locationList$: Subject<Location[]> = new  Subject<Location[]>();
   private locationList: Location[] = [];
   stockList$: Subject<Stock[]> = new Subject<Stock[]>();
-  locationNames: Subject<string[]> = new Subject<string[]>();
+  locationNames$: Subject<string[]> = new Subject<string[]>();
   constructor(private http: HttpClient) {}
 
   storePackage(newPackage: Packaging) {
@@ -38,6 +38,8 @@ export class DataStorageService {
     this.http.get(this.baseurl + '/locations')
     ]).subscribe(([packages, locations]) => {
     this.locationList = locations as Location[];
+    const locationnames = this.locationList.map(location => location.address);
+    this.locationNames$.next(locationnames);
     this.locationList$.next(locations as Location[]);
    
     if (Array.isArray(packages)) {

@@ -78,6 +78,7 @@ export class StockComponent {
     this.http.getPackagesAndLocations();
     this.populateLocation();
     this.populateStock();
+    this.populateLocationNames();
   }
    
   populateStock(): void {
@@ -96,6 +97,15 @@ export class StockComponent {
        console.log("locations: ", locations)
        this.locationList = locations;
     });
+  }
+
+  populateLocationNames(): void {
+    this.http.locationNames$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(locationNames => {
+        console.log("locationNames: ", locationNames)
+        this.locationNames = locationNames;
+      })
   }
    
   ngOnDestroy() {
