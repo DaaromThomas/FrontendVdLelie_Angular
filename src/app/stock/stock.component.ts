@@ -85,7 +85,6 @@ export class StockComponent {
     this.http.packageList$
      .pipe(takeUntil(this.unsubscribe$))
      .subscribe(packages => {
-       console.log('packages: ', packages)
        this.packageList = packages;
     });
   }
@@ -94,7 +93,6 @@ export class StockComponent {
     this.http.locationList$
      .pipe(takeUntil(this.unsubscribe$))
      .subscribe(locations => {
-       console.log("locations: ", locations)
        this.locationList = locations;
     });
   }
@@ -103,7 +101,6 @@ export class StockComponent {
     this.http.locationNames$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(locationNames => {
-        console.log("locationNames: ", locationNames)
         this.locationNames = locationNames;
       })
   }
