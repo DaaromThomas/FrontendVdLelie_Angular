@@ -1,4 +1,3 @@
-// stock.component.ts
 import { Component } from '@angular/core';
 import { DataStorageService } from '../services/data-storage.service';
 import { Stock } from '../interfaces/stock';
@@ -21,9 +20,9 @@ export class StockComponent {
   stockList: Stock[] = [];
   locationNames: string[] = [];
 
-  private unsubscribe$ = new Subject<void>();
+  private onExitStockScreen$ = new Subject<void>();
 
-  constructor(private http: DataStorageService) {}
+  constructor(private dataStorageService: DataStorageService) {}
 
   displayPackagePopup() {
     this.displayPackage = true;
@@ -37,7 +36,7 @@ export class StockComponent {
 
   addPackage(packaging: Packaging) {
     const newPackage: Packaging = packaging;
-    this.http.storePackage(newPackage);
+    this.dataStorageService.storePackage(newPackage);
     this.packageList.push(packaging);
   }
 
@@ -75,38 +74,21 @@ export class StockComponent {
   }
 
   ngOnInit() {
-    this.http.getPackagesAndLocations();
-    this.populateLocation();
-    this.populateStock();
-    this.populateLocationNames();
-  }
-   
-  populateStock(): void {
-    this.http.packageList$
-     .pipe(takeUntil(this.unsubscribe$))
-     .subscribe(packages => {
-       this.packageList = packages;
-    });
-  }
-   
-  populateLocation(): void {
-    this.http.locationList$
-     .pipe(takeUntil(this.unsubscribe$))
-     .subscribe(locations => {
-       this.locationList = locations;
-    });
+    this.dataStorageService.getPackagesAndLocations();
+    this.populateInventoryData();
   }
 
-  populateLocationNames(): void {
-    this.http.locationNames$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(locationNames => {
-        this.locationNames = locationNames;
-      })
+  populateInventoryData(): void {
+    this.dataStorageService.allInventoryData$
+      .pipe(takeUntil(this.onExitStockScreen$))
+      .subscribe((inventoryData) => {
+        this.packageList = inventoryData.packageList;
+        this.locationList = inventoryData.locationList;
+        this.locationNames = inventoryData.locationNames;
+      });
   }
-   
+
   ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+    this.onExitStockScreen$.unsubscribe();
   }
 }
