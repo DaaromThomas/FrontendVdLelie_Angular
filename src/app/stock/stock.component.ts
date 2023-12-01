@@ -11,6 +11,7 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrls: ['./stock.component.css'],
 })
 export class StockComponent {
+  subscription: any;
   displayPackage: boolean = false;
   applyBlur: boolean = false;
   tableWrapperClass: string = 'table-wrapper';
@@ -19,8 +20,6 @@ export class StockComponent {
   locationList: Location[] = [];
   stockList: Stock[] = [];
   locationNames: string[] = [];
-
-  private onExitStockScreen$ = new Subject<void>();
 
   constructor(private dataStorageService: DataStorageService) {}
 
@@ -79,16 +78,14 @@ export class StockComponent {
   }
 
   populateInventoryData(): void {
-    this.dataStorageService.allInventoryData$
-      .pipe(takeUntil(this.onExitStockScreen$))
-      .subscribe((inventoryData) => {
-        this.packageList = inventoryData.packageList;
-        this.locationList = inventoryData.locationList;
-        this.locationNames = inventoryData.locationNames;
-      });
+    this.subscription = this.dataStorageService.allInventoryData$.subscribe((inventoryData) => {
+      this.packageList = inventoryData.packageList;
+      this.locationList = inventoryData.locationList;
+      this.locationNames = inventoryData.locationNames;
+    })
   }
 
   ngOnDestroy() {
-    this.onExitStockScreen$.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }
