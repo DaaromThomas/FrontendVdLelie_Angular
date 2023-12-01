@@ -36,7 +36,7 @@ export class StockComponent {
 
   addPackage(packaging: Packaging) {
     const newPackage: Packaging = packaging;
-    this.dataStorageService.storePackage(newPackage);
+    newPackage.location = 'Current location'; //replace with function to grab current location name
     this.packageList.push(packaging);
   }
 
