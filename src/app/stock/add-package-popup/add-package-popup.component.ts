@@ -26,16 +26,13 @@ export class AddPackagePopupComponent {
 
   done(): void {
     this.amountErrorHidden = true;
-    const packaging: Packaging = {
-      packagingGroup: this.newPackage.value.group,
-      amountinstock: this.newPackage.value.amount,
-      minAmount: this.newPackage.value.minAmount,
-      name: this.newPackage.value.name
-    };
+
+    const packaging: Packaging = this.newPackage.value;
 
     if (packaging === undefined) {
+      return;
     } else if (this.checkNewPackage(packaging)) {
-      if (this.checkAmount(packaging)) {
+      if (!this.checkAmount(packaging)) {
         this.amountErrorHidden = false;
         return;
       } else {
@@ -80,14 +77,14 @@ export class AddPackagePopupComponent {
     const minAmount: number = Number(packaging.minAmount);
     if (isNaN(amount)) {
       this.error = 'Amount is not a number';
-      return true;
+      return false;
     } else if (isNaN(minAmount)) {
       this.error = 'Minimal amount is not a number';
-      return true;
+      return false;
     } else if (amount < minAmount) {
       this.error = 'Amount is less than minimal amount';
-      return true;
+      return false;
     }
-    return false;
+    return true;
   }
 }
