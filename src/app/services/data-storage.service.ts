@@ -56,7 +56,7 @@ export class DataStorageService {
 
   calculateLocation(stockId: string | undefined) {
     if (stockId != undefined) {
-      let locationName: string = 't̵̘͛h̷̾ͅé̶͕ ̴̩͌v̸̬̂o̴̝̔i̴̖̊ḏ̵̐';
+      let locationName: string = 'deleted location';
       for (let location of this.locationList) {
         let tempStock: Stock = location.stock;
         if (tempStock.id === stockId) {
