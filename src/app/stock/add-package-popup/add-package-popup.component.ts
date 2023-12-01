@@ -70,7 +70,8 @@ export class AddPackagePopupComponent {
   }
 
   savePackage(packaging: Packaging) {
-     this.storageService.storePackage(packaging);
+     this.storageService.storePackage(packaging).subscribe(() =>
+     this.storageService.getPackagesAndLocations());
   }
 
   checkAmount(packaging: Packaging): boolean {

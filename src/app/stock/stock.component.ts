@@ -33,12 +33,6 @@ export class StockComponent {
     this.applyBlur = isClosed;
   }
 
-  addPackage(packaging: Packaging) {
-    const newPackage: Packaging = packaging;
-    newPackage.location = 'Current location'; //replace with function to grab current location name
-    this.packageList.push(packaging);
-  }
-
   setLocationFilter(location: Event) {
     let filterValue = (event?.target as HTMLInputElement).value;
     this.locationFilter = filterValue;

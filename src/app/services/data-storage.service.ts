@@ -27,8 +27,7 @@ export class DataStorageService {
     };
 
     return this.http
-      .post(this.baseurl + '/packages', {}, httpOptions)
-      .subscribe();
+      .post(this.baseurl + '/packages', {}, httpOptions);
   }
 
   getPackagesAndLocations() {
