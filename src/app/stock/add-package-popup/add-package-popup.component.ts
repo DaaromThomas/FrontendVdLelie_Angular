@@ -12,8 +12,8 @@ export class AddPackagePopupComponent {
   amountErrorHidden = true;
   newPackage: FormGroup = new FormGroup({
     name: new FormControl(''),
-    group: new FormControl(''),
-    amount: new FormControl(''),
+    packagingGroup: new FormControl(''),
+    amountinstock: new FormControl(''),
     minAmount: new FormControl(''),
   });
 
@@ -49,6 +49,7 @@ export class AddPackagePopupComponent {
 
   checkNewPackage(packaging: Packaging): boolean {
     let propertyName: string | undefined;
+    console.log(packaging)
 
     if (!packaging.name) {
       propertyName = 'name';
