@@ -4,17 +4,16 @@ import { Location } from '../interfaces/location';
 import { Packaging } from '../interfaces/packaging';
 import { Subject, tap, forkJoin } from 'rxjs';
 import { Stock } from '../interfaces/stock';
+import { InventoryData } from '../interfaces/InventoryData.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataStorageService {
-  baseurl: string = 'http://localhost:8080';
-  packageList$: Subject<Packaging[]> = new Subject<Packaging[]>();
-  locationList$: Subject<Location[]> = new  Subject<Location[]>();
+  private baseurl: string = 'http://localhost:8080';
+  allInventoryData$: Subject<InventoryData> = new Subject<InventoryData>();
+  locationList$: Subject<Location[]> = new Subject<Location[]>();
   private locationList: Location[] = [];
-  stockList$: Subject<Stock[]> = new Subject<Stock[]>();
-  locationNames$: Subject<string[]> = new Subject<string[]>();
   constructor(private http: HttpClient) {}
 
   storePackage(newPackage: Packaging) {
@@ -34,23 +33,26 @@ export class DataStorageService {
 
   getPackagesAndLocations() {
     forkJoin([
-    this.http.get(this.baseurl + '/packages'),
-    this.http.get(this.baseurl + '/locations')
+      this.http.get(this.baseurl + '/packages'),
+      this.http.get(this.baseurl + '/locations'),
     ]).subscribe(([packages, locations]) => {
-    this.locationList = locations as Location[];
-    const locationnames = this.locationList.map(location => location.address);
-    this.locationNames$.next(locationnames);
-    this.locationList$.next(locations as Location[]);
-   
-    if (Array.isArray(packages)) {
-     const packagesWithLocations = packages.map((pack: Packaging) => {
-       const location = this.calculateLocation(pack.stock?.id);
-       return { ...pack, location };
-     });
-     this.packageList$.next(packagesWithLocations);
-    } else {
-     console.error('Packages data is not an array:', packages);
-    }
+      this.locationList = locations as Location[];
+      const locationNames = this.locationList.map(
+        (location) => location.address
+      );
+      const locationList = locations as Location[];
+      const packageList = Array.isArray(packages)
+        ? packages.map((pack: Packaging) => {
+            const location = this.calculateLocation(pack.stock?.id);
+            return { ...pack, location };
+          })
+        : [];
+      const inventoryData: InventoryData = {
+        packageList,
+        locationList,
+        locationNames,
+      };
+      this.allInventoryData$.next(inventoryData);
     });
   }
 
