@@ -68,7 +68,7 @@ export class ScanOrderComponent {
 
   openDialog() {
     const dialogRef = this.dialog.open(SelectPackagePopupComponent, {
-      width: '40%',
+      width: '750px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
