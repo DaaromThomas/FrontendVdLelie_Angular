@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { Login } from './login.interface';
+import { Login } from '../interfaces/login.interface';
 import { error } from 'console';
 
 @Injectable({
