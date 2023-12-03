@@ -1,15 +1,21 @@
-<h2 mat-dialog-title>Change package</h2>
-<mat-dialog-content>
-    <mat-form-field>
-        <mat-label>Select a package</mat-label>
-        <mat-select [(ngModel)]="selectedOption">
-            <mat-option value="option1">Green package (placeholder)</mat-option>
-            <mat-option value="option2">Red package (placeholder)</mat-option>
-            <mat-option value="option3">Blue package (placeholder)</mat-option>
-        </mat-select>
-    </mat-form-field>
-    <input matInput type="number" placeholder="Quantity" [(ngModel)]="quantity">
-</mat-dialog-content>
-<mat-dialog-actions>
-    <button mat-button (click)="onClose()">Close</button>
-</mat-dialog-actions>
+<div class="popup-container">
+    <div class="sidebar"></div>
+    <div class="content-container">
+        <h2 mat-dialog-title>Change package</h2>
+        <mat-dialog-content>
+            <mat-form-field>
+                <mat-label>Select a package</mat-label>
+                <mat-select [(ngModel)]="selectedOption">
+                    <mat-option value="option1">Green package (placeholder)</mat-option>
+                    <mat-option value="option2">Red package (placeholder)</mat-option>
+                    <mat-option value="option3">Blue package (placeholder)</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <input matInput type="number" placeholder="Quantity" [(ngModel)]="quantity">
+        </mat-dialog-content>
+        <mat-dialog-actions>
+            <button mat-button (click)="onClose()">Close</button>
+            <button mat-button (click)="onClose()">Ok</button>
+        </mat-dialog-actions>
+    </div>
+</div>
