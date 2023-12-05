@@ -9,11 +9,13 @@ import { LoginModule } from './login/login.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './login/Auth/AuthInterceptor';
 import { StockModule } from "./stock/stock.module";
+import { CustomersComponent } from './customers/customers.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
+    CustomersComponent,
 
     ],
   imports: [

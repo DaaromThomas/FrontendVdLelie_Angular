@@ -1,0 +1,28 @@
+<div class="filter">
+    
+</div>
+<div class="container">
+    <div class="spacer"></div>
+    <div [class]="tableWrapperClass">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>PhoneNumber</th>
+                    <th>E-Mail</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (customer of customerList; track $index) {
+                <tr>
+                    <td>{{customer.name}}</td>
+                    <td>{{customer.address}}</td>
+                    <td>{{customer.phonenumber}}</td>
+                    <td>{{customer.email}}</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -5,6 +5,7 @@ import { Packaging } from '../interfaces/packaging';
 import { Subject, tap, forkJoin } from 'rxjs';
 import { Stock } from '../interfaces/stock';
 import { InventoryData } from '../interfaces/InventoryData.interface';
+import { Customer } from '../interfaces/customer.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,7 @@ export class DataStorageService {
   allInventoryData$: Subject<InventoryData> = new Subject<InventoryData>();
   locationList$: Subject<Location[]> = new Subject<Location[]>();
   private locationList: Location[] = [];
+  customerList$: Subject<Customer[]> = new Subject<Customer[]>();
   constructor(private http: HttpClient) {}
 
   storePackage(newPackage: Packaging) {
@@ -53,6 +55,12 @@ export class DataStorageService {
       };
       this.allInventoryData$.next(inventoryData);
     });
+  }
+
+  getCustomers() {
+    this.http.get<Customer[]>(this.baseurl + '/customers').subscribe((customers) => {
+        this.customerList$.next(customers);
+    })
   }
 
   calculateLocation(stockId: string | undefined) {
