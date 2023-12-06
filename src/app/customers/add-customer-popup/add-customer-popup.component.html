@@ -1,0 +1,49 @@
+<div id="product-add-dialog" class="container">
+    <div class="title">
+      <img src='assets/Customer.png' style="width: 100px; height: 100px;" class="image-box">
+    </div>
+    <div class="values">
+        <div class="grid-row1">
+          <h1 class="title-text">New Customer</h1>
+        <h3 class="error-message">{{ error }}</h3>
+        </div>
+        <div class="grid-row-2">
+          <form [formGroup]="newCustomer" class="form">
+            <div class="form-group">
+                <div class="label-input">
+                    <label for="name-input" class="label">Name: </label>
+                    <input class="input" id="name-input" formControlName="name" placeholder="Name">
+                </div>
+            </div>
+  
+            <div class="form-group">
+                <div class="label-input">
+                    <label for="address-input" class="label">Address: </label>
+                    <input class="input" id="address-input" formControlName="address" placeholder="Address">
+                </div>
+            </div>
+  
+            <div class="form-group">
+                <div class="label-input">
+                    <label for="phonenumber" class="label">PhoneNumber: </label>
+                    <input class="input" id="phonenumber-input" formControlName="phonenumber" placeholder="PhoneNumber">
+                </div>
+            </div>
+  
+            <div class="form-group">
+                <div class="label-input">
+                    <label for="email-input" class="label">E-Mail: </label>
+                    <input class="input" id="email-input" formControlName="email" placeholder="E-Mail">
+                </div>
+            </div>
+        </form>
+        </div>
+        <div class="grid-row3">
+          <div class="button-group">
+            <button class="done-button" (click)="submitForm()">✔ Done</button>
+            <button class="close-button" (click)="discardForm()">❌ Discard</button>
+          </div>
+        </div> 
+    </div>
+  </div>
+  

@@ -32,6 +32,27 @@ export class DataStorageService {
       .post(this.baseurl + '/packages', {}, httpOptions);
   }
 
+  storeCustomer(newCustomer: Customer) {
+    let params = new HttpParams();
+    params = params.set('customerNumber', newCustomer.number);
+    params = params.set('name', newCustomer.name);
+    params = params.set('address', newCustomer.address);
+
+    if (newCustomer.phonenumber !== null) {
+      params = params.set('phonenumber', newCustomer.phonenumber);
+    }
+
+    if (newCustomer.email !== null) {
+      params = params.set('email', newCustomer.email);
+    }
+
+    const httpOptions = {
+      params: params
+    };
+
+    return this.http.post(this.baseurl + '/customers', {}, httpOptions);
+  }
+
   getPackagesAndLocations() {
     forkJoin([
       this.http.get(this.baseurl + '/packages'),

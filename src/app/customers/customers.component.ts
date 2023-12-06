@@ -10,6 +10,8 @@ import { DataStorageService } from '../services/data-storage.service';
 export class CustomersComponent {
   subscription: any;
   customerList: Customer[] = [];
+  displayAddCustomer: boolean = false;
+  applyBlur: boolean = false;
   tableWrapperClass: string = 'table-wrapper';
 
   constructor(private dataStorageService: DataStorageService) {}
@@ -28,6 +30,16 @@ export class CustomersComponent {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  displayAddCustomerPopup() {
+    this.displayAddCustomer = true;
+    this.applyBlur = true;
+  }
+
+  onAddCustomerPopupClosed(isClosed: boolean) {
+    this.displayAddCustomer = !isClosed;
+    this.applyBlur = !isClosed;
   }
 
 }

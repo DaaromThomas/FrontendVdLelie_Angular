@@ -1,11 +1,11 @@
 import { Packaging } from "./packaging";
 
 export interface Customer{
-    id: string;
-    customernumber: number;
+    id?: string;
+    number: number;
     name: string;
     address: string;
-    phonenumber: string;
-    email: string;
-    preferredPackaging: Packaging;
+    phonenumber: string | null;
+    email: string | null;
+    preferredPackaging?: Packaging;
 }

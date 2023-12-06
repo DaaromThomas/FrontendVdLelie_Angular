@@ -1,23 +1,22 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-import {ScanOrderModule} from "./scan-order/scan-order.module";
+import {
+  BrowserModule,
+  provideClientHydration,
+} from '@angular/platform-browser';
+import { ScanOrderModule } from './scan-order/scan-order.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
-import {CommonModule} from "@angular/common";
+import { CommonModule } from '@angular/common';
 import { LoginModule } from './login/login.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './login/Auth/AuthInterceptor';
-import { StockModule } from "./stock/stock.module";
-import { CustomersComponent } from './customers/customers.component';
+import { StockModule } from './stock/stock.module';
+import { CustomersModule } from './customers/customers.module';
+
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavBarComponent,
-    CustomersComponent,
-
-    ],
+  declarations: [AppComponent, NavBarComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -26,12 +25,12 @@ import { CustomersComponent } from './customers/customers.component';
     LoginModule,
     HttpClientModule,
     StockModule,
-
+    CustomersModule,
   ],
   providers: [
     provideClientHydration(),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
