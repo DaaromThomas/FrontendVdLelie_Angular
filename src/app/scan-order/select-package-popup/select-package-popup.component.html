@@ -8,16 +8,16 @@
             <mat-form-field>
                 <mat-label>Select a package</mat-label>
                 <mat-select [(ngModel)]="selectedOption">
-                    <mat-option value="option1">Green package (placeholder)</mat-option>
-                    <mat-option value="option2">Red package (placeholder)</mat-option>
-                    <mat-option value="option3">Blue package (placeholder)</mat-option>
+                    <mat-option *ngFor="let package of packageList" [value]="package.id">
+                        {{ package.name }}
+                    </mat-option>
                 </mat-select>
             </mat-form-field>
             <input matInput type="number" placeholder="Quantity" [(ngModel)]="quantity">
         </mat-dialog-content>
         <mat-dialog-actions>
-            <button mat-button (click)="onClose()">Close</button>
-            <button mat-button (click)="onClose()">Ok</button>
+            <button mat-button (click)="onClose(true)">Close</button>
+            <button mat-button (click)="onClose(false)">Ok</button>
         </mat-dialog-actions>
     </div>
 </div>

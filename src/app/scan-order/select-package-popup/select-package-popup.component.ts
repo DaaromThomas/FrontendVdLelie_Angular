@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog'
+import { DataStorageService } from '../../services/data-storage.service';
+import { Packaging } from '../../interfaces/packaging';
+import { SelectedPackaging } from '../models/selected-packaging';
 
 
 
@@ -9,17 +12,41 @@ import { MatDialogRef } from '@angular/material/dialog'
   styleUrl: './select-package-popup.component.css'
 })
 export class SelectPackagePopupComponent {
-  selectedOption: string | undefined;
-  quantity: number | undefined;
+  subscription: any;
+  packageList: Packaging[] = [];
 
-  constructor(public dialogRef: MatDialogRef<SelectPackagePopupComponent>) {
+
+  selectedOption!: String;
+  quantity: number = 1;
+
+  constructor(public dialogRef: MatDialogRef<SelectPackagePopupComponent>, private dataStorageService: DataStorageService) {
 
   }
-  onClose(cancelled: boolean = false): void {
+
+  public ngOnInit(): void {
+    this.dataStorageService.getPackagesAndLocations();
+    this.populateInventoryData();
+
+  }
+
+  populateInventoryData(): void {
+    this.subscription = this.dataStorageService.allInventoryData$.subscribe((inventoryData) => {
+      this.packageList = inventoryData.packageList;
+
+    })
+  }
+
+  onClose(cancelled: boolean): void {
     if (cancelled) {
       this.dialogRef.close();
     } else {
-      this.dialogRef.close();
+      this.dataStorageService.getPackageById(this.selectedOption).subscribe((data: Packaging) => {
+        this.dialogRef.close(new SelectedPackaging(data, this.quantity))
+      })
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

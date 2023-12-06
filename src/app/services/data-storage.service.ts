@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Location } from '../interfaces/location';
 import { Packaging } from '../interfaces/packaging';
-import { Subject, tap, forkJoin } from 'rxjs';
+import { Subject, tap, forkJoin, Observable } from 'rxjs';
 import { Stock } from '../interfaces/stock';
 import { InventoryData } from '../interfaces/InventoryData.interface';
 
@@ -14,7 +14,7 @@ export class DataStorageService {
   allInventoryData$: Subject<InventoryData> = new Subject<InventoryData>();
   locationList$: Subject<Location[]> = new Subject<Location[]>();
   private locationList: Location[] = [];
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   storePackage(newPackage: Packaging) {
     const httpOptions = {
@@ -42,9 +42,9 @@ export class DataStorageService {
       const locationList = locations as Location[];
       const packageList = Array.isArray(packages)
         ? packages.map((pack: Packaging) => {
-            const location = this.calculateLocation(pack.stock?.id);
-            return { ...pack, location };
-          })
+          const location = this.calculateLocation(pack.stock?.id);
+          return { ...pack, location };
+        })
         : [];
       const inventoryData: InventoryData = {
         packageList,
@@ -67,5 +67,12 @@ export class DataStorageService {
       return locationName;
     }
     return 'missing id';
+  }
+
+
+
+
+  getPackageById(id: String): Observable<Packaging> {
+    return this.http.get<Packaging>(this.baseurl + "/packages/" + id)
   }
 }
