@@ -5,6 +5,7 @@ import { AccountsComponent } from './accounts/accounts.component';
 import { StockComponent } from './stock/stock.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './login/Auth/LoginActivate';
+import { LoginAuth } from './login/Auth/LoginAuth';
 
 const routes: Routes = [
   {
@@ -16,7 +17,7 @@ const routes: Routes = [
       { path: 'accounts', component: AccountsComponent },
     ],
   },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent, canActivate: [LoginAuth]},
 ];
 
 @NgModule({
