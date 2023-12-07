@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {Order} from "./models/order";
 import {ScanOrderService} from "./services/scan-order.service";
-import * as http from "http";
 import {HttpClient, HttpHandler} from "@angular/common/http";
 import {Product} from "./models/product";
 
