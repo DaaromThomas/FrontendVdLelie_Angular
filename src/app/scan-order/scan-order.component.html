@@ -13,7 +13,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let product of products; index as i" (click)="selectProduct(i)" [ngClass]="{'selected': i==selectedIndex}" >
+      <tr *ngFor="let product of products; index as i" (click)="selectProduct(i)"
+        [ngClass]="{'selected': i==selectedIndex}">
         <td>{{product.name}}</td>
         <td>{{product.prefferedPackage}}</td>
         <td>0</td>
@@ -25,16 +26,17 @@
 <div class="container">
   <table>
     <thead>
-    <tr>
-      <th>packaging</th>
-      <th>amount</th>
-    </tr>
+      <tr>
+        <th>packaging</th>
+        <th>amount</th>
+      </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let package of packaging; index as i">
-      <td>{{package}}</td>
-      <td>2</td>
-    </tr>
+      <tr *ngFor="let package of packaging;">
+        <td>{{package}}</td>
+        <td>2</td>
+      </tr>
     </tbody>
   </table>
+  <button mat-button (click)="openDialog()">Open Dialog</button>
 </div>

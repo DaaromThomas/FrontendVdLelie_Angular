@@ -9,6 +9,7 @@ import { LoginModule } from './login/login.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './login/Auth/AuthInterceptor';
 import { StockModule } from "./stock/stock.module";
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { StockModule } from "./stock/stock.module";
     LoginModule,
     HttpClientModule,
     StockModule,
+    NoopAnimationsModule,
 
   ],
   providers: [
