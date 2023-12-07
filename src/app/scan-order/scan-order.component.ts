@@ -3,6 +3,7 @@ import {Order} from "../models/order";
 import {ScanOrderService} from "./services/scan-order.service";
 import {Product} from "../models/product";
 import {Packaging} from "../models/packaging.model";
+import {FormControl, FormGroup} from "@angular/forms";
 
 
 @Component({
@@ -25,8 +26,13 @@ export class ScanOrderComponent {
   public scannedProduct: Product = new Product("", new Packaging(0, "", 2, "-", "", ""), new Order(13, "p", "asdf", 12), "-", 123, "test type");
   public InputProductNumber = '';
   public errorMessage = '';
+
+  public productName = '-';
   public packageName = '-';
   public amountAvailable = 0;
+  productNumber = new FormGroup({
+    productnumber: new FormControl('')
+  });
 
   constructor(private scanOrderService: ScanOrderService){  }
 
@@ -39,6 +45,8 @@ export class ScanOrderComponent {
   }
 
   public getOrders(){
+    console.log("test");
+    this.testProductNumber(1234);
     if(this.InputProductNumber === null || this.InputProductNumber === ''){
       this.errorMessage="please scan a product";
     } else if(isNaN(Number(this.InputProductNumber))){
@@ -47,6 +55,7 @@ export class ScanOrderComponent {
       this.errorMessage = '';
       this.scanOrderService.getProduct()
           .subscribe((data: any[]) => {
+            // console.log(data);
             this.products = data;
             let productNumberIndex = this.findProductNumber(Number(this.InputProductNumber));
             if(productNumberIndex==-1){
@@ -54,9 +63,9 @@ export class ScanOrderComponent {
             }else{
               this.errorMessage = '';
               this.scannedProduct = data.at(productNumberIndex);
+              this.productName = data.at(productNumberIndex).name;
               this.packageName = data.at(productNumberIndex).prefferedpackage.name;
               this.amountAvailable = data.at(productNumberIndex).prefferedpackage.amountinstock;
-              console.log(data.at(productNumberIndex).prefferedpackage);
             }
           });
     }
@@ -72,5 +81,21 @@ export class ScanOrderComponent {
     return -1;
   }
 
+  private testProductNumber(productnumber: number) {
+      this.scanOrderService.getProductsByProductName(productnumber)
+          .subscribe((data: any) => {
+              console.log("data:");
+              console.log(data);
+          });
+      this.scanOrderService.getProductsById("a577f518-0242-4755-be35-91760d943123")
+          .subscribe((data: any) => {
+              console.log(data);
+          });
+      // this.scanOrderService.getCustomerByName("Thomas")
+      //     .subscribe((data: any) =>{
+      //       console.log("customer:");
+      //       console.log(data);
+      //     });
+  }
 
 }
