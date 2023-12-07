@@ -71,7 +71,7 @@ export class ScanOrderComponent {
       width: '750px',
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result.selectedPackaging.name, result.amount); // result heeft de gekozen package en de amount los als je er wat mee wilt doen kan dat vanaf hier
+      console.log('The dialog was closed', result.selectedPackaging, result.amount); // result heeft de gekozen package en de amount los als je er wat mee wilt doen kan dat vanaf hier
     });
   }
 
