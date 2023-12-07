@@ -19,8 +19,16 @@
                     <tr>
                         <td>{{customer.name}}</td>
                         <td>{{customer.address}}</td>
-                        <td>{{customer.phonenumber}}</td>
-                        <td>{{customer.email}}</td>
+                        @if (customer.phonenumber === null) {
+                            <td>None</td>
+                        } @else {
+                           <td>{{customer.phonenumber}}</td> 
+                        }
+                        @if (customer.email === null) {
+                            <td>None</td>
+                        } @else {
+                           <td>{{customer.email}}</td> 
+                        }                        
                     </tr>
                     }
                 </tbody>
