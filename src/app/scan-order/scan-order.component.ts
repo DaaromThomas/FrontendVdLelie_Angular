@@ -61,7 +61,6 @@ export class ScanOrderComponent {
       this.errorMessage = '';
       this.scanOrderService.getProduct()
         .subscribe((data: Product[]) => this.products = data);
-      console.log(this.orders);
     }
 
   }
@@ -71,7 +70,7 @@ export class ScanOrderComponent {
       width: '750px',
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result.selectedPackaging, result.amount); // result heeft de gekozen package en de amount los als je er wat mee wilt doen kan dat vanaf hier
+      
     });
   }
 
