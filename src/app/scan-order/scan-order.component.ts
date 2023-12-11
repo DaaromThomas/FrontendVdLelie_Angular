@@ -1,19 +1,12 @@
 import { Component } from '@angular/core';
-
-import {Order} from "../models/order";
-import {ScanOrderService} from "./services/scan-order.service";
-import {Product} from "../models/product";
-import {Packaging} from "../models/packaging.model";
-import {FormControl, FormGroup} from "@angular/forms";
-
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Order } from "./models/order";
-import { ScanOrderService } from "./services/scan-order.service";
-import * as http from "http";
-import { HttpClient, HttpHandler } from "@angular/common/http";
-import { Product } from "./models/product";
+import { Packaging } from '../models/packaging.model';
+import { Order } from '../models/order';
 import { MatDialog } from '@angular/material/dialog';
+import { Product } from '../models/product';
 import { SelectPackagePopupComponent } from './select-package-popup/select-package-popup.component';
+import { ScanOrderService } from './services/scan-order.service';
+
+
 
 
 
@@ -24,11 +17,13 @@ import { SelectPackagePopupComponent } from './select-package-popup/select-packa
 })
 export class ScanOrderComponent {
 
-
+  public packages: Packaging[] = [
+    new Packaging(10, 'TestID', 5, 'TestName', 'TestGroup', 'TestLocation')
+  ];
   public orders: Order[] = [new Order(13, "p", "asdf", 12)];
   public products: Product[] = [
-    new Product("test", new Order(13, "p", "asdf", 12), "test product", 123, "test type"),
-    new Product("test package", new Order(14, "pp", "test order", 13), "test product 2", 123456, "test product type")
+    new Product("test", this.packages[0],new Order(13, "p", "asdf", 12), "test product", 123, "test type"),
+    new Product("test package", this.packages[0], new Order(14, "pp", "test order", 13), "test product 2", 123456, "test product type")
   ];
   public packaging: string[] = ["test package", "other package"];
   public productColumns: string[] = [
@@ -44,10 +39,10 @@ export class ScanOrderComponent {
   public packageName = '-';
   public amountAvailable = 0;
 
-  constructor(private scanOrderService: ScanOrderService, public dialog: MatDialog) {
+  selectedIndex = -1;
 
+  constructor(private scanOrderService: ScanOrderService, public dialog: MatDialog) { }
 
-  constructor(private scanOrderService: ScanOrderService){  }
 
   public get getErrorMessage() {
     return this.errorMessage;
@@ -66,7 +61,8 @@ export class ScanOrderComponent {
       this.errorMessage = '';
       this.scanOrderService.getProductsByProductNumber(this.InputProductNumber)
           .subscribe((data: any) => {
-            if(data == null){
+            if(data === null){
+              console.log("Error" + data);
               this.errorMessage = 'Product not found';
             }else{
               this.errorMessage = '';
@@ -74,6 +70,8 @@ export class ScanOrderComponent {
               this.productName = data.name;
               this.packageName = data.prefferedpackage.name;
               this.amountAvailable = data.prefferedpackage.amountinstock;
+
+              this.openDialog();
             }
           });
 
@@ -88,6 +86,16 @@ export class ScanOrderComponent {
       
     });
   }
+
+  public selectProduct(index: number) {
+    if (this.selectedIndex == index) {
+      this.selectedIndex = -1;
+    }
+    else {
+      this.selectedIndex = index;
+    }
+  }
+
 
 
 
