@@ -9,7 +9,7 @@ import { LoginService } from '../login.service';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private login: LoginService) {}
-
+  
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     console.log(req);
     if (req.url.includes('/login')) {

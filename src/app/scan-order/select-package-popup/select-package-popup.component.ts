@@ -6,7 +6,6 @@ import { SelectedPackaging } from '../models/selected-packaging';
 import { Product } from '../../models/product';
 
 
-
 @Component({
   selector: 'app-select-package-popup',
   templateUrl: './select-package-popup.component.html',
@@ -31,13 +30,11 @@ export class SelectPackagePopupComponent {
   public ngOnInit(): void {
     this.dataStorageService.getPackagesAndLocations();
     this.populateInventoryData();
-    console.log(this.data);
   }
 
   populateInventoryData(): void {
     this.subscription = this.dataStorageService.allInventoryData$.subscribe((inventoryData) => {
       this.packageList = inventoryData.packageList;
-
     })
   }
 
@@ -45,20 +42,24 @@ export class SelectPackagePopupComponent {
     if (cancelled) {
       this.dialogRef.close();
     } else {
-      this.dataStorageService.changeIsPackedRequest(true, this.data.productnumber).subscribe(
-        (response) => {
-          // Handle the response data here
-          
-          console.log('Response change is packed request:', response);
-        },
-        (error) => {
-          // Handle errors here
-          console.error('Error:', error);
-        });
+      this.dataStorageService.changeIsPackedRequest(false, this.data.productnumber).subscribe();
       this.dataStorageService.getPackageById(this.selectedOption).subscribe((data: Packaging) => {
-        this.dialogRef.close(new SelectedPackaging(data, this.quantity))
+        this.createNewLog(data);
       })
     }
+  }
+
+  createNewLog(data: Packaging){
+    let selectedPackaging = new SelectedPackaging(data, this.quantity);
+    for(const index in this.packageList){
+      let packaging = this.packageList[index];
+      if(packaging.id === selectedPackaging.selectedPackaging.id){
+        let amount = packaging.amountinstock - selectedPackaging.amount;
+        this.dataStorageService.updatePackageAmount(packaging.id, amount);
+      }
+    }
+    
+    this.dialogRef.close()
   }
 
   ngOnDestroy() {
