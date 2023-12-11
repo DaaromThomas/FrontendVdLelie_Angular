@@ -1,7 +1,7 @@
 export class ChangeIsPackedRequestData{
     constructor(
-        private isPacked: boolean,
-        private customerNumber: number
+        private packed: boolean,
+        private productNumber: number
     ){}
 
     

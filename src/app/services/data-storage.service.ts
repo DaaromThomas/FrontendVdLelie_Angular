@@ -77,8 +77,8 @@ export class DataStorageService {
     return this.http.get<Packaging>(this.baseurl + "/packages/" + id)
   }
 
-  changeIsPackedRequest(isPacked: boolean, productnumber: number){
-    let data: ChangeIsPackedRequestData = new ChangeIsPackedRequestData(isPacked, productnumber);
+  changeIsPackedRequest(isPacked: boolean, productNumber: number){
+    let data: ChangeIsPackedRequestData = new ChangeIsPackedRequestData(isPacked, productNumber);
     console.log(data);
     return this.http.post("http://localhost:8080/product/ispacked", data);
   }

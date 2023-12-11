@@ -67,7 +67,7 @@ export class ScanOrderComponent {
             if(data === null){
               console.log("Error" + data);
               this.errorMessage = 'Product not found';
-            }else if(data.isPacked === true){
+            }else if(data.packed === true){
               this.errorMessage = 'Product is already packed';
             }else{
               this.errorMessage = '';
