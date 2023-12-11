@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Product } from '../models/product';
 import { SelectPackagePopupComponent } from './select-package-popup/select-package-popup.component';
 import { ScanOrderService } from './services/scan-order.service';
+import { UUID } from 'crypto';
 
 
 
@@ -39,6 +40,8 @@ export class ScanOrderComponent {
   public packageName = '-';
   public amountAvailable = 0;
 
+  selectedProduct: Product | undefined = undefined;
+
   selectedIndex = -1;
 
   constructor(private scanOrderService: ScanOrderService, public dialog: MatDialog) { }
@@ -64,6 +67,8 @@ export class ScanOrderComponent {
             if(data === null){
               console.log("Error" + data);
               this.errorMessage = 'Product not found';
+            }else if(data.isPacked === true){
+              this.errorMessage = 'Product is already packed';
             }else{
               this.errorMessage = '';
               this.scannedProduct = data;
@@ -71,6 +76,7 @@ export class ScanOrderComponent {
               this.packageName = data.prefferedpackage.name;
               this.amountAvailable = data.prefferedpackage.amountinstock;
 
+              this.selectedProduct = data;
               this.openDialog();
             }
           });
@@ -81,6 +87,7 @@ export class ScanOrderComponent {
   openDialog() {
     const dialogRef = this.dialog.open(SelectPackagePopupComponent, {
       width: '750px',
+      data: this.selectedProduct
     });
     dialogRef.afterClosed().subscribe(result => {
       

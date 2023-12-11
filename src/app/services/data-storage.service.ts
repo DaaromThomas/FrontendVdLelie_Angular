@@ -5,6 +5,7 @@ import { Packaging } from '../interfaces/packaging';
 import { Subject, tap, forkJoin, Observable } from 'rxjs';
 import { Stock } from '../interfaces/stock';
 import { InventoryData } from '../interfaces/InventoryData.interface';
+import { ChangeIsPackedRequestData } from '../models/ChangeIsPackedRequestData';
 
 @Injectable({
   providedIn: 'root',
@@ -74,5 +75,11 @@ export class DataStorageService {
 
   getPackageById(id: String): Observable<Packaging> {
     return this.http.get<Packaging>(this.baseurl + "/packages/" + id)
+  }
+
+  changeIsPackedRequest(isPacked: boolean, productnumber: number){
+    let data: ChangeIsPackedRequestData = new ChangeIsPackedRequestData(isPacked, productnumber);
+    console.log(data);
+    return this.http.post("http://localhost:8080/product/ispacked", data);
   }
 }
