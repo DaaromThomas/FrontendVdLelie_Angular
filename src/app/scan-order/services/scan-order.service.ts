@@ -27,17 +27,11 @@ export class ScanOrderService {
     return this.http.get<Product>(this.baseURL+"products/"+id);
   }
 
-  getProductsByProductName (productnumber: number): Observable<Product>{
+  getProductsByProductNumber (productnumber: string): Observable<Product>{
     let queryParams = new HttpParams();
-    queryParams = queryParams.append("productnumber",productnumber.toString());
-    return this.http.get<Product>(this.baseURL+"products/productnumber",{params: queryParams});
+    queryParams = queryParams.append("productnumber",productnumber);
+    return this.http.get<Product>(this.baseURL+"product",{params: queryParams});
   }
-
-  // getCustomerByName (name: string): Observable<Customer>{
-  //   let queryParams = new HttpParams();
-  //   queryParams = queryParams.append("name", name);
-  //   return this.http.get<Customer>(this.baseURL+"/customers/name", {params: queryParams});
-  // }
 
 
 }

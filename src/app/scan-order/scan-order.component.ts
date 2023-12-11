@@ -13,11 +13,7 @@ import {FormControl, FormGroup} from "@angular/forms";
 })
 export class ScanOrderComponent {
 
-  public orders: Order[] = [ new Order(13, "p", "asdf", 12)];
-  public products: Product[] = [
-
-  ];
-  public packaging: string[] = ["test package", "other package"];
+  public products: Product[] = [];
   public productColumns: string[] = [
     "Product",
     "Recommended Packaging",
@@ -30,9 +26,6 @@ export class ScanOrderComponent {
   public productName = '-';
   public packageName = '-';
   public amountAvailable = 0;
-  productNumber = new FormGroup({
-    productnumber: new FormControl('')
-  });
 
   constructor(private scanOrderService: ScanOrderService){  }
 
@@ -45,57 +38,28 @@ export class ScanOrderComponent {
   }
 
   public getOrders(){
-    console.log("test");
-    this.testProductNumber(1234);
     if(this.InputProductNumber === null || this.InputProductNumber === ''){
       this.errorMessage="please scan a product";
     } else if(isNaN(Number(this.InputProductNumber))){
       this.errorMessage = 'must be a valid product number';
     } else{
       this.errorMessage = '';
-      this.scanOrderService.getProduct()
-          .subscribe((data: any[]) => {
-            // console.log(data);
-            this.products = data;
-            let productNumberIndex = this.findProductNumber(Number(this.InputProductNumber));
-            if(productNumberIndex==-1){
+      this.scanOrderService.getProductsByProductNumber(this.InputProductNumber)
+          .subscribe((data: any) => {
+            if(data == null){
               this.errorMessage = 'Product not found';
             }else{
               this.errorMessage = '';
-              this.scannedProduct = data.at(productNumberIndex);
-              this.productName = data.at(productNumberIndex).name;
-              this.packageName = data.at(productNumberIndex).prefferedpackage.name;
-              this.amountAvailable = data.at(productNumberIndex).prefferedpackage.amountinstock;
+              this.scannedProduct = data;
+              this.productName = data.name;
+              this.packageName = data.prefferedpackage.name;
+              this.amountAvailable = data.prefferedpackage.amountinstock;
             }
           });
     }
   }
 
-  private findProductNumber(productNumber: number){
-    let products = this.products;
-    for(let i=0; i<products.length; i++){
-      if(products[i].productnumber==productNumber){
-        return i;
-      }
-    }
-    return -1;
-  }
 
-  private testProductNumber(productnumber: number) {
-      this.scanOrderService.getProductsByProductName(productnumber)
-          .subscribe((data: any) => {
-              console.log("data:");
-              console.log(data);
-          });
-      this.scanOrderService.getProductsById("a577f518-0242-4755-be35-91760d943123")
-          .subscribe((data: any) => {
-              console.log(data);
-          });
-      // this.scanOrderService.getCustomerByName("Thomas")
-      //     .subscribe((data: any) =>{
-      //       console.log("customer:");
-      //       console.log(data);
-      //     });
-  }
+
 
 }
