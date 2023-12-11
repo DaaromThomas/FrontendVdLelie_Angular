@@ -1,9 +1,14 @@
-<div class="textbox">
-  <label for="name">Scan order: </label><br>
-  <input id="name" type="text" class="form-control" (input)="onInputOrderNumber($event)"><br>
-  <button id="hello" name="hello" (click)="getOrders()">Load product</button><br>
-  <label for="hello" class="error">{{getErrorMessage}}</label>
-</div><br><br><br>
+<div class="productScanContainer">
+  <div class="textbox">
+    <!--  <form>-->
+    <h1 for="name">Scan product: </h1>
+    <input id="name" type="text" class="scan-input" (input)="onInputOrderNumber($event)"><br>
+    <button id="hello" name="hello" class="scan-button" (click)="getOrders()">Load product</button><br>
+    <label for="hello" class="error">{{getErrorMessage}}</label>
+    <!--  </form>-->
+  </div>
+</div>
+
 
 <div class="container">
   <table>

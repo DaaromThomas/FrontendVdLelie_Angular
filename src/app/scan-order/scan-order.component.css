@@ -1,13 +1,38 @@
+.productScanContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-size: cover;
+}
+
 th, td {
   border-color: #061E4A;
-  border-width: 2px;
+  border-width: 1px;
   border-style: solid;
 }
 
+.scan-input {
+    width: 70%;
+    padding: 5px;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    border-radius: 3px;
+    border-width: 1px;
+}
+
+.scan-input.selected {
+    border-width: 3px;
+}
+
+
 th {
     height: 30px;
-    background-color: #061E4A;
+    background-color: #4a5b73;
     color: white;
+    border-collapse: separate;
+
 }
 
 tr:hover{
@@ -20,25 +45,42 @@ thead, body {
 }
 
 table {
-    border-collapse: collapse;
-    width: 70%;
+    border-collapse: separate;
+    border: 1px;
+    border-spacing: 0px;
+    width: 100%;
     table-layout: fixed;
+    text-align: left;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
+
+th:first-of-type {
+  border-top-left-radius: 6px;
+  border-collapse: separate;
+}
+
+th:last-of-type {
+  border-top-right-radius: 6px;
+}
+
 
 .container {
     display: block;
     margin-left: 10px;
-    margin-right: auto;
+    margin-right: 10px;
 
 }
 
 .textbox{
-    border: 2px solid black;
-    width: 220px;
-    height: 13%;
-    padding: 10px;
-    margin-top: 10px;
-    margin-left: 10px;
+    width: 500px;
+    height: 250px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .selected{
@@ -47,4 +89,16 @@ table {
 
 .error{
     color: darkred;
+}
+
+.scan-button{
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.scan-button:hover{
+    background-color: #60c9b3;
 }

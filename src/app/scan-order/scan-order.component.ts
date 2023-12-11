@@ -1,4 +1,11 @@
 import { Component } from '@angular/core';
+
+import {Order} from "../models/order";
+import {ScanOrderService} from "./services/scan-order.service";
+import {Product} from "../models/product";
+import {Packaging} from "../models/packaging.model";
+import {FormControl, FormGroup} from "@angular/forms";
+
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Order } from "./models/order";
 import { ScanOrderService } from "./services/scan-order.service";
@@ -9,12 +16,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { SelectPackagePopupComponent } from './select-package-popup/select-package-popup.component';
 
 
+
 @Component({
   selector: 'app-scan-order',
   templateUrl: './scan-order.component.html',
   styleUrl: './scan-order.component.css'
 })
 export class ScanOrderComponent {
+
 
   public orders: Order[] = [new Order(13, "p", "asdf", 12)];
   public products: Product[] = [
@@ -27,42 +36,48 @@ export class ScanOrderComponent {
     "Recommended Packaging",
     "Amount available"
   ];
-  selectedIndex = -1;
-  InputOrderNumber = '';
-  errorMessage = '';
+  public scannedProduct: Product = new Product("", new Packaging(0, "", 2, "-", "", ""), new Order(13, "p", "asdf", 12), "-", 123, "test type");
+  public InputProductNumber = '';
+  public errorMessage = '';
+
+  public productName = '-';
+  public packageName = '-';
+  public amountAvailable = 0;
 
   constructor(private scanOrderService: ScanOrderService, public dialog: MatDialog) {
 
-  }
+
+  constructor(private scanOrderService: ScanOrderService){  }
 
   public get getErrorMessage() {
     return this.errorMessage;
   }
 
-  public selectProduct(index: number) {
-    if (this.selectedIndex == index) {
-      this.selectedIndex = -1;
-    }
-    else {
-      this.selectedIndex = index;
-    }
+  public onInputOrderNumber(event: Event){
+    this.InputProductNumber = (<HTMLInputElement>event.target).value;
   }
 
-  public onInputOrderNumber(event: Event) {
-    this.InputOrderNumber = (<HTMLInputElement>event.target).value;
-  }
-
-  public getOrders() {
-    if (this.InputOrderNumber === null || this.InputOrderNumber === '') {
-      this.errorMessage = "please scan a product";
-    } else if (isNaN(Number(this.InputOrderNumber))) {
-      this.errorMessage = 'must be a valid ordernumber';
-    } else {
+  public getOrders(){
+    if(this.InputProductNumber === null || this.InputProductNumber === ''){
+      this.errorMessage="please scan a product";
+    } else if(isNaN(Number(this.InputProductNumber))){
+      this.errorMessage = 'must be a valid product number';
+    } else{
       this.errorMessage = '';
-      this.scanOrderService.getProduct()
-        .subscribe((data: Product[]) => this.products = data);
-    }
+      this.scanOrderService.getProductsByProductNumber(this.InputProductNumber)
+          .subscribe((data: any) => {
+            if(data == null){
+              this.errorMessage = 'Product not found';
+            }else{
+              this.errorMessage = '';
+              this.scannedProduct = data;
+              this.productName = data.name;
+              this.packageName = data.prefferedpackage.name;
+              this.amountAvailable = data.prefferedpackage.amountinstock;
+            }
+          });
 
+    }
   }
 
   openDialog() {
@@ -73,6 +88,8 @@ export class ScanOrderComponent {
       
     });
   }
+
+
 
 
 }
