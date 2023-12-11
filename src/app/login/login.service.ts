@@ -4,17 +4,23 @@ import { Observable, Subject, catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { Login } from '../interfaces/login.interface';
 import { error } from 'console';
+import { CookieService } from './cookie.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
   Jwttoken: any;
-  wrongPassWordChange: Subject<boolean> = new Subject<boolean>;
-  constructor(private http: HttpClient, private router: Router) {}
+  wrongPassWordChange: Subject<boolean> = new Subject<boolean>();
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private cookieService: CookieService
+  ) {}
 
   loginRequest(login: Login) {
-    this.wrongPassWordChange.next(false)
+    console.log('login!');
+    this.wrongPassWordChange.next(false);
     this.http.post('http://localhost:8080/login', login).subscribe(
       (res) => {
         this.handleRes(res);
@@ -25,14 +31,17 @@ export class LoginService {
     );
   }
   handleRes(res: any) {
-    if(res.status = 200){
+    if ((res.status = 200)) {
       this.Jwttoken = res.token;
+      console.log('setting cookie');
+      this.cookieService.setCookie('refreshToken', res.refreshToken, 1);
+    
+      
       this.router.navigateByUrl('/scan-order');
     }
-    if(res.status = 401){
-      this.wrongPassWordChange.next(true)
+    if ((res.status = 401)) {
+      this.wrongPassWordChange.next(true);
     }
-
   }
   isLoggedIn(): boolean {
     if (this.Jwttoken === undefined) {
@@ -43,4 +52,22 @@ export class LoginService {
   getJwtTOken() {
     return this.Jwttoken;
   }
+
+  askJwtTokenFromRequestToken():any {
+   const refreshToken = this.cookieService.getCookie('refreshToken')
+    if(refreshToken){
+      this.http
+      .post('http://localhost:8080/refreshtoken', {
+        refreshToken: refreshToken,
+      })
+      .subscribe((data: any) => {
+        this.Jwttoken = data.accessToken;
+        this.router.navigateByUrl('/scan-order');
+      });
+  }
+  console.log("refreshTOken requested fdgojgdfo")
+  return refreshToken;
+    }
+  
+
 }

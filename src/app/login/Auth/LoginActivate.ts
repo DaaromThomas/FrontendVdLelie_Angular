@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { LoginService } from '../login.service';
 import { Observable } from 'rxjs';
 import { Router, UrlTree } from '@angular/router';
+import { CookieService } from '../cookie.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard {
-  constructor(private loginService: LoginService, private router: Router) {}
+  constructor(private loginService: LoginService, private router: Router, private cookieService: CookieService) {}
   canActivate():
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
@@ -17,7 +18,6 @@ export class AuthGuard {
       this.router.navigate(['/login']);
       return false;
     }
-    this.loginService.isLoggedIn();
     return true;
   }
 }

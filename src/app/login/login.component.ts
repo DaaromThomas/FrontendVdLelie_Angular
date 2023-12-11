@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { LoginService } from './login.service';
 import { Login } from '../interfaces/login.interface';
+import { CookieService } from './cookie.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent {
     password: new FormControl(''),
   });
 
-  constructor(private loginService: LoginService) {
+  constructor(private loginService: LoginService, private cookieService: CookieService) {
     this.subscription = loginService.wrongPassWordChange.subscribe(
       (data) => (this.wrongPassword = data)
     );
