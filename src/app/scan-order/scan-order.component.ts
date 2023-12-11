@@ -1,9 +1,20 @@
 import { Component } from '@angular/core';
+
 import {Order} from "../models/order";
 import {ScanOrderService} from "./services/scan-order.service";
 import {Product} from "../models/product";
 import {Packaging} from "../models/packaging.model";
 import {FormControl, FormGroup} from "@angular/forms";
+
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Order } from "./models/order";
+import { ScanOrderService } from "./services/scan-order.service";
+import * as http from "http";
+import { HttpClient, HttpHandler } from "@angular/common/http";
+import { Product } from "./models/product";
+import { MatDialog } from '@angular/material/dialog';
+import { SelectPackagePopupComponent } from './select-package-popup/select-package-popup.component';
+
 
 
 @Component({
@@ -13,7 +24,13 @@ import {FormControl, FormGroup} from "@angular/forms";
 })
 export class ScanOrderComponent {
 
-  public products: Product[] = [];
+
+  public orders: Order[] = [new Order(13, "p", "asdf", 12)];
+  public products: Product[] = [
+    new Product("test", new Order(13, "p", "asdf", 12), "test product", 123, "test type"),
+    new Product("test package", new Order(14, "pp", "test order", 13), "test product 2", 123456, "test product type")
+  ];
+  public packaging: string[] = ["test package", "other package"];
   public productColumns: string[] = [
     "Product",
     "Recommended Packaging",
@@ -27,9 +44,12 @@ export class ScanOrderComponent {
   public packageName = '-';
   public amountAvailable = 0;
 
+  constructor(private scanOrderService: ScanOrderService, public dialog: MatDialog) {
+
+
   constructor(private scanOrderService: ScanOrderService){  }
 
-  public get getErrorMessage(){
+  public get getErrorMessage() {
     return this.errorMessage;
   }
 
@@ -56,7 +76,17 @@ export class ScanOrderComponent {
               this.amountAvailable = data.prefferedpackage.amountinstock;
             }
           });
+
     }
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(SelectPackagePopupComponent, {
+      width: '750px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
   }
 
 

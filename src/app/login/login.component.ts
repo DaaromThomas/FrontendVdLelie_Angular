@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { LoginService } from './login.service';
-import { Login } from './login.interface';
+import { Login } from '../interfaces/login.interface';
 
 @Component({
   selector: 'app-login',
