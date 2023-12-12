@@ -77,6 +77,9 @@ export class SelectPackagePopupComponent {
         if(amount < 0){
           this.error = 'Not enough packages';
           return;
+        }else if(this.quantity < 1){
+          this.error = 'Quantity is to low';
+          return;
         }
         else{
           this.dataStorageService.updatePackageAmount(packaging.id, amount);
