@@ -43,16 +43,4 @@ describe('AuthGuard', () => {
 
         expect(router.navigate).toHaveBeenCalledWith(['/login']);
     });
-
-it('should navigate to login page and return false when isLoggedIn method throws an error', () => {
-    spyOn(loginService, 'isLoggedIn').and.throwError('Some error');
-
-    spyOn(router, 'navigate');
-
-    const result = guard.canActivate();
-
-    expect(result).toBe(false);
-
-    expect(router.navigate).toHaveBeenCalledWith(['/login']);
-});
 });

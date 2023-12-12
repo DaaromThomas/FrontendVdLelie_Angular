@@ -43,12 +43,15 @@ describe('LoginService', () => {
 
   it('should emit wrongPassWordChange event when login with incorrect credentials',  () => {
     spyOn(loginService.wrongPassWordChange, 'next');
+    spyOn(loginService, 'handleError').and.callThrough();
 
     const login: Login = { username: 'test', password: 'wrongPassword' };
 
     loginService.loginRequest(login);
     const req = httpTestingController.expectOne('http://localhost:8080/login');
-    req.flush({ status: 401 });
+    req.flush(null, { status: 401, statusText: 'Unauthorized' });
+
+    expect(loginService.handleError).toHaveBeenCalled();
     expect(loginService.wrongPassWordChange.next).toHaveBeenCalledWith(true);
   });
 
