@@ -19,8 +19,11 @@ export class LoginService {
   ) {}
 
   loginRequest(login: Login) {
-    console.log('login!');
-    this.wrongPassWordChange.next(false);
+    if(!login.password || !login.username ){
+      //todo fix
+      throw new Error('username or password not valid')
+    }
+    this.wrongPassWordChange.next(false)
     this.http.post('http://localhost:8080/login', login).subscribe(
       (res) => {
         this.handleRes(res);
@@ -37,11 +40,13 @@ export class LoginService {
       this.cookieService.setCookie('refreshToken', res.refreshToken, 1);
 
       this.router.navigateByUrl('/scan-order');
+      this.Jwttoken = res.token;
     }
     if ((res.status = 401)) {
       this.wrongPassWordChange.next(true);
     }
   }
+
   isLoggedIn(): boolean {
     if (this.Jwttoken === undefined) {
       return false;
