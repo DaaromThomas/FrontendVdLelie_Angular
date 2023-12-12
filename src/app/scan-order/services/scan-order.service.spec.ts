@@ -1,12 +1,12 @@
-// import { TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-// import { ScanOrderService } from './scan-order.service';
+import { ScanOrderService } from './scan-order.service';
 
-// describe('ScanOrderService', () => {
-//   let service: ScanOrderService;
+describe('ScanOrderService', () => {
+  let service: ScanOrderService;
 
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({});
-//     service = TestBed.inject(ScanOrderService);
-//   });
-// });
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(ScanOrderService);
+  });
+});
