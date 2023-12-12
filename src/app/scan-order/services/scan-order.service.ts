@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Order} from "../models/order";
+import {HttpClient, HttpParams} from "@angular/common/http";
+import {Order} from "../../models/order";
 import {Observable} from "rxjs";
-import {Product} from "../models/product";
+import {Product} from "../../models/product";
+import {Customer} from "../../models/Customer";
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +23,15 @@ export class ScanOrderService {
     return this.http.get<Product[]>(this.baseURL+"products");
   }
 
-  getProductsById(id: number): Observable<Product>{
-    return this.http.get<Product>(this.baseURL+"products/"+id)
+  getProductsById(id: string): Observable<Product>{
+    return this.http.get<Product>(this.baseURL+"products/"+id);
   }
+
+  getProductsByProductNumber (productnumber: string): Observable<Product>{
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("productnumber",productnumber);
+    return this.http.get<Product>(this.baseURL+"product",{params: queryParams});
+  }
+
 
 }
