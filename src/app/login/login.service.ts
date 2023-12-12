@@ -55,18 +55,19 @@ export class LoginService {
 
   askJwtTokenFromRequestToken():any {
    const refreshToken = this.cookieService.getCookie('refreshToken')
+   console.log(refreshToken)
     if(refreshToken){
       this.http
       .post('http://localhost:8080/refreshtoken', {
         refreshToken: refreshToken,
       })
       .subscribe((data: any) => {
+        if(data != null){
         this.Jwttoken = data.accessToken;
         this.router.navigateByUrl('/scan-order');
+        }
       });
   }
-  console.log("refreshTOken requested fdgojgdfo")
-  return refreshToken;
     }
   
 

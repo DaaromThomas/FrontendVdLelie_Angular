@@ -9,7 +9,7 @@ import { CookieService } from './login/cookie.service';
 })
 export class AppComponent {
 
-  constructor(private loginService: LoginService, private cookieService: CookieService){
+  constructor(private loginService: LoginService){
 
   }
   isLoggedIn(): boolean{
@@ -19,13 +19,6 @@ export class AppComponent {
 
 export function appInitializer(loginService: LoginService) {
   return () => {
-    // Check the refresh token before the route guards
-    const refreshToken = loginService.askJwtTokenFromRequestToken();
-    console.log(refreshToken)
-    if (refreshToken) {
-      console.log('Refresh Token:', refreshToken);
-    } else {
-      console.error('No Refresh Token found!');
-    };
-  };
+    loginService.askJwtTokenFromRequestToken();
+  }
 }
