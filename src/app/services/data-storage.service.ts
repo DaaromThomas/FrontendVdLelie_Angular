@@ -5,6 +5,8 @@ import { Packaging } from '../interfaces/packaging';
 import { Subject, tap, forkJoin, Observable } from 'rxjs';
 import { Stock } from '../interfaces/stock';
 import { InventoryData } from '../interfaces/InventoryData.interface';
+import { Account } from '../interfaces/account.interface';
+import { error } from 'console';
 
 @Injectable({
   providedIn: 'root',
@@ -14,20 +16,23 @@ export class DataStorageService {
   allInventoryData$: Subject<InventoryData> = new Subject<InventoryData>();
   locationList$: Subject<Location[]> = new Subject<Location[]>();
   private locationList: Location[] = [];
-  constructor(private http: HttpClient) { }
+  private currentUser: string = '';
+  private currentAccount: Account | undefined;
+  private currentStock: Stock | undefined;
+  private currentStockId: string = '';
+
+  constructor(private http: HttpClient) {}
 
   storePackage(newPackage: Packaging) {
     const httpOptions = {
       params: new HttpParams()
-        .set('stockId', '4c491e42-46ed-4876-aa7b-4b4a10b91c32')
+        .set('stockId', this.currentStockId)
         .set('name', newPackage.name)
         .set('packagingGroup', newPackage.packagingGroup)
         .set('amount', newPackage.amountinstock)
         .set('minAmount', newPackage.minAmount),
     };
-
-    return this.http
-      .post(this.baseurl + '/packages', {}, httpOptions);
+    return this.http.post(this.baseurl + '/packages', {}, httpOptions);
   }
 
   getPackagesAndLocations() {
@@ -42,9 +47,9 @@ export class DataStorageService {
       const locationList = locations as Location[];
       const packageList = Array.isArray(packages)
         ? packages.map((pack: Packaging) => {
-          const location = this.calculateLocation(pack.stock?.id);
-          return { ...pack, location };
-        })
+            const location = this.calculateLocation(pack.stock?.id);
+            return { ...pack, location };
+          })
         : [];
       const inventoryData: InventoryData = {
         packageList,
@@ -69,10 +74,55 @@ export class DataStorageService {
     return 'missing id';
   }
 
-
-
-
   getPackageById(id: String): Observable<Packaging> {
-    return this.http.get<Packaging>(this.baseurl + "/packages/" + id)
+    return this.http.get<Packaging>(this.baseurl + '/packages/' + id);
   }
+
+  setCurrentUser(user: string) {
+    this.currentUser = user;
+  }
+
+  async getCurrentStockId() {
+    await this.getCurrentLocation();
+    await this.delay(1000) // this should probably not be allowed but genuinly cant think of a better fix rn
+    this.getLocationStock();
+  }
+
+  getCurrentLocation(): Promise<Account> {
+    const httpOptions = {
+     params: new HttpParams().set('name', this.currentUser),
+    };
+   
+    return this.http
+     .get<Account>(this.baseurl + '/accounts/name', httpOptions)
+     .toPromise()
+     .then((res) => {
+       if (res) {
+         this.currentAccount = res;
+         console.log(this.currentAccount);
+         return this.currentAccount;
+       } else {
+         throw new Error('Failed to get current location');
+       }
+     });
+   }
+   
+  getLocationStock() {
+    if (this.currentAccount != undefined) {
+     for (let location of this.locationList) {
+       if (location.id === ((this.currentAccount.location as unknown) as Location).id) {
+         this.currentStockId = location.stock.id
+       }
+     }
+    }
+   }
+
+   delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+   }
+   
+
+   getStockId() {
+    return this.currentStockId;
+   }
 }
