@@ -40,7 +40,6 @@ export class LoginService {
 
   handleRes(res: any) {
       this.Jwttoken = res.token;
-      console.log('setting cookie');
       this.cookieService.setCookie('refreshToken', res.refreshToken, 1);
 
       this.router.navigateByUrl('/scan-order');
