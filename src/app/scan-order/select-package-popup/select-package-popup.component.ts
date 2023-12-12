@@ -39,8 +39,6 @@ export class SelectPackagePopupComponent {
     this.dataStorageService.getPackagesAndLocations();
     this.populateInventoryData();
 
-    console.log(this.product);
-    console.log("Preffered package id: " + this.product.prefferedpackage.id)
     this.selectedOption = this.product.prefferedpackage.id;
   }
 
@@ -56,7 +54,7 @@ export class SelectPackagePopupComponent {
     } else {
       
       this.dataStorageService.getPackageById(this.selectedOption).subscribe((data: Packaging) => {
-        this.createNewLog(data);
+        this.processData(data);
       });
       this.dataStorageService.changeIsPackedRequest(true, this.product.productnumber).subscribe();
     }
@@ -64,16 +62,12 @@ export class SelectPackagePopupComponent {
 
   error = '';
   
-  createNewLog(data: Packaging){
-    console.log(this.product);
+  processData(data: Packaging){
     let selectedPackaging = new SelectedPackaging(data, this.quantity);
     for(const index in this.packageList){
       let packaging = this.packageList[index];
       if(packaging.id === selectedPackaging.selectedPackaging.id){
-        console.log("AmountInStock" + packaging.amountinstock);
-        console.log("Selected amount" + selectedPackaging.amount);
-        let amount = packaging.amountinstock - selectedPackaging.amount;
-        console.log("Amount after calculation: " + amount)
+       let amount = packaging.amountinstock - selectedPackaging.amount;
         if(amount < 0){
           this.error = 'Not enough packages';
           return;

@@ -79,16 +79,13 @@ export class DataStorageService {
 
   changeIsPackedRequest(isPacked: boolean, productNumber: number){
     let data: ChangeIsPackedRequestData = new ChangeIsPackedRequestData(isPacked, productNumber);
-    console.log(data);
     return this.http.post("http://localhost:8080/product/ispacked", data);
   }
 
   updatePackageAmount(id: string | undefined, amount: number) {  
     const params = new HttpParams().set('amount', amount.toString());
   
-    return this.http.patch("http://localhost:8080/packages/" + id, null, { params }).subscribe((data) => {
-      console.log(data);
-    });
+    return this.http.patch("http://localhost:8080/packages/" + id, null, { params });
   }
   
   

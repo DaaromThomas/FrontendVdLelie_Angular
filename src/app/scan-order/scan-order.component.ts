@@ -17,15 +17,6 @@ import { UUID } from 'crypto';
   styleUrl: './scan-order.component.css'
 })
 export class ScanOrderComponent {
-
-  public packages: Packaging[] = [
-    new Packaging(10, 'TestID', 5, 'TestName', 'TestGroup', 'TestLocation')
-  ];
-  // public orders: Order[] = [new Order(13, "p", "asdf", 12)];
-  // public products: Product[] = [
-  //   new Product("test", this.packages[0],new Order(13, "p", "asdf", 12), "test product", 123, "test type"),
-  //   new Product("test package", this.packages[0], new Order(14, "pp", "test order", 13), "test product 2", 123456, "test product type")
-  // ];
   public packaging: string[] = ["test package", "other package"];
   public productColumns: string[] = [
     "Product",
@@ -65,7 +56,6 @@ export class ScanOrderComponent {
       this.scanOrderService.getProductsByProductNumber(this.InputProductNumber)
           .subscribe((data: any) => {
             if(data === null){
-              console.log("Error" + data);
               this.errorMessage = 'Product not found';
             }else if(data.packed === true){
               this.errorMessage = 'Product is already packed';
