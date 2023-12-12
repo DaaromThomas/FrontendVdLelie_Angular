@@ -8,7 +8,7 @@ import { CookieService } from '../cookie.service';
   providedIn: 'root',
 })
 export class AuthGuard {
-  constructor(private loginService: LoginService, private router: Router, private cookieService: CookieService) {}
+  constructor(private loginService: LoginService, private router: Router) {}
   canActivate():
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>

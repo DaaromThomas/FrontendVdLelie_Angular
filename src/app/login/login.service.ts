@@ -35,8 +35,7 @@ export class LoginService {
       this.Jwttoken = res.token;
       console.log('setting cookie');
       this.cookieService.setCookie('refreshToken', res.refreshToken, 1);
-    
-      
+
       this.router.navigateByUrl('/scan-order');
     }
     if ((res.status = 401)) {
@@ -53,22 +52,19 @@ export class LoginService {
     return this.Jwttoken;
   }
 
-  askJwtTokenFromRequestToken():any {
-   const refreshToken = this.cookieService.getCookie('refreshToken')
-   console.log(refreshToken)
-    if(refreshToken){
+  askJwtTokenFromRequestToken(): any {
+    const refreshToken = this.cookieService.getCookie('refreshToken');
+    if (refreshToken) {
       this.http
-      .post('http://localhost:8080/refreshtoken', {
-        refreshToken: refreshToken,
-      })
-      .subscribe((data: any) => {
-        if(data != null){
-        this.Jwttoken = data.accessToken;
-        this.router.navigateByUrl('/scan-order');
-        }
-      });
-  }
+        .post('http://localhost:8080/refreshtoken', {
+          refreshToken: refreshToken,
+        })
+        .subscribe((data: any) => {
+          if (data != null) {
+            this.Jwttoken = data.accessToken;
+            this.router.navigateByUrl('/scan-order');
+          }
+        });
     }
-  
-
+  }
 }

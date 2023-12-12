@@ -11,7 +11,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private login: LoginService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    if (req.url.includes('/login')||req.url.includes('/refreshtoken') ) {
+    if (req.url.includes('/login') || req.url.includes('/refreshtoken')) {
       return next.handle(req);
     }
 
