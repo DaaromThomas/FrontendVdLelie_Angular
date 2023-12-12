@@ -19,21 +19,26 @@ export class LoginService {
 
   loginRequest(login: Login) {
     if(!login.password || !login.username ){
-      //todo fix
       throw new Error('username or password not valid')
     }
     this.wrongPassWordChange.next(false)
+
     this.http.post('http://localhost:8080/login', login).subscribe(
       (res) => {
         this.handleRes(res);
       },
       (error) => {
-        this.handleRes(error);
+        this.handleError(error);
       }
     );
   }
+  handleError(error: any) {
+    if ((error.status == 401)) {
+      this.wrongPassWordChange.next(true);
+    }
+  }
+
   handleRes(res: any) {
-    if ((res.status == 200)) {
       this.Jwttoken = res.token;
       console.log('setting cookie');
       this.cookieService.setCookie('refreshToken', res.refreshToken, 1);
@@ -41,10 +46,7 @@ export class LoginService {
       this.router.navigateByUrl('/scan-order');
       this.Jwttoken = res.token;
     }
-    if ((res.status == 401)) {
-      this.wrongPassWordChange.next(true);
-    }
-  }
+
 
   isLoggedIn(): boolean {
     if (this.Jwttoken === undefined) {
