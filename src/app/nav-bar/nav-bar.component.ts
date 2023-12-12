@@ -22,7 +22,6 @@ export class NavBarComponent {
         'http://localhost:8080/refreshtoken/delete',
         this.cookieService.getCookie('refreshToken')
       )
-      .subscribe((data) => console.log(data));
     this.router.navigateByUrl('/login');
     this.loginService.Jwttoken = undefined;
   }
