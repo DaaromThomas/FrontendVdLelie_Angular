@@ -1,11 +1,11 @@
 import { TestBed, tick } from '@angular/core/testing';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
-import { Login } from './login.interface';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
+import { Login } from '../interfaces/login.interface';
 
 describe('LoginService', () => {
   let loginService: LoginService;

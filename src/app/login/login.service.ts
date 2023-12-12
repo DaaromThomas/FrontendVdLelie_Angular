@@ -1,9 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, catchError, throwError } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Login } from '../interfaces/login.interface';
-import { error } from 'console';
 import { CookieService } from './cookie.service';
 
 @Injectable({
@@ -34,7 +33,7 @@ export class LoginService {
     );
   }
   handleRes(res: any) {
-    if ((res.status = 200)) {
+    if ((res.status == 200)) {
       this.Jwttoken = res.token;
       console.log('setting cookie');
       this.cookieService.setCookie('refreshToken', res.refreshToken, 1);
@@ -42,7 +41,7 @@ export class LoginService {
       this.router.navigateByUrl('/scan-order');
       this.Jwttoken = res.token;
     }
-    if ((res.status = 401)) {
+    if ((res.status == 401)) {
       this.wrongPassWordChange.next(true);
     }
   }
