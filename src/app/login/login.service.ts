@@ -56,7 +56,7 @@ export class LoginService {
     return this.Jwttoken;
   }
 
-  askJwtTokenFromRequestToken(): any {
+  askJwtTokenFromRequestToken(): void {
     const refreshToken = this.cookieService.getCookie('refreshToken');
     if (refreshToken) {
       this.http
