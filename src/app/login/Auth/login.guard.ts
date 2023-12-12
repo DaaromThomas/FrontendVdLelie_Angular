@@ -14,10 +14,16 @@ export class AuthGuard {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (!this.loginService.isLoggedIn()) {
+      try{
+        if (this.loginService.isLoggedIn()) {
+          return true;
+        }
+      }catch(e){
+        this.router.navigate(['/login']);
+        return false;
+      }
       this.router.navigate(['/login']);
       return false;
-    }
-    return true;
+  
   }
 }

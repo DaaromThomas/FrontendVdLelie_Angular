@@ -10,7 +10,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { CommonModule } from '@angular/common';
 import { LoginModule } from './login/login.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { AuthInterceptor } from './login/Auth/AuthInterceptor';
+import { AuthInterceptor } from './login/Auth/auth.interceptor';
 import { StockModule } from './stock/stock.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginService } from './login/login.service';
