@@ -21,18 +21,18 @@ export class ScanOrderComponent {
   public packages: Packaging[] = [
     new Packaging(10, 'TestID', 5, 'TestName', 'TestGroup', 'TestLocation')
   ];
-  public orders: Order[] = [new Order(13, "p", "asdf", 12)];
-  public products: Product[] = [
-    new Product("test", this.packages[0],new Order(13, "p", "asdf", 12), "test product", 123, "test type"),
-    new Product("test package", this.packages[0], new Order(14, "pp", "test order", 13), "test product 2", 123456, "test product type")
-  ];
+  // public orders: Order[] = [new Order(13, "p", "asdf", 12)];
+  // public products: Product[] = [
+  //   new Product("test", this.packages[0],new Order(13, "p", "asdf", 12), "test product", 123, "test type"),
+  //   new Product("test package", this.packages[0], new Order(14, "pp", "test order", 13), "test product 2", 123456, "test product type")
+  // ];
   public packaging: string[] = ["test package", "other package"];
   public productColumns: string[] = [
     "Product",
     "Recommended Packaging",
     "Amount available"
   ];
-  public scannedProduct: Product = new Product("", new Packaging(0, "", 2, "-", "", ""), new Order(13, "p", "asdf", 12), "-", 123, "test type");
+  public scannedProduct!: Product;
   public InputProductNumber = '';
   public errorMessage = '';
 

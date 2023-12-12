@@ -4,6 +4,8 @@ import { DataStorageService } from '../../services/data-storage.service';
 import { Packaging } from '../../interfaces/packaging';
 import { SelectedPackaging } from '../models/selected-packaging';
 import { Product } from '../../models/product';
+import { Customer } from '../../models/Customer';
+import { error } from 'console';
 
 
 @Component({
@@ -19,17 +21,27 @@ export class SelectPackagePopupComponent {
   selectedOption!: String;
   quantity: number = 1;
 
+  
+
   constructor(
     public dialogRef: MatDialogRef<SelectPackagePopupComponent>, 
     private dataStorageService: DataStorageService,
-    @Inject(MAT_DIALOG_DATA) public data: Product
+    @Inject(MAT_DIALOG_DATA) public product: Product
     ) {
 
   }
 
+
+  
+
+
   public ngOnInit(): void {
     this.dataStorageService.getPackagesAndLocations();
     this.populateInventoryData();
+
+    console.log(this.product);
+    console.log("Preffered package id: " + this.product.prefferedpackage.id)
+    this.selectedOption = this.product.prefferedpackage.id;
   }
 
   populateInventoryData(): void {
@@ -42,20 +54,34 @@ export class SelectPackagePopupComponent {
     if (cancelled) {
       this.dialogRef.close();
     } else {
-      this.dataStorageService.changeIsPackedRequest(false, this.data.productnumber).subscribe();
+      
       this.dataStorageService.getPackageById(this.selectedOption).subscribe((data: Packaging) => {
         this.createNewLog(data);
-      })
+      });
+      this.dataStorageService.changeIsPackedRequest(true, this.product.productnumber).subscribe();
     }
   }
 
+  error = '';
+  
   createNewLog(data: Packaging){
+    console.log(this.product);
     let selectedPackaging = new SelectedPackaging(data, this.quantity);
     for(const index in this.packageList){
       let packaging = this.packageList[index];
       if(packaging.id === selectedPackaging.selectedPackaging.id){
+        console.log("AmountInStock" + packaging.amountinstock);
+        console.log("Selected amount" + selectedPackaging.amount);
         let amount = packaging.amountinstock - selectedPackaging.amount;
-        this.dataStorageService.updatePackageAmount(packaging.id, amount);
+        console.log("Amount after calculation: " + amount)
+        if(amount < 0){
+          this.error = 'Not enough packages';
+          return;
+        }
+        else{
+          this.dataStorageService.updatePackageAmount(packaging.id, amount);
+          this.error = '';
+        }
       }
     }
     

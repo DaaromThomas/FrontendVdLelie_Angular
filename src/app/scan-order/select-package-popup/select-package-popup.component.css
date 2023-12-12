@@ -39,10 +39,19 @@ mat-dialog-content {
 }
 
 img {
-    width: 70%;
-    height: 70%;
+    height: 50%;
+    aspect-ratio: 1/1;
 }
 
 ::ng-deep .mat-dialog-container {
     border-radius: 10px;
+}
+
+.select{
+    margin-top: 10px;
+}
+
+.error{
+    margin-left: 10px;
+    color: red;
 }

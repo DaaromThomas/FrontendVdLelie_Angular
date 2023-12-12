@@ -1,11 +1,15 @@
-<div class="productScanContainer">
-  <div class="textbox">
-    <!--  <form>-->
-    <h1 for="name">Scan product: </h1>
-    <input id="name" type="text" class="scan-input" (input)="onInputOrderNumber($event)"><br>
-    <button id="hello" name="hello" class="scan-button" (click)="getOrders()">Load product</button><br>
-    <label for="hello" class="error">{{getErrorMessage}}</label>
+<div class="container">
+  <img src="assets/MG_4160-bewerkt.png">
+  <div class="filter">
+    <div class="textbox">
+      <!--  <form>-->
+      <h1 class="title" for="name">Enter Productnumber: </h1>
+      <label for="hello" class="error">{{getErrorMessage}}</label>
+      <input id="name" type="text" class="scan-input" (input)="onInputOrderNumber($event)"><br>
+      <button id="hello" name="hello" class="scan-button" (click)="getOrders()">Load product</button><br>
+      
     <!--  </form>-->
+    </div>
   </div>
 </div>
 

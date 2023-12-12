@@ -1,34 +1,34 @@
 export class Packaging {
     constructor(
-        private readonly amount: number,
-        private readonly id: string,
-        private readonly minAmount: number,
-        private readonly name: string,
-        private readonly group: string,
-        private readonly location: string
+        private readonly amount_: number,
+        private readonly id_: string,
+        private readonly minAmount_: number,
+        private readonly name_: string,
+        private readonly group_: string,
+        private readonly location_: string
     ) {}
 
-    public get getId(): string {
-        return this.id;
+    public get id(): string {
+        return this.id_;
     }
 
-    public get getName(): string {
-        return this.name;
+    public get name(): string {
+        return this.name_;
     }
 
-    public get getAmount(): number {
-        return this.amount;
+    public get amount(): number {
+        return this.amount_;
     }
 
-    public get getMinAmount(): number {
-        return this.minAmount;
+    public get minAmount(): number {
+        return this.minAmount_;
     }
 
-    public get getLocation(): string {
-        return this.location;
+    public get location(): string {
+        return this.location_;
     }
 
-    public get getGroup(): string {
-        return this.group;
+    public get group(): string {
+        return this.group_;
     }
 }
