@@ -2,11 +2,10 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Location } from '../interfaces/location';
 import { Packaging } from '../interfaces/packaging';
-import { Subject, tap, forkJoin, Observable } from 'rxjs';
+import { Subject, forkJoin, Observable } from 'rxjs';
 import { Stock } from '../interfaces/stock';
 import { InventoryData } from '../interfaces/InventoryData.interface';
 import { Account } from '../interfaces/account.interface';
-import { error } from 'console';
 import { ChangeIsPackedRequestData } from '../models/ChangeIsPackedRequestData';
 
 @Injectable({
