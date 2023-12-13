@@ -70,7 +70,7 @@ export class ScanOrderComponent {
       width: '750px',
     });
     dialogRef.afterClosed().subscribe(result => {
-      
+
     });
   }
 
