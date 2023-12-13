@@ -62,9 +62,9 @@ export class DataStorageService {
 
   getPackagesAndLocations() {
     forkJoin([
-      this.http.get(this.baseurl + '/packages'),
-      this.http.get(this.baseurl + '/locations'),
-    ]).subscribe(([packages, locations]) => {
+      this.http.get<Packaging[]>(this.baseurl + '/packages'),
+      this.http.get<Location[]>(this.baseurl + '/locations'),
+    ]).subscribe(([packages, locations]: [Packaging[], Location[]]) => {
       this.locationList = locations as Location[];
       const locationNames = this.locationList.map(
         (location) => location.address
@@ -86,7 +86,7 @@ export class DataStorageService {
   }
 
   getCustomers() {
-    this.http.get<Customer[]>(this.baseurl + '/customers').subscribe((customers) => {
+    this.http.get<Customer[]>(this.baseurl + '/customers').subscribe((customers: Customer[]) => {
         this.customerList$.next(customers);
     })
   }
