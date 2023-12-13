@@ -13,7 +13,6 @@ import { CookieService } from './cookie.service';
 })
 export class LoginService {
   Jwttoken: any;
-  username: string = '';
   wrongPassWordChange: Subject<boolean> = new Subject<boolean>();
   constructor(
     private http: HttpClient,
@@ -27,7 +26,7 @@ export class LoginService {
       throw new Error('username or password not valid')
     }
     this.wrongPassWordChange.next(false)
-    this.username = login.username;
+    this.cookieService.setCookie('currentUser', login.username, 1);
     this.http.post('http://localhost:8080/login', login).subscribe(
       (res) => {
         this.handleRes(res);
@@ -45,7 +44,6 @@ export class LoginService {
 
   handleRes(res: any) {
       this.Jwttoken = res.token;
-      this.dataStorageService.setCurrentUser(this.username);
       this.cookieService.setCookie('refreshToken', res.refreshToken, 1);
       this.router.navigateByUrl('/scan-order');
       this.Jwttoken = res.token;
