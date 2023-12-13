@@ -1,0 +1,57 @@
+.popup-container {
+    display: flex;
+    overflow: hidden;
+}
+
+.sidebar {
+    background-color: #4bc8b6;
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content-container {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    width: 80px;
+    height: 40px;
+    border-radius: 20px;
+    border-color: #4D4E53;
+    background-color: #4D4E53;
+    font-weight: 700;
+    color: white;
+    margin-right: 25%;
+}
+
+button:hover {
+    background-color: #F4812B;
+}
+
+mat-dialog-content {
+    flex-grow: 1;
+}
+
+img {
+    height: 50%;
+    aspect-ratio: 1/1;
+}
+
+::ng-deep .mat-dialog-container {
+    border-radius: 10px;
+}
+
+.select{
+    margin-top: 10px;
+}
+
+.error{
+    margin-left: 10px;
+    color: red;
+}

@@ -1,39 +1,57 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, catchError, throwError } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Login } from '../interfaces/login.interface';
 import { error } from 'console';
+import { DataStorageService } from '../services/data-storage.service';
+import { CookieService } from './cookie.service';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
   Jwttoken: any;
-  wrongPassWordChange: Subject<boolean> = new Subject<boolean>;
-  constructor(private http: HttpClient, private router: Router) {}
+  username: string = '';
+  wrongPassWordChange: Subject<boolean> = new Subject<boolean>();
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private cookieService: CookieService,
+    private dataStorageService: DataStorageService
+  ) {}
 
   loginRequest(login: Login) {
+    if(!login.password || !login.username ){
+      throw new Error('username or password not valid')
+    }
     this.wrongPassWordChange.next(false)
+    this.username = login.username;
     this.http.post('http://localhost:8080/login', login).subscribe(
       (res) => {
         this.handleRes(res);
       },
       (error) => {
-        this.handleRes(error);
+        this.handleError(error);
       }
     );
   }
-  handleRes(res: any) {
-    if(res.status = 200){
-      this.Jwttoken = res.token;
-      this.router.navigateByUrl('/scan-order');
+  handleError(error: any) {
+    if ((error.status == 401)) {
+      this.wrongPassWordChange.next(true);
     }
-    if(res.status = 401){
-      this.wrongPassWordChange.next(true)
+  }
+
+  handleRes(res: any) {
+      this.Jwttoken = res.token;
+      this.dataStorageService.setCurrentUser(this.username);
+      this.cookieService.setCookie('refreshToken', res.refreshToken, 1);
+      this.router.navigateByUrl('/scan-order');
+      this.Jwttoken = res.token;
     }
 
-  }
+
   isLoggedIn(): boolean {
     if (this.Jwttoken === undefined) {
       return false;
@@ -42,5 +60,21 @@ export class LoginService {
   }
   getJwtTOken() {
     return this.Jwttoken;
+  }
+
+  askJwtTokenFromRequestToken(): void {
+    const refreshToken = this.cookieService.getCookie('refreshToken');
+    if (refreshToken) {
+      this.http
+        .post('http://localhost:8080/refreshtoken', {
+          refreshToken: refreshToken,
+        })
+        .subscribe((data: any) => {
+          if (data != null) {
+            this.Jwttoken = data.accessToken;
+            this.router.navigateByUrl('/scan-order');
+          }
+        });
+    }
   }
 }

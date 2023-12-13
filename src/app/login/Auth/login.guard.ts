@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { LoginService } from '../login.service';
 import { Observable } from 'rxjs';
 import { Router, UrlTree } from '@angular/router';
+import { CookieService } from '../cookie.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,11 +14,11 @@ export class AuthGuard {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (!this.loginService.isLoggedIn()) {
-      this.router.navigate(['/login']);
-      return false;
-    }
-    this.loginService.isLoggedIn();
-    return true;
+      if (this.loginService.isLoggedIn()) {
+        return true;
+    } 
+        this.router.navigate(['/login']);
+        return false;
+    
   }
 }

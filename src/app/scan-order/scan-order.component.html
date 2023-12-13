@@ -1,11 +1,20 @@
-<div class="textbox">
-  <label for="name">Scan order: </label><br>
-  <input id="name" type="text" class="form-control" (input)="onInputOrderNumber($event)"><br>
-  <button id="hello" name="hello" (click)="getOrders()">Load product</button><br>
-  <label for="hello" class="error">{{getErrorMessage}}</label>
-</div><br><br><br>
-
 <div class="container">
+  <img src="assets/MG_4160-bewerkt.png">
+  <div class="filter">
+    <div class="textbox">
+      <!--  <form>-->
+      <h1 class="title" for="name">Enter Productnumber: </h1>
+      <label for="hello" class="error">{{getErrorMessage}}</label>
+      <input id="name" type="text" class="scan-input" (input)="onInputOrderNumber($event)"><br>
+      <button id="hello" name="hello" class="scan-button" (click)="getOrders()">Load product</button><br>
+      
+    <!--  </form>-->
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="container">
   <table>
     <thead>
       <tr>
@@ -13,28 +22,30 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let product of products; index as i" (click)="selectProduct(i)" [ngClass]="{'selected': i==selectedIndex}" >
+      <tr *ngFor="let product of products; index as i" (click)="selectProduct(i)"
+        [ngClass]="{'selected': i==selectedIndex}">
         <td>{{product.name}}</td>
-        <td>{{product.prefferedPackage}}</td>
+        <td>{{product.prefferedpackage}}</td>
         <td>0</td>
       </tr>
     </tbody>
   </table>
-</div><br><br><br>
-
+</div><br><br><br> -->
+<!-- 
 <div class="container">
   <table>
     <thead>
-    <tr>
-      <th>packaging</th>
-      <th>amount</th>
-    </tr>
+      <tr>
+        <th>packaging</th>
+        <th>amount</th>
+      </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let package of packaging; index as i">
-      <td>{{package}}</td>
-      <td>2</td>
-    </tr>
+      <tr *ngFor="let package of packaging;">
+        <td>{{package}}</td>
+        <td>2</td>
+      </tr>
     </tbody>
   </table>
-</div>
+  <button mat-button (click)="openDialog()">Open Dialog</button>
+</div> -->

@@ -2,9 +2,11 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Location } from '../interfaces/location';
 import { Packaging } from '../interfaces/packaging';
-import { Subject, tap, forkJoin } from 'rxjs';
+import { Subject, forkJoin, Observable } from 'rxjs';
 import { Stock } from '../interfaces/stock';
 import { InventoryData } from '../interfaces/InventoryData.interface';
+import { Account } from '../interfaces/account.interface';
+import { ChangeIsPackedRequestData } from '../models/ChangeIsPackedRequestData';
 import { Customer } from '../interfaces/customer.interface';
 
 @Injectable({
@@ -15,13 +17,18 @@ export class DataStorageService {
   allInventoryData$: Subject<InventoryData> = new Subject<InventoryData>();
   locationList$: Subject<Location[]> = new Subject<Location[]>();
   private locationList: Location[] = [];
+  private currentUser: string = '';
+  private currentAccount: Account | undefined;
+  private currentStock: Stock | undefined;
+  private currentStockId: string = '';
   customerList$: Subject<Customer[]> = new Subject<Customer[]>();
+
   constructor(private http: HttpClient) {}
 
   storePackage(newPackage: Packaging) {
     const httpOptions = {
       params: new HttpParams()
-        .set('stockId', '4c491e42-46ed-4876-aa7b-4b4a10b91c32')
+        .set('stockId', this.currentStockId)
         .set('name', newPackage.name)
         .set('packagingGroup', newPackage.packagingGroup)
         .set('amount', newPackage.amountinstock)
@@ -96,5 +103,68 @@ export class DataStorageService {
       return locationName;
     }
     return 'missing id';
+  }
+
+  getPackageById(id: String): Observable<Packaging> {
+    return this.http.get<Packaging>(this.baseurl + '/packages/' + id);
+  }
+
+  setCurrentUser(user: string) {
+    this.currentUser = user;
+  }
+
+  async getCurrentStockId() {
+    await this.getCurrentLocation();
+    await this.delay(1000) // this should probably not be allowed but genuinly cant think of a better fix rn
+    this.getLocationStock();
+  }
+
+  getCurrentLocation(): Promise<Account> {
+    const httpOptions = {
+     params: new HttpParams().set('name', this.currentUser),
+    };
+   
+    return this.http
+     .get<Account>(this.baseurl + '/accounts/name', httpOptions)
+     .toPromise()
+     .then((res) => {
+       if (res) {
+         this.currentAccount = res;
+         console.log(this.currentAccount);
+         return this.currentAccount;
+       } else {
+         throw new Error('Failed to get current location');
+       }
+     });
+   }
+   
+  getLocationStock() {
+    if (this.currentAccount != undefined) {
+     for (let location of this.locationList) {
+       if (location.id === ((this.currentAccount.location as unknown) as Location).id) {
+         this.currentStockId = location.stock.id
+       }
+     }
+    }
+   }
+
+   delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+   }
+   
+
+   getStockId() {
+    return this.currentStockId;
+   }
+
+  changeIsPackedRequest(isPacked: boolean, productNumber: number){
+    let data: ChangeIsPackedRequestData = new ChangeIsPackedRequestData(isPacked, productNumber);
+    return this.http.post("http://localhost:8080/product/ispacked", data);
+  }
+
+  updatePackageAmount(id: string | undefined, amount: number) {  
+    const params = new HttpParams().set('amount', amount.toString());
+  
+    return this.http.patch("http://localhost:8080/packages/" + id, null, { params });
   }
 }

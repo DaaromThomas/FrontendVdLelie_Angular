@@ -4,7 +4,7 @@ import { ScanOrderComponent } from './scan-order/scan-order.component';
 import { AccountsComponent } from './accounts/accounts.component';
 import { StockComponent } from './stock/stock.component';
 import { LoginComponent } from './login/login.component';
-import { AuthGuard } from './login/Auth/LoginActivate';
+import { AuthGuard } from './login/Auth/login.guard';
 import { CustomersComponent } from './customers/customers.component';
 
 const routes: Routes = [
