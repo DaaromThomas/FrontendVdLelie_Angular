@@ -7,6 +7,7 @@ import { Stock } from '../interfaces/stock';
 import { InventoryData } from '../interfaces/InventoryData.interface';
 import { Account } from '../interfaces/account.interface';
 import { error } from 'console';
+import { ChangeIsPackedRequestData } from '../models/ChangeIsPackedRequestData';
 
 @Injectable({
   providedIn: 'root',
@@ -125,4 +126,15 @@ export class DataStorageService {
    getStockId() {
     return this.currentStockId;
    }
+
+  changeIsPackedRequest(isPacked: boolean, productNumber: number){
+    let data: ChangeIsPackedRequestData = new ChangeIsPackedRequestData(isPacked, productNumber);
+    return this.http.post("http://localhost:8080/product/ispacked", data);
+  }
+
+  updatePackageAmount(id: string | undefined, amount: number) {  
+    const params = new HttpParams().set('amount', amount.toString());
+  
+    return this.http.patch("http://localhost:8080/packages/" + id, null, { params });
+  }
 }

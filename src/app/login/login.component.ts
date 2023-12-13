@@ -21,10 +21,14 @@ export class LoginComponent {
   });
 
   constructor(private loginService: LoginService) {
-    this.subscription = loginService.wrongPassWordChange.subscribe(
-      (data) => (this.wrongPassword = data)
-    );
+ 
   }
+  
+    ngOnInit(){
+      this.subscription = this.loginService.wrongPassWordChange.subscribe(
+        (data) => (this.wrongPassword = data)
+      );
+    }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
@@ -37,6 +41,6 @@ export class LoginComponent {
   }
 
   ngOnDestroy() {
-     this.subscription.unsubscribe();
-   }
+    this.subscription.unsubscribe();
+  }
 }
