@@ -13,9 +13,7 @@ import { CookieService } from './cookie.service';
 })
 export class LoginService {
   Jwttoken: any;
-  wrongPassWordChange: Subject<boolean> = new Subject<boolean>;
   username: string = '';
-  constructor(private http: HttpClient, private router: Router, ) {}
   wrongPassWordChange: Subject<boolean> = new Subject<boolean>();
   constructor(
     private http: HttpClient,
