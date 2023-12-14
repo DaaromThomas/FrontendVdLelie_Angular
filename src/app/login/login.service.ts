@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Login } from '../interfaces/login.interface';
-import { error } from 'console';
-import { DataStorageService } from '../services/data-storage.service';
 import { CookieService } from './cookie.service';
 
 
@@ -14,11 +12,11 @@ import { CookieService } from './cookie.service';
 export class LoginService {
   Jwttoken: any;
   wrongPassWordChange: Subject<boolean> = new Subject<boolean>();
+  baseurl: string = 'http://localhost:8080';
   constructor(
     private http: HttpClient,
     private router: Router,
     private cookieService: CookieService,
-    private dataStorageService: DataStorageService
   ) {}
 
   loginRequest(login: Login) {
@@ -27,7 +25,7 @@ export class LoginService {
     }
     this.wrongPassWordChange.next(false)
     this.cookieService.setCookie('currentUser', login.username, 1);
-    this.http.post('http://localhost:8080/login', login).subscribe(
+    this.http.post(this.baseurl + '/login', login).subscribe(
       (res) => {
         this.handleRes(res);
       },
@@ -64,7 +62,7 @@ export class LoginService {
     const refreshToken = this.cookieService.getCookie('refreshToken');
     if (refreshToken) {
       this.http
-        .post('http://localhost:8080/refreshtoken', {
+        .post(this.baseurl + '/refreshtoken', {
           refreshToken: refreshToken,
         })
         .subscribe((data: any) => {
