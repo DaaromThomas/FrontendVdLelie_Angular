@@ -132,8 +132,8 @@ export class DataStorageService {
   }
 
   updatePackageAmount(id: string | undefined, amount: number) {  
-    const params = new HttpParams().set('amount', amount.toString());
+    const params = new HttpParams().set('amount', amount);
   
-    return this.http.patch("http://localhost:8080/packages/" + id, null, { params });
+    return this.http.patch("http://localhost:8080/packages/" + id, null, { params }).subscribe();
   }
 }
