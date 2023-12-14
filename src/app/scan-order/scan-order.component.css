@@ -1,50 +1,88 @@
-th, td {
-  border-color: #061E4A;
-  border-width: 2px;
-  border-style: solid;
-}
-
-th {
-    height: 30px;
-    background-color: #061E4A;
-    color: white;
-}
-
-tr:hover{
-    background-color: #60c9b3;
-    cursor: pointer;
-}
-
-thead, body {
-
-}
-
-table {
-    border-collapse: collapse;
-    width: 70%;
-    table-layout: fixed;
-}
-
 .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .container img {
+    width: 100%;
+    height: 100vh;
     display: block;
-    margin-left: 10px;
-    margin-right: auto;
-
-}
-
-.textbox{
-    border: 2px solid black;
-    width: 220px;
-    height: 13%;
-    padding: 10px;
-    margin-top: 10px;
-    margin-left: 10px;
-}
-
-.selected{
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .filter {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(221, 221, 221, 0.6); /* Adjust the background color and opacity of the filter */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .textbox {
+    width: 500px;
+    height: 250px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(221, 221, 221, 0.8);
+  }
+  
+  .title {
+    font-size: 42px;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    color: black;
+  }
+  
+  .scan-input {
+    width: 70%;
+    padding: 5px;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    border-radius: 3px;
+    border-width: 1px;
+  }
+  
+  .scan-input.selected {
+    border-width: 3px;
+  }
+  
+  .selected {
     background-color: #60c9b3;
-}
-
-.error{
+  }
+  
+  .error {
     color: darkred;
-}
+    position: fixed;
+    margin-top: 85px;
+  }
+  
+  .scan-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    color: white;
+    background-color: #4a5b73;
+    border-radius: 3px;
+  }
+  
+  .scan-button:hover {
+    background-color: #60c9b3;
+  }
+  

@@ -1,12 +1,14 @@
+import { Customer } from "./Customer";
+
 export class Order{
   public id: number;
-  public customer: string;
+  public customer: Customer;
   public name: string;
   public orderNumber: number;
 
   constructor(
     id: number,
-    customer: string,
+    customer: Customer,
     name: string,
     orderNumber: number
   ){

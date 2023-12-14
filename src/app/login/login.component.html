@@ -1,12 +1,12 @@
 <div class="login-container">
   <form [formGroup]="login" class="login-form">
-    <h2>Login</h2>
+    <img id="logo" src="../../assets/Logo-van-der-Lelie.svg">
     <h5 *ngIf="wrongPassword">Verkeerde gebruikersnaam of wachtwoord ingevoerd</h5>
     <div class="form-group">
       <input
         type="text"
         placeholder="Enter Username"
-        class="form-control"
+        class="scan-input"
         formControlName="username"
       />
     </div>
@@ -16,7 +16,7 @@
           #passwordInput
           type="password"
           placeholder="Enter Password"
-          class="form-control"
+          class="scan-input"
           formControlName="password"
         />
         <span class="toggle-password" (click)="togglePasswordVisibility()">

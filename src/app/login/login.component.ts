@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { LoginService } from './login.service';
-import { Login } from './login.interface';
+import { Login } from '../interfaces/login.interface';
 
 @Component({
   selector: 'app-login',
@@ -21,10 +21,14 @@ export class LoginComponent {
   });
 
   constructor(private loginService: LoginService) {
-    this.subscription = loginService.wrongPassWordChange.subscribe(
-      (data) => (this.wrongPassword = data)
-    );
+ 
   }
+  
+    ngOnInit(){
+      this.subscription = this.loginService.wrongPassWordChange.subscribe(
+        (data) => (this.wrongPassword = data)
+      );
+    }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
@@ -37,6 +41,6 @@ export class LoginComponent {
   }
 
   ngOnDestroy() {
-     this.subscription.unsubscribe();
-   }
+    this.subscription.unsubscribe();
+  }
 }

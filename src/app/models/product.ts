@@ -1,23 +1,27 @@
 import {Order} from "./order";
+import {Packaging} from "./packaging.model";
 
 export class Product {
-  public prefferedPackage: string;
+  public id: string;
+  public prefferedpackage: Packaging;
   public order: Order;
   public name: string;
-  public productNumber: number;
+  public productnumber: number;
   public productType: string;
 
   constructor(
-    prefferedPackage: string,
+    id: string,
+    preferredPackage: Packaging,
     order: Order,
     name: string,
     productNumber: number,
     productType: string
   ){
-    this.prefferedPackage = prefferedPackage;
+    this.id = id;
+    this.prefferedpackage = preferredPackage;
     this.order = order;
     this.name = name;
-    this.productNumber = productNumber;
+    this.productnumber = productNumber;
     this.productType = productType;
   }
 }

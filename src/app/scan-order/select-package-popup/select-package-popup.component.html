@@ -1,0 +1,27 @@
+<div class="popup-container">
+    <div class="sidebar">
+        <img src="assets/package.png" alt="">
+    </div>
+    <div class="content-container">
+        <h3 mat-dialog-title>Name: {{product.name}}</h3>
+        <h3 mat-dialog-title>Product number: {{product.productnumber}}</h3>
+        <h3 mat-dialog-title>Order: {{product.order.name}}</h3>
+        <h3 mat-dialog-title>Customer: {{product.order.customer.name}}</h3>
+        <mat-dialog-content>
+            <mat-form-field class="select">
+                <mat-label>Select a package</mat-label>
+                <mat-select [(ngModel)]="selectedOption">
+                    <mat-option *ngFor="let package of packageList" [value]="package.id">
+                        {{ package.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <input matInput type="number" placeholder="Quantity" [(ngModel)]="quantity" id="quantity">
+            <label for="quantity" class="error">{{error}}</label>
+        </mat-dialog-content>
+        <mat-dialog-actions>
+            <button mat-button (click)="onClose(true)">Close</button>
+            <button mat-button (click)="onClose(false)">Ok</button>
+        </mat-dialog-actions>
+    </div>
+</div>
