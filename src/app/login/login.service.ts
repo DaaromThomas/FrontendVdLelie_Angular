@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Login } from '../interfaces/login.interface';
-import { error } from 'console';
 import { DataStorageService } from '../services/data-storage.service';
 import { CookieService } from './cookie.service';
 

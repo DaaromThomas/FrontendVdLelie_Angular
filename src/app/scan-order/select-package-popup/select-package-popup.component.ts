@@ -5,7 +5,6 @@ import { Packaging } from '../../interfaces/packaging';
 import { SelectedPackaging } from '../models/selected-packaging';
 import { Product } from '../../models/product';
 import { Customer } from '../../models/Customer';
-import { error } from 'console';
 
 
 @Component({
