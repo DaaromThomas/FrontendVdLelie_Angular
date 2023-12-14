@@ -23,6 +23,7 @@ import { LoginService } from './login/login.service';
     BrowserModule,
     AppRoutingModule,
     CommonModule,
+    ScanOrderModule,
     LoginModule,
     HttpClientModule,
     StockModule,
