@@ -10,7 +10,7 @@ describe('AddPackagePopupComponent', () => {
   let fixture: ComponentFixture<AddPackagePopupComponent>;
 
   const matDialogRefStub = {
-    close: (dialogResult: any) => { }
+    close: () => { }
    };
    
    beforeEach(async () => {
