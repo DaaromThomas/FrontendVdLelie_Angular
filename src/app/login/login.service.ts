@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Login } from '../interfaces/login.interface';
-import { DataStorageService } from '../services/data-storage.service';
 import { CookieService } from './cookie.service';
 
 
@@ -17,7 +16,6 @@ export class LoginService {
     private http: HttpClient,
     private router: Router,
     private cookieService: CookieService,
-    private dataStorageService: DataStorageService
   ) {}
 
   loginRequest(login: Login) {
