@@ -70,7 +70,6 @@ export class StockComponent {
     this.dataStorageService.getPackagesAndLocations();
     this.populateInventoryData();
     this.dataStorageService.getCurrentStockId();
-    console.log(this.dataStorageService.getStockId())
   }
 
   populateInventoryData(): void {
