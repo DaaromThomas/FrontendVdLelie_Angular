@@ -30,10 +30,6 @@ export class SelectPackagePopupComponent {
 
   }
 
-
-  
-
-
   public ngOnInit(): void {
     this.dataStorageService.getPackagesAndLocations();
     this.populateInventoryData();
@@ -70,12 +66,14 @@ export class SelectPackagePopupComponent {
         if(amount < 0){
           this.error = 'Not enough packages';
           return;
-        }else if(this.quantity < 1){
+        }
+        else if(this.quantity < 1){
           this.error = 'Quantity is to low';
           return;
         }
         else{
           this.dataStorageService.updatePackageAmount(packaging.id, amount);
+          this.dataStorageService.sendEmail(amount, selectedPackaging.selectedPackaging.name);
           this.error = '';
         }
       }

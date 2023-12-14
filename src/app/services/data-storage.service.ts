@@ -167,3 +167,11 @@ export class DataStorageService {
     return this.http.patch(this.baseurl + "/customers/" + customerId, null, { params });
   }
 }
+  sendEmail(amount: number, name: string){
+    const params = new HttpParams()
+    .set('amount', amount.toString())
+    .set('name', name);
+
+    return this.http.post(this.baseurl + '/email', null, {params}).subscribe();
+  }
+}
