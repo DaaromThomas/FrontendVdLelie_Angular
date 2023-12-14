@@ -13,6 +13,7 @@ export class LoginService {
   Jwttoken: any;
   wrongPassWordChange: Subject<boolean> = new Subject<boolean>();
   baseurl: string = 'http://localhost:8080';
+  expirationTimeInDays: number = 1;
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -24,7 +25,7 @@ export class LoginService {
       throw new Error('username or password not valid')
     }
     this.wrongPassWordChange.next(false)
-    this.cookieService.setCookie('currentUser', login.username, 1);
+    this.cookieService.setCookie('currentUser', login.username, this.expirationTimeInDays);
     this.http.post(this.baseurl + '/login', login).subscribe(
       (res) => {
         this.handleRes(res);
@@ -42,7 +43,7 @@ export class LoginService {
 
   handleRes(res: any) {
       this.Jwttoken = res.token;
-      this.cookieService.setCookie('refreshToken', res.refreshToken, 1);
+      this.cookieService.setCookie('refreshToken', res.refreshToken, this.expirationTimeInDays);
       this.router.navigateByUrl('/scan-order');
       this.Jwttoken = res.token;
     }
