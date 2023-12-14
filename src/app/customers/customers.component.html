@@ -20,12 +20,12 @@
                         <td>{{customer.name}}</td>
                         <td>{{customer.address}}</td>
                         @if (customer.phonenumber === null) {
-                            <td>None</td>
+                            <td>No phone number</td>
                         } @else {
                            <td>{{customer.phonenumber}}</td> 
                         }
                         @if (customer.email === null) {
-                            <td>None</td>
+                            <td>No e-mail</td>
                         } @else {
                            <td>{{customer.email}}</td> 
                         }                        
