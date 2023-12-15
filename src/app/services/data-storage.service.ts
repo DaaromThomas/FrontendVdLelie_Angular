@@ -15,11 +15,11 @@ export class DataStorageService {
   private baseurl: string = 'http://localhost:8080';
   allInventoryData$: Subject<InventoryData> = new Subject<InventoryData>();
   locationList$: Subject<Location[]> = new Subject<Location[]>();
-  private locationList: Location[] = [];
-  private currentUser: string = '';
-  private currentAccount: Account | undefined;
-  private currentStock: Stock | undefined;
-  private currentStockId: string = '';
+  locationList: Location[] = [];
+   currentUser: string = '';
+   currentAccount: Account | undefined;
+   currentStock: Stock | undefined;
+   currentStockId: string = '';
 
   constructor(private http: HttpClient) {}
 
