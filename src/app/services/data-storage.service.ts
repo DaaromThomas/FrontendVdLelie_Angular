@@ -7,6 +7,7 @@ import { Stock } from '../interfaces/stock';
 import { InventoryData } from '../interfaces/InventoryData.interface';
 import { Account } from '../interfaces/account.interface';
 import { ChangeIsPackedRequestData } from '../models/ChangeIsPackedRequestData';
+import { CookieService } from '../login/cookie.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,7 @@ export class DataStorageService {
    currentStock: Stock | undefined;
    currentStockId: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cookieService: CookieService) {}
 
   storePackage(newPackage: Packaging) {
     const httpOptions = {
@@ -78,10 +79,6 @@ export class DataStorageService {
     return this.http.get<Packaging>(this.baseurl + '/packages/' + id);
   }
 
-  setCurrentUser(user: string) {
-    this.currentUser = user;
-  }
-
   async getCurrentStockId() {
     await this.getCurrentLocation();
     await this.delay(1000) // this should probably not be allowed but genuinly cant think of a better fix rn
@@ -90,7 +87,7 @@ export class DataStorageService {
 
   getCurrentLocation(): Promise<Account> {
     const httpOptions = {
-     params: new HttpParams().set('name', this.currentUser),
+     params: new HttpParams().set('name', this.cookieService.getCookie('currentUser')),
     };
    
     return this.http
@@ -128,12 +125,12 @@ export class DataStorageService {
 
   changeIsPackedRequest(isPacked: boolean, productNumber: number){
     let data: ChangeIsPackedRequestData = new ChangeIsPackedRequestData(isPacked, productNumber);
-    return this.http.post("http://localhost:8080/product/ispacked", data);
+    return this.http.post(this.baseurl + "/product/ispacked", data);
   }
 
   updatePackageAmount(id: string | undefined, amount: number) {  
     const params = new HttpParams().set('amount', amount);
   
-    return this.http.patch("http://localhost:8080/packages/" + id, null, { params }).subscribe();
+    return this.http.patch(this.baseurl + "/packages/" + id, null, { params });
   }
 }
