@@ -1,14 +1,16 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DataStorageService } from '../../services/data-storage.service';
 import { Customer } from '../../interfaces/customer.interface';
 
+declare var intlTelInput: any;
+
 @Component({
   selector: 'app-add-customer-popup',
   templateUrl: './add-customer-popup.component.html',
-  styleUrl: './add-customer-popup.component.css',
+  styleUrls: ['./add-customer-popup.component.css'],
 })
-export class AddCustomerPopupComponent {
+export class AddCustomerPopupComponent implements AfterViewInit {
   customerList: Customer[] = [];
 
   newCustomer: FormGroup = new FormGroup({
@@ -23,35 +25,62 @@ export class AddCustomerPopupComponent {
 
   error: string = '';
 
+  phoneInput: any;
+
   constructor(private storageService: DataStorageService) {}
 
   ngOnInit() {
     this.storageService.getCustomers();
     this.storageService.customerList$.subscribe((customerData) => {
       this.customerList = customerData;
-    })
+    });
+  }
+
+  ngAfterViewInit() {
+    const input = document.querySelector('#phonenumber-input');
+    this.phoneInput = intlTelInput(input, {
+      utilsScript:
+        'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js',
+        initialCountry: 'nl',
+        preferredCountries: ['nl', 'ro']
+    });
   }
 
   submitForm(): void {
-    let customer: Customer = this.newCustomer.value;
-    customer.number = this.customerList.length + 1;
-    console.log(customer)
-  
+    if (this.phoneInput) {
+      const fullNumber = this.phoneInput.getNumber();
+      console.log(fullNumber);
+      const fullNumberString = fullNumber.toString();
+      const countryData = this.phoneInput.getSelectedCountryData();
+      const countryCode = countryData.dialCode;
 
-    if (customer === undefined) {
-      return;
-    }
-    if (customer.phonenumber === '') {
-      customer.phonenumber = null;
-    }
-    if (customer.email === '') {
-      customer.email = null;
-    }
-    if (this.checkValidCustomer(customer)) {
-      this.popupClosed.emit(true);
-      this.addCustomer.emit(customer);
-      this.saveCustomer(customer);
-      return;
+      const formattedNumber =
+        '+' +
+        countryCode +
+        ' ' +
+        fullNumberString.replace('+' + countryCode, '');
+      let customer: Customer = {
+        ...this.newCustomer.value,
+        phonenumber: formattedNumber,
+      };
+      customer.number = this.customerList.length + 1;
+      console.log(customer);
+
+      if (customer === undefined) {
+        return;
+      }
+      if (customer.phonenumber === '') {
+        customer.phonenumber = null;
+      }
+      if (customer.email === '') {
+        customer.email = null;
+      }
+      if (this.checkValidCustomer(customer)) {
+        this.popupClosed.emit(true);
+        this.addCustomer.emit(customer);
+        this.saveCustomer(customer);
+        return;
+      }
     }
   }
 
@@ -60,14 +89,12 @@ export class AddCustomerPopupComponent {
   }
 
   checkValidCustomer(customer: Customer): boolean {
-    console.log(customer);
-
     if (!customer.name) {
       this.error = 'name is undefined';
       return false;
     }
     if (!customer.address) {
-      this.error = 'address is undefined'
+      this.error = 'address is undefined';
       return false;
     }
 
@@ -75,6 +102,7 @@ export class AddCustomerPopupComponent {
   }
 
   saveCustomer(customer: Customer) {
+    console.log(customer);
     this.storageService
       .storeCustomer(customer)
       .subscribe(() => this.storageService.getCustomers());

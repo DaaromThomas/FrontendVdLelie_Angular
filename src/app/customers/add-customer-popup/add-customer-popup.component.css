@@ -116,3 +116,29 @@
     display: flex;
     justify-content: center;
 }
+
+.intl-tel-input {
+    display: block;
+    position: relative;
+    width: 60%;
+    height: 20px;
+    color: #333;
+    background-color: #d7e0e8;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.intl-tel-input .flag-dropdown {
+    background-color: #d7e0e8; /* Match the background color of your application */
+    border: none; /* Remove the border */
+    border-radius: 5px; /* Match the border radius of your application */
+}
+   
+.intl-tel-input .flag-dropdown .country {
+    background-color: #d7e0e8; /* Match the background color of your application */
+    color: #333; /* Match the color of your application */
+    padding: 10px; /* Add some padding */
+    border-radius: 5px; /* Match the border radius of your application */
+}
+   
