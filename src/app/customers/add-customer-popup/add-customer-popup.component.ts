@@ -44,6 +44,7 @@ export class AddCustomerPopupComponent implements AfterViewInit {
         initialCountry: 'nl',
         preferredCountries: ['nl', 'ro']
     });
+    this.applyStyles();
   }
 
   submitForm(): void {
@@ -107,5 +108,22 @@ export class AddCustomerPopupComponent implements AfterViewInit {
       .storeCustomer(customer)
       .subscribe(() => this.storageService.getCustomers());
     this.storageService.getCustomers();
+  }
+
+  applyStyles() {
+    let observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+       if (mutation.addedNodes.length) {
+         var newNodes = Array.from(mutation.addedNodes);
+         newNodes.forEach(function(node) {
+           if ((node as HTMLElement).classList && (node as HTMLElement).classList.contains('iti__flag-container')) {
+             (node as HTMLElement).style.display = 'contents';
+           }
+         });
+       }
+      });
+     });
+     
+     observer.observe(document.body, { childList: true, subtree: true }); 
   }
 }
