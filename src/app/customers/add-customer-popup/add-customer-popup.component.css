@@ -71,16 +71,20 @@
 .label {
   width: 130px;
   box-sizing: border-box;
-  margin-bottom: 5px;
 }
 
 .input {
-  width: 60%;
+  width: 200px;
   box-sizing: border-box;
   margin-bottom: 10px;
   background-color: #d7e0e8;
   border-radius: 5px;
 }
+
+#email-input{
+  margin-top: 10px;
+}
+
 
 .done-button {
   background-color: #4bc8b6;
@@ -120,7 +124,7 @@
   justify-content: center;
 }
 
-.intl-tel-input {
+/* .intl-tel-input {
   display: block;
   position: initial;
   width: 100%;
@@ -131,9 +135,10 @@
   box-sizing: border-box;
   margin-bottom: 10px !important;
   padding-left: 0px !important;
-}
+} */
 
-.intl-tel-input .flag-dropdown {
+
+/* .intl-tel-input .flag-dropdown {
   background-color: #d7e0e8;
   border: none;
   border-radius: 5px;
@@ -144,13 +149,13 @@
   color: #333;
   padding: 10px;
   border-radius: 5px;
-}
+} */
 
-.label-input * {
+/* .label-input * {
   display: grid !important;
   grid-template-columns: auto 1fr !important;
 }
 
 .iti__flag-container {
     display: contents !important;
-}
+} */

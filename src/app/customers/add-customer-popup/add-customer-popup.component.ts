@@ -64,7 +64,7 @@ export class AddCustomerPopupComponent implements AfterViewInit {
         ...this.newCustomer.value,
         phonenumber: formattedNumber,
       };
-      customer.number = this.customerList.length + 1;
+      customer.number = this.getRandomInt(100000);
       console.log(customer);
 
       if (customer === undefined) {
@@ -125,5 +125,9 @@ export class AddCustomerPopupComponent implements AfterViewInit {
      });
      
      observer.observe(document.body, { childList: true, subtree: true }); 
+  }
+
+  getRandomInt(max: number) {
+    return Math.floor(Math.random() * max);
   }
 }
