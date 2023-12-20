@@ -23,7 +23,6 @@ export class CustomersComponent {
 
   populateCustomerData(): void {
     this.subscription = this.dataStorageService.customerList$.subscribe((customerData) => {
-      console.log(customerData);
       this.customerList = customerData;
     })
   }
