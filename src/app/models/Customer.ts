@@ -10,7 +10,7 @@ export class Customer{
     public prefferedPackaging!: Packaging;
 
     constructor(
-         address: string,
+        address: string,
         customerNumber: number,
         email: string,
         id: string,

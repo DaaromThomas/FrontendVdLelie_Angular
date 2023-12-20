@@ -1,8 +1,5 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-import {
-  BrowserModule,
-  provideClientHydration,
-} from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { ScanOrderModule } from './scan-order/scan-order.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent, appInitializer } from './app.component';
@@ -14,9 +11,11 @@ import { AuthInterceptor } from './login/Auth/auth.interceptor';
 import { StockModule } from './stock/stock.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginService } from './login/login.service';
+import { GlobalErrorHandler } from './ErrorHandling/global-error-handler';
+import { LoadingcomponentComponent } from './ErrorHandling/loadingcomponent/loadingcomponent.component';
 
 @NgModule({
-  declarations: [AppComponent, NavBarComponent],
+  declarations: [AppComponent, NavBarComponent, LoadingcomponentComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -26,6 +25,7 @@ import { LoginService } from './login/login.service';
     HttpClientModule,
     StockModule,
     NoopAnimationsModule,
+    GlobalErrorHandler
   ],
   providers: [
     provideClientHydration(),
