@@ -8,9 +8,18 @@ describe('AddCustomerPopupComponent', () => {
   let fixture: ComponentFixture<AddCustomerPopupComponent>;
 
   beforeEach(async () => {
+    (window as any).intlTelInput = function() {
+      return {
+        destroy: () => {},
+        getNumber: () => '+1234567890',
+        getNumberType: () => {},
+        getSelectedCountryData: () => ({ dialCode: '1', iso2: 'us' }),
+      };
+    };
+
     await TestBed.configureTestingModule({
       declarations: [AddCustomerPopupComponent],
-      imports: [HttpClientModule, ReactiveFormsModule]
+      imports: [HttpClientModule, ReactiveFormsModule,],
     })
     .compileComponents();
     
@@ -63,7 +72,7 @@ describe('AddCustomerPopupComponent', () => {
     expect(component.saveCustomer).not.toHaveBeenCalled();
   })
 
-  it('should not emit when submitForm is called with empty address', () => {
+  it('should not emit when submitForm is called with empty e-mail', () => {
     spyOn(component.popupClosed, 'emit');
     spyOn(component.addCustomer, 'emit');
     spyOn(component, 'saveCustomer');
@@ -81,5 +90,45 @@ describe('AddCustomerPopupComponent', () => {
     expect(component.popupClosed.emit).not.toHaveBeenCalled();
     expect(component.addCustomer.emit).not.toHaveBeenCalled();
     expect(component.saveCustomer).not.toHaveBeenCalled();
+  })
+
+  it('should not emit when submitForm is called with an invalid e-mail', () => {
+    spyOn(component.popupClosed, 'emit');
+    spyOn(component.addCustomer, 'emit');
+    spyOn(component, 'saveCustomer');
+
+    //set form values with invalid required data
+    component.newCustomerForm.setValue({
+      name: 'Gordijnen man', //this one is not empty and isn't allowed to be either
+      address: 'BavelaarStraat', //this one is empty but should not be allowed to be empty
+      phonenumber: '', //this one is allowed to remain empty
+      email: 'hello@iamnotvalid', //this one should not be allowed to be empty
+    });
+
+    component.submitForm();
+
+    expect(component.popupClosed.emit).not.toHaveBeenCalled();
+    expect(component.addCustomer.emit).not.toHaveBeenCalled();
+    expect(component.saveCustomer).not.toHaveBeenCalled();
+  })
+
+  it('should emit when submitForm is called with empty phonenumber', () => {
+    spyOn(component.popupClosed, 'emit');
+    spyOn(component.addCustomer, 'emit');
+    spyOn(component, 'saveCustomer');
+
+    //set form values with invalid required data
+    component.newCustomerForm.setValue({
+      name: 'Gordijnen man', //this one is not empty and isn't allowed to be either
+      address: 'BavelaarStraat', //this one is empty but should not be allowed to be empty
+      phonenumber: '', //this one is allowed to remain empty
+      email: 'test@test.com', //this one should not be allowed to be empty
+    });
+
+    component.submitForm();
+
+    expect(component.popupClosed.emit).toHaveBeenCalled();
+    expect(component.addCustomer.emit).toHaveBeenCalled();
+    expect(component.saveCustomer).toHaveBeenCalled();
   })
 });
