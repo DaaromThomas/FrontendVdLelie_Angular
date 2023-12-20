@@ -83,13 +83,19 @@ export class AddCustomerPopupComponent implements AfterViewInit, OnDestroy {
       this.error = 'address is empty';
       return false;
     }
-    if (!customer.email) {
-      this.error = 'email is empty'
+    if (!customer.email || !this.validateEmail(customer.email)) {
+      this.error = 'email is empty or invalid'
       return false;
     }
 
     return true;
   }
+
+  validateEmail(email: string) {
+    var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+   }
+   
 
   getFormattedPhoneNumber(): string | null {
     if (this.phoneInput) {
