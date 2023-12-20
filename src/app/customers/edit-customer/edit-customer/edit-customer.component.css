@@ -1,0 +1,126 @@
+.container {
+    width: 600px;
+    height: 500px;
+    background-color: #ffffff;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    overflow-x: hidden;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+      rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .values {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    width: 100%;
+  }
+  
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    row-gap: 5px;
+    width: 70%;
+  }
+  
+  .title {
+    margin: 0;
+    width: 100%;
+    background-color: #4bc8b6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .image-box {
+    scale: 175%;
+  }
+  
+  .title-text {
+    width: max-content;
+    font-size: 60px;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    color: #d7e0e8;
+    margin: 10px;
+  }
+  
+  .error-message {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+    position: absolute;
+    top: 60%;
+    color: #cc0000;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .label-input {
+    display: flex;
+    align-items: center;
+  }
+  
+  .label {
+    width: 130px;
+    box-sizing: border-box;
+  }
+  
+  .input {
+    width: 200px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    background-color: #d7e0e8;
+    border-radius: 5px;
+  }
+  
+  #email-input{
+    margin-top: 10px;
+  }
+  
+  
+  .done-button {
+    background-color: #4bc8b6;
+    border-radius: 10px;
+    font-weight: bold;
+  }
+  
+  .close-button {
+    background-color: #d7e0e8;
+    border-radius: 10px;
+    font-weight: bold;
+  }
+  
+  .done-button:hover,
+  .done-button:focus {
+    background-color: #f4812b;
+    color: white;
+  }
+  
+  .close-button:hover,
+  .close-button:focus {
+    background-color: #f4812b;
+    color: white;
+  }
+  
+  .grid-row1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+  }
+  
+  .grid-row3 {
+    display: flex;
+    justify-content: center;
+  }
+  
