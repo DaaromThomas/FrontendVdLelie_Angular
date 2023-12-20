@@ -64,7 +64,7 @@ export class AddCustomerPopupComponent implements AfterViewInit, OnDestroy {
         ...this.newCustomer.value,
         phonenumber: formattedNumber,
       };
-      customer.number = this.getRandomInt(100000);
+      customer.number = this.customerList.length + 1;
 
       if (customer === undefined) {
         return;
@@ -129,9 +129,5 @@ export class AddCustomerPopupComponent implements AfterViewInit, OnDestroy {
       node.nodeType === Node.ELEMENT_NODE &&
       (node as HTMLElement).classList?.contains('iti__flag-container')
     );
-  }
-
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
   }
 }
