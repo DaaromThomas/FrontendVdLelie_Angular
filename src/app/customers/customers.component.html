@@ -1,7 +1,6 @@
 <div *ngIf="applyBlur" class="overlay" (click)="onAddCustomerPopupClosed(true)"></div>
-<div class="blur" [ngClass]="{'blur-effect': displayAddCustomer}">
-    <div class="filter">
-    </div>
+<div class="blur" [ngClass]="{ 'blur-effect': displayAddCustomer }">
+    <div class="filter"></div>
     <div class="container">
         <div class="spacer"></div>
         <div [class]="tableWrapperClass">
@@ -15,22 +14,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for (customer of customerList; track $index) {
-                    <tr>
+                    <tr *ngFor="let customer of customerList; trackBy: trackByFn" (click)="editCustomer(customer)">
                         <td>{{customer.name}}</td>
                         <td>{{customer.address}}</td>
-                        @if (customer.phonenumber === null) {
-                            <td>No phone number</td>
-                        } @else {
-                           <td>{{customer.phonenumber}}</td> 
-                        }
-                        @if (customer.email === null) {
-                            <td>No e-mail</td>
-                        } @else {
-                           <td>{{customer.email}}</td> 
-                        }                        
-                    </tr>
-                    }
+                        <td>{{customer.phonenumber ? customer.phonenumber : 'No phone number'}}</td>
+                        <td>{{customer.email ? customer.email : 'No e-mail'}}</td>
+                      </tr>
                 </tbody>
             </table>
         </div>
@@ -39,5 +28,6 @@
 </div>
 
 <div class="add-customer" *ngIf="displayAddCustomer">
-    <app-add-customer-popup class="customer-popup" (popupClosed)="onAddCustomerPopupClosed($event)"></app-add-customer-popup>
+    <app-add-customer-popup class="customer-popup"
+        (popupClosed)="onAddCustomerPopupClosed($event)"></app-add-customer-popup>
 </div>
