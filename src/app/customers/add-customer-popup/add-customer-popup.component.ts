@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, AfterViewInit } from '@angular/core';
+import { Component, EventEmitter, Output, AfterViewInit, Renderer2, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DataStorageService } from '../../services/data-storage.service';
 import { Customer } from '../../interfaces/customer.interface';
@@ -10,9 +10,8 @@ declare var intlTelInput: any;
   templateUrl: './add-customer-popup.component.html',
   styleUrls: ['./add-customer-popup.component.css'],
 })
-export class AddCustomerPopupComponent implements AfterViewInit {
+export class AddCustomerPopupComponent implements AfterViewInit, OnDestroy {
   customerList: Customer[] = [];
-
   newCustomer: FormGroup = new FormGroup({
     name: new FormControl(''),
     address: new FormControl(''),
@@ -24,10 +23,10 @@ export class AddCustomerPopupComponent implements AfterViewInit {
   @Output() addCustomer: EventEmitter<any> = new EventEmitter<any>();
 
   error: string = '';
-
   phoneInput: any;
+  mutationObserver!: MutationObserver;
 
-  constructor(private storageService: DataStorageService) {}
+  constructor(private storageService: DataStorageService, private renderer: Renderer2) {}
 
   ngOnInit() {
     this.storageService.getCustomers();
@@ -39,33 +38,33 @@ export class AddCustomerPopupComponent implements AfterViewInit {
   ngAfterViewInit() {
     const input = document.querySelector('#phonenumber-input');
     this.phoneInput = intlTelInput(input, {
-      utilsScript:
-        'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js',
-        initialCountry: 'nl',
-        preferredCountries: ['nl', 'ro']
+      utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js',
+      initialCountry: 'nl',
+      preferredCountries: ['nl', 'ro'],
     });
     this.applyStyles();
+  }
+
+  ngOnDestroy() {
+    if (this.mutationObserver) {
+      this.mutationObserver.disconnect();
+    }
   }
 
   submitForm(): void {
     if (this.phoneInput) {
       const fullNumber = this.phoneInput.getNumber();
-      console.log(fullNumber);
       const fullNumberString = fullNumber.toString();
       const countryData = this.phoneInput.getSelectedCountryData();
       const countryCode = countryData.dialCode;
 
       const formattedNumber =
-        '+' +
-        countryCode +
-        ' ' +
-        fullNumberString.replace('+' + countryCode, '');
+        '+' + countryCode + ' ' + fullNumberString.replace('+' + countryCode, '');
       let customer: Customer = {
         ...this.newCustomer.value,
         phonenumber: formattedNumber,
       };
       customer.number = this.getRandomInt(100000);
-      console.log(customer);
 
       if (customer === undefined) {
         return;
@@ -103,28 +102,33 @@ export class AddCustomerPopupComponent implements AfterViewInit {
   }
 
   saveCustomer(customer: Customer) {
-    console.log(customer);
     this.storageService
       .storeCustomer(customer)
       .subscribe(() => this.storageService.getCustomers());
-    this.storageService.getCustomers();
   }
 
   applyStyles() {
-    let observer = new MutationObserver(function(mutations) {
-      mutations.forEach(function(mutation) {
-       if (mutation.addedNodes.length) {
-         var newNodes = Array.from(mutation.addedNodes);
-         newNodes.forEach(function(node) {
-           if ((node as HTMLElement).classList && (node as HTMLElement).classList.contains('iti__flag-container')) {
-             (node as HTMLElement).style.display = 'contents';
-           }
-         });
-       }
+    this.mutationObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.addedNodes.length) {
+          const newNodes = Array.from(mutation.addedNodes);
+          newNodes.forEach((node) => {
+            if (this.isFlagContainer(node)) {
+              this.renderer.setStyle(node, 'display', 'contents');
+            }
+          });
+        }
       });
-     });
-     
-     observer.observe(document.body, { childList: true, subtree: true }); 
+    });
+
+    this.mutationObserver.observe(document.body, { childList: true, subtree: true });
+  }
+
+  isFlagContainer(node: Node): node is HTMLElement {
+    return (
+      node.nodeType === Node.ELEMENT_NODE &&
+      (node as HTMLElement).classList?.contains('iti__flag-container')
+    );
   }
 
   getRandomInt(max: number) {
