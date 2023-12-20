@@ -29,11 +29,11 @@ describe('AddCustomerPopupComponent', () => {
     spyOn(component, 'saveCustomer');
 
     //set form values with invalid required data
-    component.newCustomer.setValue({
+    component.newCustomerForm.setValue({
       name: '', //this one is empty but should not be allowed to be empty
       address: 'BavelaarStraat', //this one is not empty and isn't allowed to be either
       phonenumber: '', //this one is allowed to remain empty
-      email: '', //so is this o ne
+      email: 'test@test.com', //this one should not be allowed to be empty
     });
 
     component.submitForm();
@@ -49,11 +49,31 @@ describe('AddCustomerPopupComponent', () => {
     spyOn(component, 'saveCustomer');
 
     //set form values with invalid required data
-    component.newCustomer.setValue({
+    component.newCustomerForm.setValue({
       name: 'Gordijnen man', //this one is not empty and isn't allowed to be either
       address: '', //this one is empty but should not be allowed to be empty
       phonenumber: '', //this one is allowed to remain empty
-      email: '', //so is this o ne
+      email: 'test@test.com', //this one should not be allowed to be empty
+    });
+
+    component.submitForm();
+
+    expect(component.popupClosed.emit).not.toHaveBeenCalled();
+    expect(component.addCustomer.emit).not.toHaveBeenCalled();
+    expect(component.saveCustomer).not.toHaveBeenCalled();
+  })
+
+  it('should not emit when submitForm is called with empty address', () => {
+    spyOn(component.popupClosed, 'emit');
+    spyOn(component.addCustomer, 'emit');
+    spyOn(component, 'saveCustomer');
+
+    //set form values with invalid required data
+    component.newCustomerForm.setValue({
+      name: 'Gordijnen man', //this one is not empty and isn't allowed to be either
+      address: 'BavelaarStraat', //this one is empty but should not be allowed to be empty
+      phonenumber: '', //this one is allowed to remain empty
+      email: '', //this one should not be allowed to be empty
     });
 
     component.submitForm();

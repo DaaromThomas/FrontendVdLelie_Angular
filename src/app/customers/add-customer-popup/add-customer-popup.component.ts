@@ -12,7 +12,7 @@ declare var intlTelInput: any;
 })
 export class AddCustomerPopupComponent implements AfterViewInit, OnDestroy {
   customerList: Customer[] = [];
-  newCustomer: FormGroup = new FormGroup({
+  newCustomerForm: FormGroup = new FormGroup({
     name: new FormControl(''),
     address: new FormControl(''),
     phonenumber: new FormControl(''),
@@ -52,36 +52,22 @@ export class AddCustomerPopupComponent implements AfterViewInit, OnDestroy {
   }
 
   submitForm(): void {
-    if (this.phoneInput) {
-      const fullNumber = this.phoneInput.getNumber();
-      const fullNumberString = fullNumber.toString();
-      const countryData = this.phoneInput.getSelectedCountryData();
-      const countryCode = countryData.dialCode;
-
-      const formattedNumber =
-        '+' + countryCode + ' ' + fullNumberString.replace('+' + countryCode, '');
-      let customer: Customer = {
-        ...this.newCustomer.value,
-        phonenumber: formattedNumber,
-      };
-      customer.number = this.customerList.length + 1;
-
-      if (customer === undefined) {
-        return;
-      }
-      if (customer.phonenumber === '') {
-        customer.phonenumber = null;
-      }
-      if (customer.email === '') {
-        customer.email = null;
-      }
-      if (this.checkValidCustomer(customer)) {
-        this.popupClosed.emit(true);
-        this.addCustomer.emit(customer);
-        this.saveCustomer(customer);
-        return;
-      }
+    let newCustomer: Customer = {
+      ...this.newCustomerForm.value,
+      phonenumber: this.getFormattedPhoneNumber()
     }
+
+    newCustomer.number = this.customerList.length + 1;
+
+      if (newCustomer === undefined) {
+        return;
+      }
+      if (this.checkValidCustomer(newCustomer)) {
+        this.popupClosed.emit(true);
+        this.addCustomer.emit(newCustomer);
+        this.saveCustomer(newCustomer);
+        return;
+      }
   }
 
   discardForm(): void {
@@ -90,15 +76,36 @@ export class AddCustomerPopupComponent implements AfterViewInit, OnDestroy {
 
   checkValidCustomer(customer: Customer): boolean {
     if (!customer.name) {
-      this.error = 'name is undefined';
+      this.error = 'name is empty';
       return false;
     }
     if (!customer.address) {
-      this.error = 'address is undefined';
+      this.error = 'address is empty';
+      return false;
+    }
+    if (!customer.email) {
+      this.error = 'email is empty'
       return false;
     }
 
     return true;
+  }
+
+  getFormattedPhoneNumber(): string | null {
+    if (this.phoneInput) {
+      const fullNumber = this.phoneInput.getNumber();
+      if (fullNumber === '') {
+        return null;
+      }
+      const fullNumberString = fullNumber.toString();
+      const countryData = this.phoneInput.getSelectedCountryData();
+      const countryCode = countryData.dialCode;
+
+      const formattedNumber =
+        '+' + countryCode + ' ' + fullNumberString.replace('+' + countryCode, '');
+        return formattedNumber;
+    }
+    return null;
   }
 
   saveCustomer(customer: Customer) {
