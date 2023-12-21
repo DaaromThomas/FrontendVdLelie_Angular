@@ -2,31 +2,43 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddCustomerPopupComponent } from './add-customer-popup.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Renderer2 } from '@angular/core';
 
 describe('AddCustomerPopupComponent', () => {
-  let component: AddCustomerPopupComponent;
-  let fixture: ComponentFixture<AddCustomerPopupComponent>;
+ let component: AddCustomerPopupComponent;
+ let fixture: ComponentFixture<AddCustomerPopupComponent>;
+ let mockRenderer: jasmine.SpyObj<Renderer2>;
+ let mockMutationObserver: jasmine.SpyObj<MutationObserver>;
 
-  beforeEach(async () => {
-    (window as any).intlTelInput = function() {
-      return {
-        destroy: () => {},
-        getNumber: () => '+1234567890',
-        getNumberType: () => {},
-        getSelectedCountryData: () => ({ dialCode: '1', iso2: 'us' }),
-      };
-    };
+ beforeEach(async () => {
+   (window as any).intlTelInput = function() {
+     return {
+       destroy: () => {},
+       getNumber: () => '+1234567890',
+       getNumberType: () => {},
+       getSelectedCountryData: () => ({ dialCode: '1', iso2: 'us' }),
+     };
+   };
 
-    await TestBed.configureTestingModule({
-      declarations: [AddCustomerPopupComponent],
-      imports: [HttpClientModule, ReactiveFormsModule,],
-    })
-    .compileComponents();
-    
-    fixture = TestBed.createComponent(AddCustomerPopupComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+   mockRenderer = jasmine.createSpyObj('Renderer2', ['setStyle']);
+   mockMutationObserver = jasmine.createSpyObj('MutationObserver', ['observe']);
+
+   await TestBed.configureTestingModule({
+     declarations: [AddCustomerPopupComponent],
+     imports: [HttpClientModule, ReactiveFormsModule,],
+     providers: [
+       { provide: Renderer2, useValue: mockRenderer },
+       { provide: MutationObserver, useValue: mockMutationObserver },
+     ],
+   })
+   .compileComponents();
+
+   fixture = TestBed.createComponent(AddCustomerPopupComponent);
+   component = fixture.componentInstance;
+   fixture.detectChanges();
+ });
+
+ // Your existing tests...
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -131,4 +143,44 @@ describe('AddCustomerPopupComponent', () => {
     expect(component.addCustomer.emit).toHaveBeenCalled();
     expect(component.saveCustomer).toHaveBeenCalled();
   })
+
+  it('should call observe method of MutationObserver', () => {
+    // Arrange
+    const observeSpy = spyOn(MutationObserver.prototype, 'observe');
+   
+    // Act
+    component.applyStyles();
+   
+    // Assert
+    expect(observeSpy).toHaveBeenCalledWith(document.body, { childList: true, subtree: true });
+   });
+   
+ 
+  it('should identify flag container nodes', () => {
+    // Arrange
+    const dummyElement = document.createElement('div');
+    dummyElement.classList.add('iti__flag-container');
+ 
+    // Act
+    const result = component.isFlagContainer(dummyElement);
+ 
+    // Assert
+    expect(result).toBeTrue();
+  });
+
+  it('should not identify non-flag container nodes', () => {
+    // Arrange
+    const dummyTextNode = document.createTextNode('This is a text node');
+    const dummyElement = document.createElement('div');
+   
+    // Act
+    const resultTextNode = component.isFlagContainer(dummyTextNode);
+    const resultElement = component.isFlagContainer(dummyElement);
+   
+    // Assert
+    expect(resultTextNode).toBeFalse();
+    expect(resultElement).toBeFalse();
+   });
+   
+
 });
