@@ -45,14 +45,12 @@ export class DataStorageService {
     params = params.set('customerNumber', newCustomer.number);
     params = params.set('name', newCustomer.name);
     params = params.set('address', newCustomer.address);
+    params = params.set('email', newCustomer.email);
 
-    if (newCustomer.phonenumber !== null) {
+    if (newCustomer.phonenumber != null) {
       params = params.set('phonenumber', newCustomer.phonenumber);
     }
 
-    if (newCustomer.email !== null) {
-      params = params.set('email', newCustomer.email);
-    }
 
     const httpOptions = {
       params: params
