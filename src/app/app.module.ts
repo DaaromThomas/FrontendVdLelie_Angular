@@ -12,8 +12,10 @@ import { LoginModule } from './login/login.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './login/Auth/auth.interceptor';
 import { StockModule } from './stock/stock.module';
+import { CustomersModule } from './customers/customers.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginService } from './login/login.service';
+
 
 @NgModule({
   declarations: [AppComponent, NavBarComponent],
@@ -25,6 +27,7 @@ import { LoginService } from './login/login.service';
     LoginModule,
     HttpClientModule,
     StockModule,
+    CustomersModule,    
     NoopAnimationsModule,
   ],
   providers: [

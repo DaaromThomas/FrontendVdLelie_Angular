@@ -7,6 +7,7 @@ import { Stock } from '../interfaces/stock';
 import { InventoryData } from '../interfaces/InventoryData.interface';
 import { Account } from '../interfaces/account.interface';
 import { ChangeIsPackedRequestData } from '../models/ChangeIsPackedRequestData';
+import { Customer } from '../interfaces/customer.interface';
 import { CookieService } from '../login/cookie.service';
 
 @Injectable({
@@ -21,6 +22,7 @@ export class DataStorageService {
   private currentAccount: Account | undefined;
   private currentStock: Stock | undefined;
   private currentStockId: string = '';
+  customerList$: Subject<Customer[]> = new Subject<Customer[]>();
 
   constructor(private http: HttpClient, private cookieService: CookieService) {}
 
@@ -33,14 +35,35 @@ export class DataStorageService {
         .set('amount', newPackage.amountinstock)
         .set('minAmount', newPackage.minAmount),
     };
-    return this.http.post(this.baseurl + '/packages', {}, httpOptions);
+
+    return this.http
+      .post(this.baseurl + '/packages', {}, httpOptions);
+  }
+
+  storeCustomer(newCustomer: Customer) {
+    let params = new HttpParams();
+    params = params.set('customerNumber', newCustomer.number);
+    params = params.set('name', newCustomer.name);
+    params = params.set('address', newCustomer.address);
+    params = params.set('email', newCustomer.email);
+
+    if (newCustomer.phonenumber != null) {
+      params = params.set('phonenumber', newCustomer.phonenumber);
+    }
+
+
+    const httpOptions = {
+      params: params
+    };
+
+    return this.http.post(this.baseurl + '/customers', {}, httpOptions);
   }
 
   getPackagesAndLocations() {
     forkJoin([
-      this.http.get(this.baseurl + '/packages'),
-      this.http.get(this.baseurl + '/locations'),
-    ]).subscribe(([packages, locations]) => {
+      this.http.get<Packaging[]>(this.baseurl + '/packages'),
+      this.http.get<Location[]>(this.baseurl + '/locations'),
+    ]).subscribe(([packages, locations]: [Packaging[], Location[]]) => {
       this.locationList = locations as Location[];
       const locationNames = this.locationList.map(
         (location) => location.address
@@ -59,6 +82,12 @@ export class DataStorageService {
       };
       this.allInventoryData$.next(inventoryData);
     });
+  }
+
+  getCustomers() {
+    this.http.get<Customer[]>(this.baseurl + '/customers').subscribe((customers: Customer[]) => {
+        this.customerList$.next(customers);
+    })
   }
 
   calculateLocation(stockId: string | undefined) {
@@ -131,6 +160,6 @@ export class DataStorageService {
   updatePackageAmount(id: string | undefined, amount: number) {  
     const params = new HttpParams().set('amount', amount);
   
-    return this.http.patch(this.baseurl + "/packages/" + id, null, { params });
+    return this.http.patch(this.baseurl + "/packages/" + id, null, { params }).subscribe();
   }
 }
