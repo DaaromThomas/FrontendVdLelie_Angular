@@ -34,4 +34,25 @@ export class CustomerValidationService {
    var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
    return re.test(email);
  }
+
+ getFormattedPhoneNumber(phoneInput: any): string | null {
+  if (phoneInput) {
+    const fullNumber = phoneInput.getNumber();
+    if (fullNumber === '') {
+      return null;
+    }
+    const fullNumberString = fullNumber.toString();
+    const countryData = phoneInput.getSelectedCountryData();
+    const countryCode = countryData.dialCode;
+ 
+    const formattedNumber = '+' + countryCode + ' ' + fullNumberString.replace('+' + countryCode, '');
+    return formattedNumber;
+  }
+  return null;
+ }
+ 
+ updateFormValue(form: FormGroup, key: string, value: any): void {
+  (form.controls[key] as FormControl).setValue(value);
+ }
+ 
 }

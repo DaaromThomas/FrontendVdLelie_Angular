@@ -1,8 +1,11 @@
 import {
+    AfterViewChecked,
+  AfterViewInit,
   Component,
   EventEmitter,
   Inject,
   OnDestroy,
+  OnInit,
   Output,
   Renderer2,
 } from '@angular/core';
@@ -11,17 +14,20 @@ import { Customer } from '../../../interfaces/customer.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CustomerValidationService } from '../../CustomerValidationService';
 
+declare var intlTelInput: any;
+
 @Component({
   selector: 'app-edit-customer',
   templateUrl: './edit-customer.component.html',
   styleUrls: ['./edit-customer.component.css'],
 })
-export class EditCustomerComponent implements OnDestroy {
+export class EditCustomerComponent implements AfterViewInit, OnDestroy, OnInit {
   customerForm: FormGroup;
   customer: Customer;
   error: string = '';
-  intlTelInput: any;
+  phoneInput: any;
   mutationObserver!: MutationObserver;
+  phoneNumberWithCountry!: string;
   @Output() popupClosed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
@@ -37,6 +43,35 @@ export class EditCustomerComponent implements OnDestroy {
     );
   }
 
+  ngOnInit() {
+    if (this.customer.phonenumber){
+       this.phoneNumberWithCountry = this.customer.phonenumber; 
+    }
+    }
+
+    ngAfterViewInit() {
+        const input = document.querySelector('#phonenumber-input');
+        this.phoneInput = intlTelInput(input, {
+         utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js',
+         initialCountry: 'nl',
+         preferredCountries: ['nl', 'ro'],
+         autoFormat: false
+        });
+       
+        setTimeout(() => {
+         const phoneNumberWithCountry = this.phoneInput.getNumber();
+
+         const dialCode = this.phoneInput.getSelectedCountryData().dialCode;
+       
+         const phoneNumberWithoutCountry = phoneNumberWithCountry.replace(`+${dialCode}`, '');
+       
+         this.customerForm.controls['phonenumber'].setValue(phoneNumberWithoutCountry);
+        }, 10); //yes technicly you should never wait x amount of seconds but this 10 miliseconds fixes all my issues will attempt a proper fix later:tm:
+       
+        this.applyStyles();
+       }
+       
+
   ngOnDestroy() {
     if (this.mutationObserver) {
       this.mutationObserver.disconnect();
@@ -48,16 +83,16 @@ export class EditCustomerComponent implements OnDestroy {
   }
 
   onSubmit() {
-    if (
-      this.customerValidationService.checkValidCustomer(this.customerForm.value)
-    ) {
-      // Here you can handle the form submission.
-      // For example, you can update the customer's data.
+    const formattedPhoneNumber = this.customerValidationService.getFormattedPhoneNumber(this.phoneInput);
+    this.customerValidationService.updateFormValue(this.customerForm, 'phonenumber', formattedPhoneNumber);
+   
+    if (this.customerValidationService.checkValidCustomer(this.customerForm.value)) {
       console.log(this.customerForm.value);
     } else {
       this.error = 'Invalid customer data';
     }
-  }
+   }
+   
 
   applyStyles() {
     this.mutationObserver = new MutationObserver((mutations) => {
