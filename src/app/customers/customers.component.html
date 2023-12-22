@@ -14,12 +14,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let customer of customerList; trackBy: trackByFn" (click)="editCustomer(customer)">
+                    <tr *ngFor="let customer of customerList; track: $index">
                         <td>{{customer.name}}</td>
                         <td>{{customer.address}}</td>
                         <td>{{customer.phonenumber ? customer.phonenumber : 'No phone number'}}</td>
                         <td>{{customer.email ? customer.email : 'No e-mail'}}</td>
-                      </tr>
+                        <td class="no-border" ><button mat-button (click)="$event.stopPropagation(); editCustomer(customer)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        </td>
+                    </tr>
+                   
                 </tbody>
             </table>
         </div>

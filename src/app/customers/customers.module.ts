@@ -5,10 +5,12 @@ import { CustomersComponent } from './customers.component';
 import { AddCustomerPopupComponent } from './add-customer-popup/add-customer-popup.component';
 import { SharedModule } from '../shared/shared-module/shared-module.module';
 import { EditCustomerComponent } from './edit-customer/edit-customer/edit-customer.component';
+import { MatButtonModule } from '@angular/material/button'
+import { MatIconModule } from '@angular/material/icon'
 
 @NgModule({
   declarations: [CustomersComponent, AddCustomerPopupComponent, EditCustomerComponent],
-  imports: [CommonModule, ReactiveFormsModule, SharedModule],
+  imports: [CommonModule, ReactiveFormsModule, SharedModule, MatButtonModule, MatIconModule],
   exports: [CustomersComponent, AddCustomerPopupComponent, EditCustomerComponent],
 })
 export class CustomersModule {}

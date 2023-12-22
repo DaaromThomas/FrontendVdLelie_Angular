@@ -46,11 +46,11 @@ tbody {
     overflow: auto;
 }
 
-tr {
+tr td:not(.no-border){
     background-color: #ffffff;
 }
 
-tr:hover {
+tr:hover td:not(.no-border) {
     background-color: #60c9b3;
 }
 
@@ -104,3 +104,14 @@ button {
     filter: blur(5px);
     z-index: 998;
 }
+
+.no-border {
+    border: none;
+    display: flex;
+    justify-content: flex-start;
+    white-space: nowrap;
+ }
+
+ .no-border button {
+    background-color: #ffffff;
+ }

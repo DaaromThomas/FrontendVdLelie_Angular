@@ -5,6 +5,7 @@
     display: grid;
     grid-template-columns: 1.2fr 0.8fr;
     overflow-x: hidden;
+    overflow-y: hidden;
     border-radius: 15px;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
       rgba(0, 0, 0, 0.22) 0px 15px 12px;
@@ -30,6 +31,7 @@
     margin: 0;
     width: 100%;
     background-color: #4bc8b6;
+    border-radius: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -123,4 +125,10 @@
     display: flex;
     justify-content: center;
   }
+
+  ::ng-deep .mat-mdc-dialog-surface, ::ng-deep .mdc-dialog__surface {
+    border-radius: 20px !important;
+  }
+  
+ 
   
