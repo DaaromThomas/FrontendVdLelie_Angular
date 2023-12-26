@@ -17,13 +17,13 @@ export class SelectPackagePopupComponent {
   packageList: Packaging[] = [];
 
 
-  selectedOption!: String;
+  selectedOption!: string;
   quantity: number = 1;
 
-  
+
 
   constructor(
-    public dialogRef: MatDialogRef<SelectPackagePopupComponent>, 
+    public dialogRef: MatDialogRef<SelectPackagePopupComponent>,
     private dataStorageService: DataStorageService,
     @Inject(MAT_DIALOG_DATA) public product: Product
     ) {
@@ -31,14 +31,13 @@ export class SelectPackagePopupComponent {
   }
 
 
-  
+
 
 
   public ngOnInit(): void {
     this.dataStorageService.getPackagesAndLocations();
     this.populateInventoryData();
-
-    this.selectedOption = this.product.prefferedpackage.id;
+    this.selectedOption = this.product.order.customer.preferredPackaging.id as string;
   }
 
   populateInventoryData(): void {
@@ -51,7 +50,7 @@ export class SelectPackagePopupComponent {
     if (cancelled) {
       this.dialogRef.close();
     } else {
-      
+
       this.dataStorageService.getPackageById(this.selectedOption).subscribe((data: Packaging) => {
         this.processData(data);
       });
@@ -60,7 +59,7 @@ export class SelectPackagePopupComponent {
   }
 
   error = '';
-  
+
   processData(data: Packaging){
     let selectedPackaging = new SelectedPackaging(data, this.quantity);
     for(const index in this.packageList){
@@ -80,7 +79,7 @@ export class SelectPackagePopupComponent {
         }
       }
     }
-    
+
     this.dialogRef.close()
   }
 

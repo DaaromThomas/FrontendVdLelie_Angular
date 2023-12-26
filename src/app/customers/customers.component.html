@@ -1,5 +1,5 @@
-<div *ngIf="applyBlur" class="overlay" (click)="onAddCustomerPopupClosed(true)"></div>
-<div class="blur" [ngClass]="{'blur-effect': displayAddCustomer}">
+<div *ngIf="applyBlur" class="overlay" (click)="onAddCustomerPopupClosed(true);onChangePrefferedPackagePopupClosed(true)"></div>
+<div class="blur" [ngClass]="{'blur-effect': displayAddCustomer || displayChangePrefferedPackage}">
     <div class="filter">
     </div>
     <div class="container">
@@ -12,6 +12,7 @@
                         <th>Address</th>
                         <th>PhoneNumber</th>
                         <th>E-Mail</th>
+                        <th>Preffered Package</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,13 +23,24 @@
                         @if (customer.phonenumber === null) {
                             <td>No phone number</td>
                         } @else {
-                           <td>{{customer.phonenumber}}</td> 
+                           <td>{{customer.phonenumber}}</td>
                         }
                         @if (customer.email === null) {
                             <td>No e-mail</td>
                         } @else {
-                           <td>{{customer.email}}</td> 
-                        }                        
+                           <td>{{customer.email}}</td>
+                        }
+                        @if (customer.preferredPackaging === null) {
+                           <td>
+                               -
+                                <button (click)="displayChangePrefferedPackagePopup(customer.id)" >set</button>
+                           </td>
+                        } @else{
+                           <td>
+                              {{customer.preferredPackaging!.name}}
+                              <button (click)="displayChangePrefferedPackagePopup(customer.id)">change</button>
+                           </td>
+                        }
                     </tr>
                     }
                 </tbody>
@@ -40,4 +52,8 @@
 
 <div class="add-customer" *ngIf="displayAddCustomer">
     <app-add-customer-popup class="customer-popup" (popupClosed)="onAddCustomerPopupClosed($event)"></app-add-customer-popup>
+</div>
+
+<div class="change-preffered-package" *ngIf="displayChangePrefferedPackage">
+    <app-change-customer-preffered-package-popup class="preffered-package-popup" [customerId]="selectedCustomerId" (popupClosed)="onChangePrefferedPackagePopupClosed($event)"></app-change-customer-preffered-package-popup>
 </div>

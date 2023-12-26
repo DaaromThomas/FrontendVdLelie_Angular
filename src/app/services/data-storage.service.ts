@@ -88,8 +88,22 @@ export class DataStorageService {
 
   getCustomers() {
     this.http.get<Customer[]>(this.baseurl + '/customers').subscribe((customers: Customer[]) => {
+      console.log("customers:");
+      console.log(customers);
         this.customerList$.next(customers);
     })
+  }
+
+  setCustomerPrefferedPackage(CustomerId: string, prefferedPackageId: string){
+    console.log(CustomerId);
+    console.log(prefferedPackageId);
+    let params = new HttpParams();
+    // params = params.set('id', CustomerId);
+    params = params.set('prefferedPackageId', prefferedPackageId);
+    const httpOptions = {
+      params: params
+    };
+    this.http.patch<Customer>(this.baseurl + '/customers/' + CustomerId, {}, httpOptions).subscribe();
   }
 
   calculateLocation(stockId: string | undefined) {
@@ -120,7 +134,7 @@ export class DataStorageService {
     const httpOptions = {
      params: new HttpParams().set('name', this.cookieService.getCookie('currentUser')),
     };
-   
+
     return this.http
      .get<Account>(this.baseurl + '/accounts/name', httpOptions)
      .toPromise()
@@ -134,7 +148,7 @@ export class DataStorageService {
        }
      });
    }
-   
+
   getLocationStock() {
     if (this.currentAccount != undefined) {
      for (let location of this.locationList) {
@@ -148,7 +162,7 @@ export class DataStorageService {
    delay(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
    }
-   
+
 
    getStockId() {
     return this.currentStockId;
@@ -159,9 +173,9 @@ export class DataStorageService {
     return this.http.post(this.baseurl + "/product/ispacked", data);
   }
 
-  updatePackageAmount(id: string | undefined, amount: number) {  
+  updatePackageAmount(id: string | undefined, amount: number) {
     const params = new HttpParams().set('amount', amount.toString());
-  
+
     return this.http.patch(this.baseurl + "/packages/" + id, null, { params }).subscribe();
   }
 }
