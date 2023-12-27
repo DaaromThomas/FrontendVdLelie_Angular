@@ -33,12 +33,13 @@
                         @if (customer.preferredPackaging === null) {
                            <td>
                                -
-                                <button (click)="displayChangePrefferedPackagePopup(customer.id)" >set</button>
+                              <img class="edit-button-icon" src="../../assets/edit.png" (click)="displayChangePrefferedPackagePopup(customer.id)">
                            </td>
                         } @else{
                            <td>
                               {{customer.preferredPackaging!.name}}
-                              <button (click)="displayChangePrefferedPackagePopup(customer.id)">change</button>
+                                <img class="edit-button-icon" src="../../assets/edit.png" (click)="displayChangePrefferedPackagePopup(customer.id)">
+
                            </td>
                         }
                     </tr>

@@ -118,3 +118,10 @@ button {
     filter: blur(5px);
     z-index: 998;
 }
+
+.edit-button-icon{
+  width: 15px;
+  height: 15px;
+  float: right;
+}
+
