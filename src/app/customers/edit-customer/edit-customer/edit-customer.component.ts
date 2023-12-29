@@ -13,6 +13,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Customer } from '../../../interfaces/customer.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CustomerValidationService } from '../../CustomerValidationService';
+import { HttpParams } from '@angular/common/http';
+import { DataStorageService } from '../../../services/data-storage.service';
 
 declare var intlTelInput: any;
 
@@ -35,7 +37,8 @@ export class EditCustomerComponent implements AfterViewInit, OnDestroy, OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
     private customerValidationService: CustomerValidationService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private dataStorageService: DataStorageService
   ) {
     this.customer = data.customer;
     this.customerForm = this.customerValidationService.createForm(
@@ -87,7 +90,19 @@ export class EditCustomerComponent implements AfterViewInit, OnDestroy, OnInit {
     this.customerValidationService.updateFormValue(this.customerForm, 'phonenumber', formattedPhoneNumber);
    
     if (this.customerValidationService.checkValidCustomer(this.customerForm.value)) {
+      let customerData: Customer = this.customerForm.value;
+      let params = new HttpParams();
+      params = params.set('name', customerData.name);
+      params = params.set('address', customerData.address);
+      params = params.set('email', customerData.email)
+      if (customerData.phonenumber) {
+        params = params.set('phonenumber', customerData.phonenumber) 
+      }
+      if (this.customer.id) {
+        this.dataStorageService.updateCustomer(params, this.customer.id).subscribe(() => this.dataStorageService.getCustomers());
+      }
       console.log(this.customerForm.value);
+      this.close();
     } else {
       this.error = 'Invalid customer data';
     }
