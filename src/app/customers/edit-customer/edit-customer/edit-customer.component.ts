@@ -1,5 +1,5 @@
 import {
-    AfterViewChecked,
+  AfterViewChecked,
   AfterViewInit,
   Component,
   EventEmitter,
@@ -47,33 +47,26 @@ export class EditCustomerComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ngOnInit() {
-    if (this.customer.phonenumber){
-       this.phoneNumberWithCountry = this.customer.phonenumber; 
+    if (this.customer.phonenumber) {
+      this.phoneNumberWithCountry = this.customer.phonenumber;
     }
-    }
+  }
 
-    ngAfterViewInit() {
-        const input = document.querySelector('#phonenumber-input');
-        this.phoneInput = intlTelInput(input, {
-         utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js',
-         initialCountry: 'nl',
-         preferredCountries: ['nl', 'ro'],
-         autoFormat: false
-        });
-       
-        setTimeout(() => {
-         const phoneNumberWithCountry = this.phoneInput.getNumber();
+  ngAfterViewInit() {
+    const input = document.querySelector('#phonenumber-input');
+    this.phoneInput = intlTelInput(input, {
+      utilsScript:
+        'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js',
+      initialCountry: 'nl',
+      preferredCountries: ['nl', 'ro'],
+      autoFormat: false,
+    });
 
-         const dialCode = this.phoneInput.getSelectedCountryData().dialCode;
-       
-         const phoneNumberWithoutCountry = phoneNumberWithCountry.replace(`+${dialCode}`, '');
-       
-         this.customerForm.controls['phonenumber'].setValue(phoneNumberWithoutCountry);
-        }, 10); //yes technicly you should never wait x amount of seconds but this 10 miliseconds fixes all my issues will attempt a proper fix later:tm:
-       
-        this.applyStyles();
-       }
-       
+    this.phoneInput.promise.then(() => {
+      this.processPhoneNumber();
+    })
+    this.applyStyles();
+  }
 
   ngOnDestroy() {
     if (this.mutationObserver) {
@@ -86,28 +79,43 @@ export class EditCustomerComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   onSubmit() {
-    const formattedPhoneNumber = this.customerValidationService.getFormattedPhoneNumber(this.phoneInput);
-    this.customerValidationService.updateFormValue(this.customerForm, 'phonenumber', formattedPhoneNumber);
-   
-    if (this.customerValidationService.checkValidCustomer(this.customerForm.value)) {
+    const formattedPhoneNumber =
+      this.customerValidationService.getFormattedPhoneNumber(this.phoneInput);
+    this.customerValidationService.updateFormValue(
+      this.customerForm,
+      'phonenumber',
+      formattedPhoneNumber
+    );
+
+    if (
+      this.customerValidationService.checkValidCustomer(this.customerForm.value)
+    ) {
       let customerData: Customer = this.customerForm.value;
       let params = new HttpParams();
       params = params.set('name', customerData.name);
       params = params.set('address', customerData.address);
-      params = params.set('email', customerData.email)
+      params = params.set('email', customerData.email);
       if (customerData.phonenumber) {
-        params = params.set('phonenumber', customerData.phonenumber) 
+        params = params.set('phonenumber', customerData.phonenumber);
       }
       if (this.customer.id) {
-        this.dataStorageService.updateCustomer(params, this.customer.id).subscribe(() => this.dataStorageService.getCustomers());
+        this.dataStorageService
+          .updateCustomer(params, this.customer.id)
+          .subscribe(() => this.dataStorageService.getCustomers());
       }
       console.log(this.customerForm.value);
       this.close();
     } else {
       this.error = 'Invalid customer data';
     }
-   }
-   
+  }
+
+  processPhoneNumber() {
+    const phoneNumberWithCountry = this.phoneInput.getNumber();
+    const dialCode = this.phoneInput.getSelectedCountryData().dialCode;
+    const phoneNumberWithoutCountry = phoneNumberWithCountry.replace(`+${dialCode}`, '');
+    this.customerForm.controls['phonenumber'].setValue(phoneNumberWithoutCountry);
+   }      
 
   applyStyles() {
     this.mutationObserver = new MutationObserver((mutations) => {
@@ -131,8 +139,8 @@ export class EditCustomerComponent implements AfterViewInit, OnDestroy, OnInit {
 
   isFlagContainer(node: Node): node is HTMLElement {
     return (
-      (node.nodeType === Node.ELEMENT_NODE &&
-        (node as HTMLElement).classList?.contains('iti__flag-container'))
+      node.nodeType === Node.ELEMENT_NODE &&
+      (node as HTMLElement).classList?.contains('iti__flag-container')
     );
   }
 }
