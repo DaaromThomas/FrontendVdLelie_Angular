@@ -115,8 +115,8 @@ export class EditCustomerComponent implements AfterViewInit, OnDestroy, OnInit {
     const dialCode = this.phoneInput.getSelectedCountryData().dialCode;
     const phoneNumberWithoutCountry = phoneNumberWithCountry.replace(`+${dialCode}`, '');
     this.customerForm.controls['phonenumber'].setValue(phoneNumberWithoutCountry);
-   }      
-
+   }   
+  
   applyStyles() {
     this.mutationObserver = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
