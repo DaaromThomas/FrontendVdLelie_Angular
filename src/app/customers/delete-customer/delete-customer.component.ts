@@ -38,16 +38,39 @@ export class DeleteCustomerComponent implements OnInit {
     });
   }
 
-  onDelete(): void {
-    if (this.customer.id) {
+  async onDelete(): Promise<void> {
+    const isSafeToDelete = await this.safeToDelete();
+    if (this.customer.id && isSafeToDelete) {
       this.dataStorageService
         .deleteCustomer(this.customer.id)
         .subscribe(() => this.dataStorageService.getCustomers());
-    } //should probably throw an error here
-    this.close();
+      this.close
+    } else if (!isSafeToDelete) {
+      this.error = 'Customer still has unpacked products'
+    }
   }
 
   close(): void {
     this.dialogRef.close();
   }
+
+  async safeToDelete(): Promise<boolean> {
+    if (this.customer.id) {
+      try {
+        const result: boolean | undefined = await this.dataStorageService.hasUnpackedOrders(this.customer.id).toPromise();
+        
+        if (result !== undefined) {
+          return !result;
+        } else {
+          throw new Error("Unexpected undefined result for hasUnpackedOrders")
+        }
+      } catch (error) {
+        console.error("Error checking unpacked products:", error);
+        return false;
+      }
+    }
+    return false;
+  }
+  
+  
 }
