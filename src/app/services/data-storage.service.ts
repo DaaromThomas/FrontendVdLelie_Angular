@@ -162,4 +162,8 @@ export class DataStorageService {
   
     return this.http.patch(this.baseurl + "/packages/" + id, null, { params }).subscribe();
   }
+
+  updateCustomer(params: HttpParams, customerId: string) {
+    return this.http.patch(this.baseurl + "/customers/" + customerId, null, { params });
+  }
 }
