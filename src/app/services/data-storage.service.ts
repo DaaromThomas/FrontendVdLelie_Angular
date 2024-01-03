@@ -166,4 +166,8 @@ export class DataStorageService {
   updateCustomer(params: HttpParams, customerId: string) {
     return this.http.patch(this.baseurl + "/customers/" + customerId, null, { params });
   }
+
+  deleteCustomer(customerId: string) {
+    return this.http.delete(this.baseurl + "/customers/" + customerId);
+  }
 }
