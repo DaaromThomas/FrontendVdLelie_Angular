@@ -19,12 +19,17 @@
                         <td>{{customer.address}}</td>
                         <td>{{customer.phonenumber ? customer.phonenumber : 'No phone number'}}</td>
                         <td>{{customer.email ? customer.email : 'No e-mail'}}</td>
-                        <td class="no-border" ><button mat-button (click)="$event.stopPropagation(); editCustomer(customer)">
-                            <mat-icon>edit</mat-icon>
-                        </button>
+                        <td class="no-border">
+                            <div style="display: flex;" >
+                                <button mat-button (click)="$event.stopPropagation(); editCustomer(customer)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button mat-button (click)="$event.stopPropagation(); deleteCustomer(customer)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
                         </td>
                     </tr>
-                   
                 </tbody>
             </table>
         </div>
