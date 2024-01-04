@@ -3,61 +3,75 @@ import { Account } from "../interfaces/account.interface";
 import { Packaging } from "./packaging.model";
 import { Product } from "./product";
 
-export class Log{
+export class Log {
+    private _account: Account;
+    private _product: Product;
+    private _packaging: Packaging;
+    private _packagingamount: number;
+    private _date: Date;
+    private _time: Time;
+
     constructor(
-        private account: Account,
-        private product: Product,
-        private packaging: Packaging,
-        private packagingAmount: number,
-        private date: Date,
-        private time: Time
-    ){}
-
-    get account_(): Account{
-        return this.account;
+        account: Account,
+        product: Product,
+        packaging: Packaging,
+        packagingamount: number,
+        date: Date,
+        time: Time
+    ) {
+        this._account = account;
+        this._product = product;
+        this._packaging = packaging;
+        this._packagingamount = packagingamount;
+        this._date = date;
+        this._time = time;
     }
 
-    set account_(account: Account){
-        this.account = account;
+    get account(): Account {
+        return this._account;
     }
 
-    get product_(): Product{
-        return this.product;
+    set account(account: Account) {
+        this._account = account;
     }
 
-    set product_(product: Product){
-        this.product = product;
+    get product(): Product {
+        return this._product;
     }
 
-    get packaging_(): Packaging{
-        return this.packaging;
+    set product(product: Product) {
+        this._product = product;
     }
 
-    set packaging_(packaging: Packaging){
-        this.packaging = packaging;
+    get packaging(): Packaging {
+        return this._packaging;
     }
 
-    get packagingAmount_(): number{
-        return this.packagingAmount;
+    set packaging(packaging: Packaging) {
+        this._packaging = packaging;
     }
 
-    set packagingAmount_(amount: number){
-        this.packagingAmount = amount;
+    get packagingamount(): number {
+        return this._packagingamount;
     }
 
-    get date_(): Date{
-        return this.date;
+    set packagingamount(amount: number) {
+        this._packagingamount = amount;
     }
 
-    set date_(date: Date){
-        this.date = date;
+    get date(): Date {
+        return this._date;
     }
 
-    get time_(): Time{
-        return this.time;
+    set date(date: Date) {
+        this._date = date;
     }
 
-    set time_(time: Time){
-        this.time = time;
+    get time(): Time {
+        return this._time;
+    }
+
+    set time(time: Time) {
+        this._time = time;
     }
 }
