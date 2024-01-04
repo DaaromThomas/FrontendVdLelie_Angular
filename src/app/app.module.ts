@@ -15,6 +15,8 @@ import { StockModule } from './stock/stock.module';
 import { CustomersModule } from './customers/customers.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginService } from './login/login.service';
+import { LogsComponent } from './logs/logs.component';
+import { LogsModule } from './logs/logs.module';
 
 
 @NgModule({
@@ -29,6 +31,7 @@ import { LoginService } from './login/login.service';
     StockModule,
     CustomersModule,    
     NoopAnimationsModule,
+    LogsModule
   ],
   providers: [
     provideClientHydration(),
