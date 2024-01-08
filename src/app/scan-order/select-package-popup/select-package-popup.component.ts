@@ -1,10 +1,12 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog'
 import { DataStorageService } from '../../services/data-storage.service';
 import { Packaging } from '../../interfaces/packaging';
 import { SelectedPackaging } from '../models/selected-packaging';
 import { Product } from '../../models/product';
 import { Customer } from '../../models/Customer';
+import { error } from 'console';
+import { EmailNotificationPopupComponent } from './email-notification-popup/email-notification-popup.component';
 
 
 @Component({
@@ -20,13 +22,14 @@ export class SelectPackagePopupComponent {
   selectedOption!: String;
   quantity: number = 1;
 
-  
+
 
   constructor(
-    public dialogRef: MatDialogRef<SelectPackagePopupComponent>, 
+    public dialogRef: MatDialogRef<SelectPackagePopupComponent>,
     private dataStorageService: DataStorageService,
-    @Inject(MAT_DIALOG_DATA) public product: Product
-    ) {
+    @Inject(MAT_DIALOG_DATA) public product: Product,
+    public dialog: MatDialog
+  ) {
 
   }
 
@@ -47,7 +50,7 @@ export class SelectPackagePopupComponent {
     if (cancelled) {
       this.dialogRef.close();
     } else {
-      
+
       this.dataStorageService.getPackageById(this.selectedOption).subscribe((data: Packaging) => {
         this.processData(data);
       });
@@ -56,33 +59,42 @@ export class SelectPackagePopupComponent {
   }
 
   error = '';
-  
-  processData(data: Packaging){
+
+  processData(data: Packaging) {
     let selectedPackaging = new SelectedPackaging(data, this.quantity);
-    for(const index in this.packageList){
+    for (const index in this.packageList) {
       let packaging = this.packageList[index];
-      if(packaging.id === selectedPackaging.selectedPackaging.id){
-       let amount = packaging.amountinstock - selectedPackaging.amount;
-        if(amount < 0){
+      if (packaging.id === selectedPackaging.selectedPackaging.id) {
+        let amount = packaging.amountinstock - selectedPackaging.amount;
+        if (amount < 0) {
           this.error = 'Not enough packages';
           return;
         }
-        else if(this.quantity < 1){
+        else if (this.quantity < 1) {
           this.error = 'Quantity is to low';
           return;
         }
-        else{
+        else {
           this.dataStorageService.updatePackageAmount(packaging.id, amount);
-          this.dataStorageService.sendEmail(amount, selectedPackaging.selectedPackaging.name);
+          if (packaging.amountinstock < packaging.minAmount) {
+            console.log("je moet nu een email versturen")
+          }
           this.error = '';
         }
       }
     }
-    
+
     this.dialogRef.close()
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(EmailNotificationPopupComponent, {
+      width: '750px',
+    });
+  }
+
 }
