@@ -16,32 +16,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for (customer of customerList; track $index) {
-                    <tr>
+                    <tr *ngFor="let customer of customerList; track: $index">
                         <td>{{customer.name}}</td>
                         <td>{{customer.address}}</td>
-                        @if (customer.phonenumber === null) {
-                            <td>No phone number</td>
-                        } @else {
-                           <td>{{customer.phonenumber}}</td>
-                        }
-                        @if (customer.email === null) {
-                            <td>No e-mail</td>
-                        } @else {
-                           <td>{{customer.email}}</td>
-                        }
+                        <td>{{customer.phonenumber ? customer.phonenumber : 'No phone number'}}</td>
+                        <td>{{customer.email ? customer.email : 'No e-mail'}}</td>
                         @if (customer.preferredPackaging === null) {
-                           <td>
-                               -
-                              <img class="edit-button-icon" src="../../assets/edit.png" (click)="displayChangePrefferedPackagePopup(customer.id)">
-                           </td>
+                        <td>
+                          -
+                         <img class="edit-button-icon" src="../../assets/edit.png" (click)="displayChangePrefferedPackagePopup(customer.id)">
+                        </td>
                         } @else{
-                           <td>
-                              {{customer.preferredPackaging!.name}}
-                                <img class="edit-button-icon" src="../../assets/edit.png" (click)="displayChangePrefferedPackagePopup(customer.id)">
-
-                           </td>
-                        }
+                        <td>
+                          {{customer.preferredPackaging!.name}}
+                          <img class="edit-button-icon" src="../../assets/edit.png" (click)="displayChangePrefferedPackagePopup(customer.id)">
+                        </td>
+                      }
+                        <td class="no-border" ><button mat-button (click)="$event.stopPropagation(); editCustomer(customer)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        </td>
                     </tr>
                     }
                 </tbody>
@@ -52,7 +46,8 @@
 </div>
 
 <div class="add-customer" *ngIf="displayAddCustomer">
-    <app-add-customer-popup class="customer-popup" (popupClosed)="onAddCustomerPopupClosed($event)"></app-add-customer-popup>
+    <app-add-customer-popup class="customer-popup"
+        (popupClosed)="onAddCustomerPopupClosed($event)"></app-add-customer-popup>
 </div>
 
 <div class="change-preffered-package" *ngIf="displayChangePrefferedPackage">

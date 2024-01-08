@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { Customer } from '../interfaces/customer.interface';
 import { DataStorageService } from '../services/data-storage.service';
+import { MatDialog } from '@angular/material/dialog';
+import { EditCustomerComponent } from './edit-customer/edit-customer/edit-customer.component';
 
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
-  styleUrl: './customers.component.css'
+  styleUrls: ['./customers.component.css'],
 })
 export class CustomersComponent {
   subscription: any;
@@ -17,18 +19,22 @@ export class CustomersComponent {
   selectedCustomerId : string = "";
 
 
-  constructor(private dataStorageService: DataStorageService) {}
+  constructor(
+    private dataStorageService: DataStorageService,
+    private dialog: MatDialog
+  ) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.dataStorageService.getCustomers();
     this.populateCustomerData();
   }
 
   populateCustomerData(): void {
-    this.subscription = this.dataStorageService.customerList$.subscribe((customerData) => {
-      console.log(customerData);
-      this.customerList = customerData;
-    })
+    this.subscription = this.dataStorageService.customerList$.subscribe(
+      (customerData) => {
+        this.customerList = customerData;
+      }
+    );
   }
 
   ngOnDestroy() {
@@ -55,4 +61,15 @@ export class CustomersComponent {
     this.applyBlur = !isClosed;
   }
 
+  trackByFn(index: number, customer: Customer) {
+    return customer.id; // unique id corresponding to the customer
+  }
+
+  editCustomer(customer: Customer) {
+    this.dialog.open(EditCustomerComponent, {
+      data: {
+        customer: customer,
+      },
+    });
+  }
 }

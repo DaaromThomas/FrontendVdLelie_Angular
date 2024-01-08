@@ -1,4 +1,4 @@
-<div id="product-add-dialog" class="container">
+<div id="customer-add-dialog" class="container">
     <div class="title">
       <img src='assets/Customer.png' style="width: 100px; height: 100px;" class="image-box">
     </div>
@@ -8,7 +8,7 @@
         <h3 class="error-message">{{ error }}</h3>
         </div>
         <div class="grid-row-2">
-          <form [formGroup]="newCustomer" class="form">
+          <form [formGroup]="newCustomerForm" class="form">
             <div class="form-group">
                 <div class="label-input">
                     <label for="name-input" class="label">Name: </label>
@@ -26,7 +26,7 @@
             <div class="form-group">
                 <div class="label-input">
                     <label for="phonenumber" class="label">PhoneNumber: </label>
-                    <input id="phonenumber-input" formControlName="phonenumber" placeholder="PhoneNumber" class="intl-tel-input">
+                    <input id="phonenumber-input" formControlName="phonenumber" placeholder="PhoneNumber" class="input" appNumericInput>
                 </div>
             </div>
   

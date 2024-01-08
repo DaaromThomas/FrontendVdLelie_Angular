@@ -6,6 +6,6 @@ export interface Customer{
     name: string;
     address: string;
     phonenumber: string | null;
-    email: string | null;
+    email: string;
     preferredPackaging?: Packaging;
 }
