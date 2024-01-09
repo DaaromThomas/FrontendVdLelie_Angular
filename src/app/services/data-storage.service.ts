@@ -166,6 +166,14 @@ export class DataStorageService {
     return this.http.patch(this.baseurl + "/customers/" + customerId, null, { params });
   }
 
+  deleteCustomer(customerId: string) {
+    return this.http.delete(this.baseurl + "/customers/" + customerId);
+  }
+
+  hasUnpackedOrders(customerId: string): Observable<boolean> {
+    return this.http.get<boolean>(this.baseurl + "/customers/" + customerId + "/hasUnpackedProducts");
+  }
+  
   sendEmail(amount: number, name: string) {
     const params = new HttpParams()
       .set('amount', amount.toString())
@@ -174,3 +182,4 @@ export class DataStorageService {
     return this.http.post(this.baseurl + '/email/lowonstock', null, { params }).subscribe();
   }
 }
+
