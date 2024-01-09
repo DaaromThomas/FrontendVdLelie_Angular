@@ -7,9 +7,10 @@ import { MatDialogModule } from '@angular/material/dialog'
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { EmailNotificationPopupComponent } from './select-package-popup/email-notification-popup/email-notification-popup.component';
 
 @NgModule({
-  declarations: [ScanOrderComponent, SelectPackagePopupComponent],
+  declarations: [ScanOrderComponent, SelectPackagePopupComponent, EmailNotificationPopupComponent],
   imports: [CommonModule, BrowserModule, MatDialogModule, FormsModule, MatFormFieldModule, MatSelectModule],
   exports: [ScanOrderComponent],
 })
