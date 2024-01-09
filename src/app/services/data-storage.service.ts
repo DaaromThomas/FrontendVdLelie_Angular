@@ -125,7 +125,6 @@ export class DataStorageService {
       .then((res) => {
         if (res) {
           this.currentAccount = res;
-          console.log(this.currentAccount);
           return this.currentAccount;
         } else {
           throw new Error('Failed to get current location');
