@@ -1,7 +1,7 @@
 import { Time } from "@angular/common";
 import { Account } from "../interfaces/account.interface";
-import { Packaging } from "./packaging.model";
 import { Product } from "./product";
+import { Packaging } from "../interfaces/packaging";
 
 export class Log {
     private _account: Account;
