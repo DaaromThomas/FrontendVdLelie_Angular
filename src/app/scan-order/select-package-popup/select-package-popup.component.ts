@@ -77,7 +77,7 @@ export class SelectPackagePopupComponent {
         else {
           this.dataStorageService.updatePackageAmount(packaging.id, amount);
           if (amount <= packaging.minAmount) {
-            this.dataStorageService.sendEmail(packaging.amountinstock, packaging.name)
+            this.dataStorageService.sendEmail(amount, packaging.name)
           }
           this.error = '';
         }
