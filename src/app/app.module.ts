@@ -9,10 +9,16 @@ import { LoginModule } from './login/login.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './login/Auth/auth.interceptor';
 import { StockModule } from './stock/stock.module';
+import { CustomersModule } from './customers/customers.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginService } from './login/login.service';
+
 import { GlobalErrorHandler } from './ErrorHandling/global-error-handler';
 import { LoadingcomponentComponent } from './ErrorHandling/loadingcomponent/loadingcomponent.component';
+
+import {FormsModule} from "@angular/forms";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [AppComponent, NavBarComponent, LoadingcomponentComponent],
@@ -24,8 +30,12 @@ import { LoadingcomponentComponent } from './ErrorHandling/loadingcomponent/load
     LoginModule,
     HttpClientModule,
     StockModule,
+    CustomersModule,
     NoopAnimationsModule,
-    GlobalErrorHandler
+    GlobalErrorHandler,
+    FormsModule,
+    MatMenuModule,
+    MatDialogModule
   ],
   providers: [
     provideClientHydration(),
