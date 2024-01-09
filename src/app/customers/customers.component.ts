@@ -3,6 +3,7 @@ import { Customer } from '../interfaces/customer.interface';
 import { DataStorageService } from '../services/data-storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditCustomerComponent } from './edit-customer/edit-customer/edit-customer.component';
+import { DeleteCustomerComponent } from './delete-customer/delete-customer.component';
 
 @Component({
   selector: 'app-customers',
@@ -67,6 +68,14 @@ export class CustomersComponent {
 
   editCustomer(customer: Customer) {
     this.dialog.open(EditCustomerComponent, {
+      data: {
+        customer: customer,
+      },
+    });
+  }
+
+  deleteCustomer(customer: Customer) {
+    this.dialog.open(DeleteCustomerComponent, {
       data: {
         customer: customer,
       },

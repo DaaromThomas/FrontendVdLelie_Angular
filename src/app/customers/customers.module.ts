@@ -13,10 +13,10 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
 import { MatInputModule } from '@angular/material/input';
-
+import { DeleteCustomerComponent } from './delete-customer/delete-customer.component'
 
 @NgModule({
-  declarations: [CustomersComponent, AddCustomerPopupComponent, EditCustomerComponent, ChangeCustomerPrefferedPackagePopupComponent],
+  declarations: [CustomersComponent, AddCustomerPopupComponent, EditCustomerComponent, ChangeCustomerPrefferedPackagePopupComponent, DeleteCustomerComponent],
   imports: [CommonModule, ReactiveFormsModule, SharedModule, MatButtonModule, MatDialogContent, MatFormFieldModule, MatIconModule, MatOptionModule, MatSelectModule, FormsModule, MatInputModule],
   exports: [CustomersComponent, AddCustomerPopupComponent, EditCustomerComponent],
 })

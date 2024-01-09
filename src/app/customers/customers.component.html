@@ -32,12 +32,17 @@
                             <img class="edit-button-icon" src="../../assets/edit.png" (click)="displayChangePrefferedPackagePopup(customer.id)">
                           </td>
                         }
-                        <td class="no-border" ><button mat-button (click)="$event.stopPropagation(); editCustomer(customer)">
-                            <mat-icon>edit</mat-icon>
-                        </button>
+                        <td class="no-border">
+                            <div style="display: flex;" >
+                                <button mat-button (click)="$event.stopPropagation(); editCustomer(customer)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button mat-button (click)="$event.stopPropagation(); deleteCustomer(customer)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
                         </td>
                     </tr>
-
                 </tbody>
             </table>
         </div>
