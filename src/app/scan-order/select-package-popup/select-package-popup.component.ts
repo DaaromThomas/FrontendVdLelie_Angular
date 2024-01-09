@@ -78,6 +78,7 @@ export class SelectPackagePopupComponent {
           this.dataStorageService.updatePackageAmount(packaging.id, amount);
           if (amount <= packaging.minAmount) {
             this.dataStorageService.sendEmail(amount, packaging.name)
+            this.openDialog()
           }
           this.error = '';
         }
