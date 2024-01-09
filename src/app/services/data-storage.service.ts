@@ -24,7 +24,7 @@ export class DataStorageService {
   private currentStockId: string = '';
   customerList$: Subject<Customer[]> = new Subject<Customer[]>();
 
-  constructor(private http: HttpClient, private cookieService: CookieService) {}
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   storePackage(newPackage: Packaging) {
     const httpOptions = {
@@ -71,9 +71,9 @@ export class DataStorageService {
       const locationList = locations as Location[];
       const packageList = Array.isArray(packages)
         ? packages.map((pack: Packaging) => {
-            const location = this.calculateLocation(pack.stock?.id);
-            return { ...pack, location };
-          })
+          const location = this.calculateLocation(pack.stock?.id);
+          return { ...pack, location };
+        })
         : [];
       const inventoryData: InventoryData = {
         packageList,
@@ -86,7 +86,7 @@ export class DataStorageService {
 
   getCustomers() {
     this.http.get<Customer[]>(this.baseurl + '/customers').subscribe((customers: Customer[]) => {
-        this.customerList$.next(customers);
+      this.customerList$.next(customers);
     })
   }
 
@@ -116,50 +116,49 @@ export class DataStorageService {
 
   getCurrentLocation(): Promise<Account> {
     const httpOptions = {
-     params: new HttpParams().set('name', this.cookieService.getCookie('currentUser')),
+      params: new HttpParams().set('name', this.cookieService.getCookie('currentUser')),
     };
-   
+
     return this.http
-     .get<Account>(this.baseurl + '/accounts/name', httpOptions)
-     .toPromise()
-     .then((res) => {
-       if (res) {
-         this.currentAccount = res;
-         console.log(this.currentAccount);
-         return this.currentAccount;
-       } else {
-         throw new Error('Failed to get current location');
-       }
-     });
-   }
-   
+      .get<Account>(this.baseurl + '/accounts/name', httpOptions)
+      .toPromise()
+      .then((res) => {
+        if (res) {
+          this.currentAccount = res;
+          return this.currentAccount;
+        } else {
+          throw new Error('Failed to get current location');
+        }
+      });
+  }
+
   getLocationStock() {
     if (this.currentAccount != undefined) {
-     for (let location of this.locationList) {
-       if (location.id === ((this.currentAccount.location as unknown) as Location).id) {
-         this.currentStockId = location.stock.id
-       }
-     }
+      for (let location of this.locationList) {
+        if (location.id === ((this.currentAccount.location as unknown) as Location).id) {
+          this.currentStockId = location.stock.id
+        }
+      }
     }
-   }
+  }
 
-   delay(ms: number): Promise<void> {
+  delay(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
-   }
-   
+  }
 
-   getStockId() {
+
+  getStockId() {
     return this.currentStockId;
-   }
+  }
 
-  changeIsPackedRequest(isPacked: boolean, productNumber: number){
+  changeIsPackedRequest(isPacked: boolean, productNumber: number) {
     let data: ChangeIsPackedRequestData = new ChangeIsPackedRequestData(isPacked, productNumber);
     return this.http.post(this.baseurl + "/product/ispacked", data);
   }
 
-  updatePackageAmount(id: string | undefined, amount: number) {  
+  updatePackageAmount(id: string | undefined, amount: number) {
     const params = new HttpParams().set('amount', amount);
-  
+
     return this.http.patch(this.baseurl + "/packages/" + id, null, { params }).subscribe();
   }
 
@@ -175,4 +174,12 @@ export class DataStorageService {
     return this.http.get<boolean>(this.baseurl + "/customers/" + customerId + "/hasUnpackedProducts");
   }
   
+  sendEmail(amount: number, name: string) {
+    const params = new HttpParams()
+      .set('amount', amount.toString())
+      .set('name', name);
+
+    return this.http.post(this.baseurl + '/email/lowonstock', null, { params }).subscribe();
+  }
 }
+
