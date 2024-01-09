@@ -17,6 +17,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginService } from './login/login.service';
 import {FormsModule} from "@angular/forms";
 import {MatMenuModule} from "@angular/material/menu";
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import {MatMenuModule} from "@angular/material/menu";
     NoopAnimationsModule,
     FormsModule,
     MatMenuModule,
+    MatDialogModule
   ],
   providers: [
     provideClientHydration(),
