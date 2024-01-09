@@ -14,8 +14,11 @@ export class CustomersComponent {
   subscription: any;
   customerList: Customer[] = [];
   displayAddCustomer: boolean = false;
+  displayChangePrefferedPackage: boolean = false;
   applyBlur: boolean = false;
   tableWrapperClass: string = 'table-wrapper';
+  selectedCustomerId : string = "";
+
 
   constructor(
     private dataStorageService: DataStorageService,
@@ -43,9 +46,19 @@ export class CustomersComponent {
     this.displayAddCustomer = true;
     this.applyBlur = true;
   }
+  displayChangePrefferedPackagePopup(customerId: any) {
+    this.selectedCustomerId = customerId;
+    this.displayChangePrefferedPackage = true;
+    this.applyBlur = true;
+  }
 
   onAddCustomerPopupClosed(isClosed: boolean) {
     this.displayAddCustomer = !isClosed;
+    this.applyBlur = !isClosed;
+  }
+
+  onChangePrefferedPackagePopupClosed(isClosed: boolean) {
+    this.displayChangePrefferedPackage = !isClosed;
     this.applyBlur = !isClosed;
   }
 

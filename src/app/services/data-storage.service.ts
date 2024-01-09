@@ -24,7 +24,7 @@ export class DataStorageService {
   private currentStockId: string = '';
   customerList$: Subject<Customer[]> = new Subject<Customer[]>();
 
-  constructor(private http: HttpClient, private cookieService: CookieService) { }
+  constructor(private http: HttpClient, private cookieService: CookieService) {}
 
   storePackage(newPackage: Packaging) {
     const httpOptions = {
@@ -88,6 +88,18 @@ export class DataStorageService {
     this.http.get<Customer[]>(this.baseurl + '/customers').subscribe((customers: Customer[]) => {
       this.customerList$.next(customers);
     })
+  }
+
+  setCustomerPrefferedPackage(CustomerId: string, prefferedPackageId: string){
+    console.log(CustomerId);
+    console.log(prefferedPackageId);
+    let params = new HttpParams();
+    // params = params.set('id', CustomerId);
+    params = params.set('prefferedPackageId', prefferedPackageId);
+    const httpOptions = {
+      params: params
+    };
+    this.http.patch<Customer>(this.baseurl + '/customers/' + CustomerId, {}, httpOptions).subscribe();
   }
 
   calculateLocation(stockId: string | undefined) {
@@ -173,7 +185,7 @@ export class DataStorageService {
   hasUnpackedOrders(customerId: string): Observable<boolean> {
     return this.http.get<boolean>(this.baseurl + "/customers/" + customerId + "/hasUnpackedProducts");
   }
-  
+
   sendEmail(amount: number, name: string) {
     const params = new HttpParams()
       .set('amount', amount.toString())
@@ -182,4 +194,5 @@ export class DataStorageService {
     return this.http.post(this.baseurl + '/email/lowonstock', null, { params }).subscribe();
   }
 }
+
 

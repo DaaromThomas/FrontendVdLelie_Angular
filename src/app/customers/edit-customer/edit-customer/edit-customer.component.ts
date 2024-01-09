@@ -103,7 +103,6 @@ export class EditCustomerComponent implements AfterViewInit, OnDestroy, OnInit {
           .updateCustomer(params, this.customer.id)
           .subscribe(() => this.dataStorageService.getCustomers());
       }
-      console.log(this.customerForm.value);
       this.close();
     } else {
       this.error = 'Invalid customer data';
@@ -115,8 +114,8 @@ export class EditCustomerComponent implements AfterViewInit, OnDestroy, OnInit {
     const dialCode = this.phoneInput.getSelectedCountryData().dialCode;
     const phoneNumberWithoutCountry = phoneNumberWithCountry.replace(`+${dialCode}`, '');
     this.customerForm.controls['phonenumber'].setValue(phoneNumberWithoutCountry);
-   }   
-  
+   }
+
   applyStyles() {
     this.mutationObserver = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {

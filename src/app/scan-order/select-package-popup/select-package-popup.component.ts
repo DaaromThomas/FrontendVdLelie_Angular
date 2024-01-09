@@ -5,7 +5,6 @@ import { Packaging } from '../../interfaces/packaging';
 import { SelectedPackaging } from '../models/selected-packaging';
 import { Product } from '../../models/product';
 import { Customer } from '../../models/Customer';
-import { error } from 'console';
 import { EmailNotificationPopupComponent } from './email-notification-popup/email-notification-popup.component';
 
 
@@ -19,7 +18,7 @@ export class SelectPackagePopupComponent {
   packageList: Packaging[] = [];
 
 
-  selectedOption!: String;
+  selectedOption!: string;
   quantity: number = 1;
 
 
@@ -32,6 +31,10 @@ export class SelectPackagePopupComponent {
   ) {
 
   }
+
+
+
+
 
   public ngOnInit(): void {
     this.dataStorageService.getPackagesAndLocations();

@@ -80,6 +80,20 @@ button {
     z-index: 999;
 }
 
+.change-preffered-package {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    margin: 0 auto;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+}
+
 .filter {
     margin-top: 1%;
     margin-right: 1%;
@@ -115,3 +129,15 @@ button {
  .no-border button {
     background-color: #ffffff;
  }
+
+.edit-button-icon{
+  width: 15px;
+  height: 15px;
+  float: right;
+}
+
+.edit-button-icon:hover{
+    color: red;
+    cursor: pointer;
+}
+

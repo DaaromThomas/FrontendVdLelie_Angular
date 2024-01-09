@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="title">
+        <img src='assets/Customer.png' style="width: 100px; height: 100px;" class="image-box">
+    </div>
+    <div class="values">
+        <h1 class="title-text">Set Preferred Package</h1>
+        <div mat-dialog-content>
+            <mat-form-field class="select">
+                <mat-label>Select a package</mat-label>
+                <mat-select [(ngModel)]="selectedOption">
+                    <mat-option *ngFor="let package of packageList" [value]="package.id">
+                        {{ package.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="buttons">
+            <button class="done-button" (click)="setPrefferedPackage()" >✔ set preference</button>
+            <button class="close-button" (click)="closeWindow()" >❌ discard</button>
+        </div>
+    </div>
+</div>
