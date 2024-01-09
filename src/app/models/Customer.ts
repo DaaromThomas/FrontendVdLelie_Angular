@@ -11,7 +11,7 @@ export class Customer{
     public preferredPackaging!: Packaging;
 
     constructor(
-         address: string,
+        address: string,
         customerNumber: number,
         email: string,
         id: string,
