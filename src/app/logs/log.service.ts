@@ -1,7 +1,8 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Log } from '../models/Log';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Params } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,13 @@ export class LogService implements OnInit{
         this.logList = logs;
         this.logList$.next(this.logList);
       })
+  }
+
+  public createLog(params: HttpParams){
+
+    this.http.post(this.logURL, params).subscribe((data) => {
+      console.log(data);
+    });
   }
 
   

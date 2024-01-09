@@ -1,3 +1,5 @@
+import { Location } from '../interfaces/location'
+
 export interface Account {
   id: string;
   location: Location;

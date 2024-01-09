@@ -6,6 +6,12 @@ import { SelectedPackaging } from '../models/selected-packaging';
 import { Product } from '../../models/product';
 import { Customer } from '../../models/Customer';
 import { EmailNotificationPopupComponent } from './email-notification-popup/email-notification-popup.component';
+import { LogService } from '../../logs/log.service';
+import { Account } from '../../interfaces/account.interface';
+import { HttpParams } from '@angular/common/http';
+import { Params } from '@angular/router';
+import { Stock } from '../../models/stock.model';
+
 
 
 @Component({
@@ -27,10 +33,9 @@ export class SelectPackagePopupComponent {
     public dialogRef: MatDialogRef<SelectPackagePopupComponent>,
     private dataStorageService: DataStorageService,
     @Inject(MAT_DIALOG_DATA) public product: Product,
-    public dialog: MatDialog
-  ) {
 
-  }
+    public dialog: MatDialog, private logService: LogService
+  ) {}
 
 
 
@@ -93,6 +98,14 @@ export class SelectPackagePopupComponent {
             this.openDialog()
           }
           this.error = '';
+
+          const account: Account | undefined = this.dataStorageService.GAccount;
+
+          if (account !== undefined) {
+            this.sendLogToDB(account, this.product, data, this.quantity);
+          }else{
+             console.log("Account is undefined")
+          }
         }
       }
     }
@@ -104,10 +117,25 @@ export class SelectPackagePopupComponent {
     this.subscription.unsubscribe();
   }
 
+
   openDialog() {
     const dialogRef = this.dialog.open(EmailNotificationPopupComponent, {
       width: '750px',
     });
   }
 
+
+
+  sendLogToDB(account: Account, product: Product, packaging: Packaging, packagingamount: number) {
+    const httpParams: HttpParams = new HttpParams()
+      .set('accountId', account.id)
+      .set('productId', product.id)
+      .set('packagingId', packaging.id)
+      .set('packagingamount', packagingamount);
+
+    this.logService.createLog(httpParams);
+  }
+
 }
+
+
