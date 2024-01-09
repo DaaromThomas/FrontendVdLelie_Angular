@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="table-wrapper">
+        <table class="table">
+            <thead class="table-head">
+                <tr id="top-row">
+                    <th>Account</th>
+                    <th>Product</th>
+                    <th>Packaging</th>
+                    <th>Packaging-amount</th>
+                    <th>Date and time</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody class="table-body">
+                <tr *ngFor="let log of logs; let i = index" class="row">
+                    <td>{{log.account.name}}</td>
+                    <td>{{log.product.name}}</td>
+                    <td>{{log.packaging.name}}</td>
+                    <td>{{log.packagingamount}}</td>
+                    <td>{{log.date}} {{log.time}}</td>
+                    <td>
+                        <button class="button-63" role="button">Revert</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
