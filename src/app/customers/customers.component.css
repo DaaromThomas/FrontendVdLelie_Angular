@@ -136,3 +136,8 @@ button {
   float: right;
 }
 
+.edit-button-icon:hover{
+    color: red;
+    cursor: pointer;
+}
+

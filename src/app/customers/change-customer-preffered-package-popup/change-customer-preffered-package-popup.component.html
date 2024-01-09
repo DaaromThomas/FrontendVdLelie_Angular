@@ -4,7 +4,7 @@
     </div>
     <div class="values">
         <h1 class="title-text">Set Preferred Package</h1>
-        <mat-dialog-content>
+        <div mat-dialog-content>
             <mat-form-field class="select">
                 <mat-label>Select a package</mat-label>
                 <mat-select [(ngModel)]="selectedOption">
@@ -13,7 +13,7 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-        </mat-dialog-content>
+        </div>
         <div class="buttons">
             <button class="done-button" (click)="setPrefferedPackage()" >✔ set preference</button>
             <button class="close-button" (click)="closeWindow()" >❌ discard</button>
