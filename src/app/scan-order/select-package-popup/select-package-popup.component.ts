@@ -40,7 +40,7 @@ export class SelectPackagePopupComponent {
     this.dataStorageService.getPackagesAndLocations();
     this.populateInventoryData();
 
-    this.selectedOption = this.product.prefferedpackage.id;
+    this.selectedOption = this.product.order.customer.preferredPackaging.id;
   }
 
   populateInventoryData(): void {
