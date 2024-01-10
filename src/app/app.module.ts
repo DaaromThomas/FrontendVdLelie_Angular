@@ -1,8 +1,5 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-import {
-  BrowserModule,
-  provideClientHydration,
-} from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { ScanOrderModule } from './scan-order/scan-order.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent, appInitializer } from './app.component';
@@ -12,11 +9,19 @@ import { LoginModule } from './login/login.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './login/Auth/auth.interceptor';
 import { StockModule } from './stock/stock.module';
+import { CustomersModule } from './customers/customers.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginService } from './login/login.service';
 
+import { GlobalErrorHandler } from './ErrorHandling/global-error-handler';
+import { LoadingcomponentComponent } from './ErrorHandling/loadingcomponent/loadingcomponent.component';
+
+import {FormsModule} from "@angular/forms";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatDialogModule} from "@angular/material/dialog";
+
 @NgModule({
-  declarations: [AppComponent, NavBarComponent],
+  declarations: [AppComponent, NavBarComponent, LoadingcomponentComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -25,7 +30,12 @@ import { LoginService } from './login/login.service';
     LoginModule,
     HttpClientModule,
     StockModule,
+    CustomersModule,
     NoopAnimationsModule,
+    GlobalErrorHandler,
+    FormsModule,
+    MatMenuModule,
+    MatDialogModule
   ],
   providers: [
     provideClientHydration(),

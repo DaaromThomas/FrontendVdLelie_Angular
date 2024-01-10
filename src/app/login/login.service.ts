@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Login } from '../interfaces/login.interface';
-import { error } from 'console';
-import { DataStorageService } from '../services/data-storage.service';
 import { CookieService } from './cookie.service';
 
 
@@ -13,13 +11,13 @@ import { CookieService } from './cookie.service';
 })
 export class LoginService {
   Jwttoken: any;
-  username: string = '';
   wrongPassWordChange: Subject<boolean> = new Subject<boolean>();
+  baseurl: string = 'http://localhost:8080';
+  expirationTimeInDays: number = 1;
   constructor(
     private http: HttpClient,
     private router: Router,
     private cookieService: CookieService,
-    private dataStorageService: DataStorageService
   ) {}
 
   loginRequest(login: Login) {
@@ -27,8 +25,8 @@ export class LoginService {
       throw new Error('username or password not valid')
     }
     this.wrongPassWordChange.next(false)
-    this.username = login.username;
-    this.http.post('http://localhost:8080/login', login).subscribe(
+    this.cookieService.setCookie('currentUser', login.username, this.expirationTimeInDays);
+    this.http.post(this.baseurl + '/login', login).subscribe(
       (res) => {
         this.handleRes(res);
       },
@@ -45,8 +43,7 @@ export class LoginService {
 
   handleRes(res: any) {
       this.Jwttoken = res.token;
-      this.dataStorageService.setCurrentUser(this.username);
-      this.cookieService.setCookie('refreshToken', res.refreshToken, 1);
+      this.cookieService.setCookie('refreshToken', res.refreshToken, this.expirationTimeInDays);
       this.router.navigateByUrl('/scan-order');
       this.Jwttoken = res.token;
     }
@@ -66,7 +63,7 @@ export class LoginService {
     const refreshToken = this.cookieService.getCookie('refreshToken');
     if (refreshToken) {
       this.http
-        .post('http://localhost:8080/refreshtoken', {
+        .post(this.baseurl + '/refreshtoken', {
           refreshToken: refreshToken,
         })
         .subscribe((data: any) => {

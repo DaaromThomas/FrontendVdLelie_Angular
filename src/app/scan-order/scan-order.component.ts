@@ -5,7 +5,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { Product } from '../models/product';
 import { SelectPackagePopupComponent } from './select-package-popup/select-package-popup.component';
 import { ScanOrderService } from './services/scan-order.service';
-import { UUID } from 'crypto';
 
 
 
