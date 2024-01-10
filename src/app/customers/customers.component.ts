@@ -60,6 +60,8 @@ export class CustomersComponent {
   onChangePrefferedPackagePopupClosed(isClosed: boolean) {
     this.displayChangePrefferedPackage = !isClosed;
     this.applyBlur = !isClosed;
+    this.dataStorageService.getCustomers();
+    this.populateCustomerData();
   }
 
   trackByFn(index: number, customer: Customer) {
