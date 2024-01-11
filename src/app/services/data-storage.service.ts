@@ -186,10 +186,11 @@ export class DataStorageService {
     return this.http.get<boolean>(this.baseurl + "/customers/" + customerId + "/hasUnpackedProducts");
   }
 
-  sendEmail(amount: number, name: string) {
+  sendEmail(amount: number, name: string, minAmount: Number) {
     const params = new HttpParams()
       .set('amount', amount.toString())
-      .set('name', name);
+      .set('name', name)
+      .set('minAmount', minAmount.toString());
 
     return this.http.post(this.baseurl + '/email/lowonstock', null, { params }).subscribe();
   }
