@@ -13,7 +13,7 @@ describe('EditCustomerComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [EditCustomerComponent],
-      imports: [HttpClientTestingModule], // Add this line
+      imports: [HttpClientTestingModule],
       providers: [
         FormBuilder,
         {

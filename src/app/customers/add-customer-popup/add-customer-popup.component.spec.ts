@@ -38,8 +38,6 @@ describe('AddCustomerPopupComponent', () => {
    fixture.detectChanges();
  });
 
- // Your existing tests...
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -49,12 +47,11 @@ describe('AddCustomerPopupComponent', () => {
     spyOn(component.addCustomer, 'emit');
     spyOn(component, 'saveCustomer');
 
-    //set form values with invalid required data
     component.newCustomerForm.setValue({
-      name: '', //this one is empty but should not be allowed to be empty
-      address: 'BavelaarStraat', //this one is not empty and isn't allowed to be either
-      phonenumber: '', //this one is allowed to remain empty
-      email: 'test@test.com', //this one should not be allowed to be empty
+      name: '',
+      address: 'BavelaarStraat',
+      phonenumber: '',
+      email: 'test@test.com',
     });
 
     component.submitForm();
@@ -69,12 +66,11 @@ describe('AddCustomerPopupComponent', () => {
     spyOn(component.addCustomer, 'emit');
     spyOn(component, 'saveCustomer');
 
-    //set form values with invalid required data
     component.newCustomerForm.setValue({
-      name: 'Gordijnen man', //this one is not empty and isn't allowed to be either
-      address: '', //this one is empty but should not be allowed to be empty
-      phonenumber: '', //this one is allowed to remain empty
-      email: 'test@test.com', //this one should not be allowed to be empty
+      name: 'Gordijnen man',
+      address: '',
+      phonenumber: '',
+      email: 'test@test.com',
     });
 
     component.submitForm();
@@ -89,12 +85,11 @@ describe('AddCustomerPopupComponent', () => {
     spyOn(component.addCustomer, 'emit');
     spyOn(component, 'saveCustomer');
 
-    //set form values with invalid required data
     component.newCustomerForm.setValue({
-      name: 'Gordijnen man', //this one is not empty and isn't allowed to be either
-      address: 'BavelaarStraat', //this one is empty but should not be allowed to be empty
-      phonenumber: '', //this one is allowed to remain empty
-      email: '', //this one should not be allowed to be empty
+      name: 'Gordijnen man',
+      address: 'BavelaarStraat',
+      phonenumber: '',
+      email: '',
     });
 
     component.submitForm();
@@ -109,12 +104,11 @@ describe('AddCustomerPopupComponent', () => {
     spyOn(component.addCustomer, 'emit');
     spyOn(component, 'saveCustomer');
 
-    //set form values with invalid required data
     component.newCustomerForm.setValue({
-      name: 'Gordijnen man', //this one is not empty and isn't allowed to be either
-      address: 'BavelaarStraat', //this one is empty but should not be allowed to be empty
-      phonenumber: '', //this one is allowed to remain empty
-      email: 'hello@iamnotvalid', //this one should not be allowed to be empty
+      name: 'Gordijnen man',
+      address: 'BavelaarStraat',
+      phonenumber: '',
+      email: 'hello@iamnotvalid',
     });
 
     component.submitForm();
@@ -129,12 +123,11 @@ describe('AddCustomerPopupComponent', () => {
     spyOn(component.addCustomer, 'emit');
     spyOn(component, 'saveCustomer');
 
-    //set form values with invalid required data
     component.newCustomerForm.setValue({
-      name: 'Gordijnen man', //this one is not empty and isn't allowed to be either
-      address: 'BavelaarStraat', //this one is empty but should not be allowed to be empty
-      phonenumber: '', //this one is allowed to remain empty
-      email: 'test@test.com', //this one should not be allowed to be empty
+      name: 'Gordijnen man',
+      address: 'BavelaarStraat',
+      phonenumber: '',
+      email: 'test@test.com',
     });
 
     component.submitForm();
@@ -145,39 +138,30 @@ describe('AddCustomerPopupComponent', () => {
   })
 
   it('should call observe method of MutationObserver', () => {
-    // Arrange
     const observeSpy = spyOn(MutationObserver.prototype, 'observe');
    
-    // Act
     component.applyStyles();
    
-    // Assert
     expect(observeSpy).toHaveBeenCalledWith(document.body, { childList: true, subtree: true });
    });
    
  
   it('should identify flag container nodes', () => {
-    // Arrange
     const dummyElement = document.createElement('div');
     dummyElement.classList.add('iti__flag-container');
  
-    // Act
     const result = component.isFlagContainer(dummyElement);
  
-    // Assert
     expect(result).toBeTrue();
   });
 
   it('should not identify non-flag container nodes', () => {
-    // Arrange
     const dummyTextNode = document.createTextNode('This is a text node');
     const dummyElement = document.createElement('div');
    
-    // Act
     const resultTextNode = component.isFlagContainer(dummyTextNode);
     const resultElement = component.isFlagContainer(dummyElement);
    
-    // Assert
     expect(resultTextNode).toBeFalse();
     expect(resultElement).toBeFalse();
    });
