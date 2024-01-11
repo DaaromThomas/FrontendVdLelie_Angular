@@ -66,6 +66,10 @@ button {
     margin-right: 10%;
 }
 
+mat-icon.options {
+    float: right;
+}
+
 .add-customer {
     width: fit-content;
     height: fit-content;
