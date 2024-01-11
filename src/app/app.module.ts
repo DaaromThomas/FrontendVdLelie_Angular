@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import {APP_INITIALIZER, InjectionToken, NgModule} from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { ScanOrderModule } from './scan-order/scan-order.module';
 import { AppRoutingModule } from './app-routing.module';

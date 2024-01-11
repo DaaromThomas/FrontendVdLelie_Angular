@@ -2,50 +2,11 @@
   <img src="assets/grey-scanorder.png">
   <div class="filter">
     <div class="textbox">
-      <!--  <form>-->
       <h1 class="title" for="name">Enter Productnumber: </h1>
-      <label for="hello" class="error">{{getErrorMessage}}</label>
-      <input id="name" type="text" class="scan-input" (input)="onInputOrderNumber($event)"><br>
-      <button id="hello" name="hello" class="scan-button" (click)="getOrders()">Load product</button><br>
-      
-    <!--  </form>-->
+      <label for="scanButton" class="error">{{getErrorMessage}}</label>
+      <input id="productNumberInput" type="text" class="scan-input" (input)="onInputOrderNumber($event)" (keyup.enter)="onEnter()" [disabled]="disableScan"><br>
+      <button id="scanButton" name="hello" class="scan-button" (click)="getOrders()">Load product</button><br>
     </div>
   </div>
 </div>
 
-
-<!-- <div class="container">
-  <table>
-    <thead>
-      <tr>
-        <th *ngFor="let name of productColumns">{{name}}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let product of products; index as i" (click)="selectProduct(i)"
-        [ngClass]="{'selected': i==selectedIndex}">
-        <td>{{product.name}}</td>
-        <td>{{product.prefferedpackage}}</td>
-        <td>0</td>
-      </tr>
-    </tbody>
-  </table>
-</div><br><br><br> -->
-<!-- 
-<div class="container">
-  <table>
-    <thead>
-      <tr>
-        <th>packaging</th>
-        <th>amount</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let package of packaging;">
-        <td>{{package}}</td>
-        <td>2</td>
-      </tr>
-    </tbody>
-  </table>
-  <button mat-button (click)="openDialog()">Open Dialog</button>
-</div> -->
