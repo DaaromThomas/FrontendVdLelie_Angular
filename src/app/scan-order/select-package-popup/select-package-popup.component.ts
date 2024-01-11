@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import {Component, HostListener, Inject} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog'
 import { DataStorageService } from '../../services/data-storage.service';
 import { Packaging } from '../../interfaces/packaging';
@@ -41,6 +41,15 @@ export class SelectPackagePopupComponent {
     this.populateInventoryData();
 
     this.selectedOption = this.product.order.customer.preferredPackaging.id;
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent): void {
+    if (event.key === "Enter") {
+      this.onClose(false);
+    } else if (event.key === "Escape" || event.key === "Backspace"){
+      this.onClose(true);
+    }
   }
 
   populateInventoryData(): void {
