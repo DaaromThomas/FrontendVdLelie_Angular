@@ -1,5 +1,5 @@
-<div *ngIf="applyBlur" class="overlay" (click)="onAddCustomerPopupClosed(true);onChangePrefferedPackagePopupClosed(true)"></div>
-<div class="blur" [ngClass]="{'blur-effect': displayAddCustomer || displayChangePrefferedPackage}">
+<div *ngIf="applyBlur" class="overlay" (click)="onAddCustomerPopupClosed(true);"></div>
+<div class="blur" [ngClass]="{'blur-effect': displayAddCustomer}">
     <div class="filter">
     </div>
     <div class="container">
@@ -12,7 +12,7 @@
                         <th>Address</th>
                         <th>PhoneNumber</th>
                         <th>E-Mail</th>
-                        <th>Preffered Package</th>
+                        <th>Preferred Package</th>
                     </tr>
                 </thead>
                 <tbody>
