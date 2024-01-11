@@ -25,9 +25,9 @@
                           <td>
                             -
                             <mat-icon class="options" [matMenuTriggerFor]="customer_options" >more_vert</mat-icon>
-                            <mat-menu #customer_options="matMenu">
-                                <p mat-menu-item (click)="editCustomer(customer)">edit <mat-icon>edit</mat-icon></p>
-                                <p mat-menu-item (click)="deleteCustomer(customer)">delete <mat-icon>delete</mat-icon></p>
+                            <mat-menu class="options" #customer_options="matMenu">
+                                <p class="edit" mat-menu-item (click)="editCustomer(customer)">edit <mat-icon>edit</mat-icon></p>
+                                <p class="delete" mat-menu-item (click)="deleteCustomer(customer)">delete <mat-icon>delete</mat-icon></p>
                             </mat-menu>
                             <img class="edit-button-icon" src="../../assets/edit.png" (click)="displayChangePrefferedPackagePopup(customer.id)">
                           </td>
@@ -35,9 +35,9 @@
                           <td>
                             {{customer.preferredPackaging!.name}}
                             <mat-icon class="options" [matMenuTriggerFor]="customer_options" >more_vert</mat-icon>
-                            <mat-menu #customer_options="matMenu">
-                                <p mat-menu-item (click)="editCustomer(customer)">edit <mat-icon>edit</mat-icon></p>
-                                <p mat-menu-item (click)="deleteCustomer(customer)">delete <mat-icon>delete</mat-icon></p>
+                            <mat-menu class="options" #customer_options="matMenu">
+                                <p class="edit" mat-menu-item (click)="editCustomer(customer)">edit <mat-icon>edit</mat-icon></p>
+                                <p class="delete" mat-menu-item (click)="deleteCustomer(customer)">delete <mat-icon>delete</mat-icon></p>
                             </mat-menu>
                             <img class="edit-button-icon" src="../../assets/edit.png" (click)="displayChangePrefferedPackagePopup(customer.id)">
                           </td>
