@@ -62,7 +62,6 @@ export class CustomersComponent {
     this.applyBlur = !isClosed;
     this.dataStorageService.getCustomers();
     this.populateCustomerData();
-    console.log("haha");
   }
 
   trackByFn(index: number, customer: Customer) {
