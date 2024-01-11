@@ -14,7 +14,6 @@ import {MatSelectModule} from "@angular/material/select";
 import { MatInputModule } from '@angular/material/input';
 import { DeleteCustomerComponent } from './delete-customer/delete-customer.component'
 import { MatMenuModule } from '@angular/material/menu';
-import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [CustomersComponent, AddCustomerPopupComponent, EditCustomerComponent, DeleteCustomerComponent],
