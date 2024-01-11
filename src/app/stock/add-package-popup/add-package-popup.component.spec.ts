@@ -76,7 +76,6 @@ describe('AddPackagePopupComponent', () => {
     spyOn(component.addPackage, 'emit');
     spyOn(component, 'savePackage');
 
-    // Set form values to simulate an invalid form (e.g., missing required field)
     component.newPackage.setValue({
       amountinstock: 10,
       minAmount: 5,

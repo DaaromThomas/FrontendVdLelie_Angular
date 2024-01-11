@@ -12,7 +12,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class DeleteCustomerComponent implements OnInit {
   customer: Customer;
   customerForm!: FormGroup;
-  error: string = ''; //thinking of displaying an error when the customer still has orders opened but maybe have an overrule button that also cascades and deletes those orders then?
+  error: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<DeleteCustomerComponent>,
