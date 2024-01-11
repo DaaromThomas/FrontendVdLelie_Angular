@@ -90,18 +90,6 @@ export class DataStorageService {
     })
   }
 
-  setCustomerPrefferedPackage(CustomerId: string, prefferedPackageId: string){
-    console.log(CustomerId);
-    console.log(prefferedPackageId);
-    let params = new HttpParams();
-    // params = params.set('id', CustomerId);
-    params = params.set('prefferedPackageId', prefferedPackageId);
-    const httpOptions = {
-      params: params
-    };
-    this.http.patch<Customer>(this.baseurl + '/customers/' + CustomerId, {}, httpOptions).subscribe();
-  }
-
   calculateLocation(stockId: string | undefined) {
     if (stockId != undefined) {
       let locationName: string = 'deleted location';

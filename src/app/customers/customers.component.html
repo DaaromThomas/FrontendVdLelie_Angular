@@ -54,7 +54,3 @@
     <app-add-customer-popup class="customer-popup"
         (popupClosed)="onAddCustomerPopupClosed($event)"></app-add-customer-popup>
 </div>
-
-<div class="change-preffered-package" *ngIf="displayChangePrefferedPackage">
-    <app-change-customer-preffered-package-popup class="preffered-package-popup" [customerId]="selectedCustomerId" (popupClosed)="onChangePrefferedPackagePopupClosed($event)"></app-change-customer-preffered-package-popup>
-</div>
