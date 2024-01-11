@@ -92,7 +92,6 @@ export class DataStorageService {
 
   setCustomerPrefferedPackage(CustomerId: string, prefferedPackageId: string){
     let params = new HttpParams();
-    // params = params.set('id', CustomerId);
     params = params.set('prefferedPackageId', prefferedPackageId);
     const httpOptions = {
       params: params
