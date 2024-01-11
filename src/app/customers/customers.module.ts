@@ -7,7 +7,6 @@ import { SharedModule } from '../shared/shared-module/shared-module.module';
 import { EditCustomerComponent } from './edit-customer/edit-customer/edit-customer.component';
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
-import { ChangeCustomerPrefferedPackagePopupComponent } from './change-customer-preffered-package-popup/change-customer-preffered-package-popup.component';
 import {MatDialogContent} from "@angular/material/dialog";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatOptionModule} from "@angular/material/core";
@@ -16,7 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { DeleteCustomerComponent } from './delete-customer/delete-customer.component'
 
 @NgModule({
-  declarations: [CustomersComponent, AddCustomerPopupComponent, EditCustomerComponent, ChangeCustomerPrefferedPackagePopupComponent, DeleteCustomerComponent],
+  declarations: [CustomersComponent, AddCustomerPopupComponent, EditCustomerComponent, DeleteCustomerComponent],
   imports: [CommonModule, ReactiveFormsModule, SharedModule, MatButtonModule, MatDialogContent, MatFormFieldModule, MatIconModule, MatOptionModule, MatSelectModule, FormsModule, MatInputModule],
   exports: [CustomersComponent, AddCustomerPopupComponent, EditCustomerComponent],
 })

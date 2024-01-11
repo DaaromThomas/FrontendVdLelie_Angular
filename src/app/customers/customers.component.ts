@@ -46,6 +46,7 @@ export class CustomersComponent {
     this.displayAddCustomer = true;
     this.applyBlur = true;
   }
+  
   displayChangePrefferedPackagePopup(customerId: any) {
     this.selectedCustomerId = customerId;
     this.displayChangePrefferedPackage = true;
