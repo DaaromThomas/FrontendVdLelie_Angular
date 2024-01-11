@@ -24,24 +24,24 @@
                         @if (customer.preferredPackaging === null) {
                           <td>
                             -
+                            <mat-icon class="options" [matMenuTriggerFor]="customer_options" >more_vert</mat-icon>
+                            <mat-menu #customer_options="matMenu">
+                                <p mat-menu-item (click)="editCustomer(customer)">edit <mat-icon>edit</mat-icon></p>
+                                <p mat-menu-item (click)="deleteCustomer(customer)">delete <mat-icon>delete</mat-icon></p>
+                            </mat-menu>
                             <img class="edit-button-icon" src="../../assets/edit.png" (click)="displayChangePrefferedPackagePopup(customer.id)">
                           </td>
                         } @else{
                           <td>
                             {{customer.preferredPackaging!.name}}
+                            <mat-icon class="options" [matMenuTriggerFor]="customer_options" >more_vert</mat-icon>
+                            <mat-menu #customer_options="matMenu">
+                                <p mat-menu-item (click)="editCustomer(customer)">edit <mat-icon>edit</mat-icon></p>
+                                <p mat-menu-item (click)="deleteCustomer(customer)">delete <mat-icon>delete</mat-icon></p>
+                            </mat-menu>
                             <img class="edit-button-icon" src="../../assets/edit.png" (click)="displayChangePrefferedPackagePopup(customer.id)">
                           </td>
                         }
-                        <td class="no-border">
-                            <div style="display: flex;" >
-                                <button mat-button (click)="$event.stopPropagation(); editCustomer(customer)">
-                                    <mat-icon>edit</mat-icon>
-                                </button>
-                                <button mat-button (click)="$event.stopPropagation(); deleteCustomer(customer)">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                            </div>
-                        </td>
                     </tr>
                 </tbody>
             </table>
