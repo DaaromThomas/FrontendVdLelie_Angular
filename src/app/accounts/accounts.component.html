@@ -1,1 +1,26 @@
-<p>accounts works!</p>
+<div class="container">
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>employee number</th>
+                    <th>role</th>
+                    <th>email</th>
+                    <th>notification</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(account of accountList; track $index){
+                    <tr >
+                        <td>{{account.name}}</td>
+                        <td>{{account.employeenumber.toString()}}</td>
+                        <td>{{account.role}}</td>
+                        <td>{{account.email}}</td>
+                        <td><input type="checkbox" ng-model="account.checkbox" readonly=></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -4,4 +4,6 @@ export interface Account {
   employeenumber: Number;
   name: string;
   role: string;
+  email: string;
+  noitification: boolean;
 }

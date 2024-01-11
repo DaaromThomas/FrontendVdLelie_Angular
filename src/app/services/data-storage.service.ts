@@ -21,6 +21,7 @@ export class DataStorageService {
   private currentStockId: string = '';
   isDataLoaded$ = new BehaviorSubject<boolean>(false);
   customerList$: Subject<Customer[]> = new Subject<Customer[]>();
+  accountList$: Subject<Account[]> = new Subject<Account[]>();
 
   constructor(private http: HttpClient) { }
 
@@ -162,7 +163,6 @@ export class DataStorageService {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-
   getStockId() {
     return this.currentStockId;
   }
@@ -210,6 +210,12 @@ export class DataStorageService {
       .set('minAmount', minAmount.toString());
 
     return this.http.post(this.baseurl + '/email/lowonstock', null, { params }).subscribe();
+  }
+
+  getAccounts() {
+    this.http.get<Account[]>(this.baseurl + '/accounts').subscribe((accounts: Account[]) => {
+      this.accountList$.next(accounts);
+    })
   }
 }
 
