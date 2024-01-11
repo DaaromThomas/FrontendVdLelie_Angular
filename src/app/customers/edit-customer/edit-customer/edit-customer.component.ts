@@ -33,7 +33,7 @@ export class EditCustomerComponent implements AfterViewInit, OnDestroy, OnInit {
   phoneNumberWithCountry!: string;
   subscription: any;
   packageList: Packaging[] = [];
-  prefferredPackage: string = "";
+  prefferredPackage!: string;
 
   @Output() popupClosed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -57,6 +57,9 @@ export class EditCustomerComponent implements AfterViewInit, OnDestroy, OnInit {
     }
     this.dataStorageService.getPackagesAndLocations();
     this.populatePackageList();
+    if (this.customer.preferredPackaging?.id) {
+      this.prefferredPackage = this.customer.preferredPackaging.id
+    }
   }
 
   populatePackageList(): void {
@@ -111,7 +114,7 @@ export class EditCustomerComponent implements AfterViewInit, OnDestroy, OnInit {
       if (customerData.phonenumber) {
         params = params.set('phonenumber', customerData.phonenumber);
       }
-      if (this.prefferredPackage != "") {
+      if (this.prefferredPackage) {
         params = params.set('prefferedPackageId', this.prefferredPackage);
       }
       if (this.customer.id) {
