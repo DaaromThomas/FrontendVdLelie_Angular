@@ -68,6 +68,7 @@ export class CustomersComponent {
       data: {
         customer: customer,
       },
+      autoFocus: false
     });
   }
 }
