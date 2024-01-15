@@ -66,6 +66,23 @@ button {
     margin-right: 10%;
 }
 
+mat-icon.options {
+    float: right;
+}
+
+p.delete {
+    color: red;
+}
+
+p.edit {
+    color: #60c9b3;
+}
+
+p.delete:hover, p.edit:hover {
+    border-radius: 10px;
+    background-color: #f4812b;
+}
+
 .add-customer {
     width: fit-content;
     height: fit-content;

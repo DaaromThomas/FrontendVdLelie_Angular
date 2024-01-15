@@ -4,6 +4,8 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { CustomerValidationService } from '../../CustomerValidationService';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 describe('EditCustomerComponent', () => {
   let component: EditCustomerComponent;
@@ -13,7 +15,7 @@ describe('EditCustomerComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [EditCustomerComponent],
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, MatFormFieldModule, MatSelectModule],
       providers: [
         FormBuilder,
         {

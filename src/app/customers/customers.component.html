@@ -1,5 +1,5 @@
-<div *ngIf="applyBlur" class="overlay" (click)="onAddCustomerPopupClosed(true);onChangePrefferedPackagePopupClosed(true)"></div>
-<div class="blur" [ngClass]="{'blur-effect': displayAddCustomer || displayChangePrefferedPackage}">
+<div *ngIf="applyBlur" class="overlay" (click)="onAddCustomerPopupClosed(true);"></div>
+<div class="blur" [ngClass]="{'blur-effect': displayAddCustomer}">
     <div class="filter">
     </div>
     <div class="container">
@@ -12,7 +12,7 @@
                         <th>Address</th>
                         <th>PhoneNumber</th>
                         <th>E-Mail</th>
-                        <th>Preffered Package</th>
+                        <th>Preferred Package</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,24 +24,22 @@
                         @if (customer.preferredPackaging === null) {
                           <td>
                             -
-                            <img class="edit-button-icon" src="../../assets/edit.png" (click)="displayChangePrefferedPackagePopup(customer.id)">
+                            <mat-icon class="options" [matMenuTriggerFor]="customer_options" >more_vert</mat-icon>
+                            <mat-menu class="options" #customer_options="matMenu">
+                                <p class="edit" mat-menu-item (click)="editCustomer(customer)">edit <mat-icon>edit</mat-icon></p>
+                                <p class="delete" mat-menu-item (click)="deleteCustomer(customer)">delete <mat-icon>delete</mat-icon></p>
+                            </mat-menu>
                           </td>
                         } @else{
                           <td>
                             {{customer.preferredPackaging!.name}}
-                            <img class="edit-button-icon" src="../../assets/edit.png" (click)="displayChangePrefferedPackagePopup(customer.id)">
+                            <mat-icon class="options" [matMenuTriggerFor]="customer_options" >more_vert</mat-icon>
+                            <mat-menu class="options" #customer_options="matMenu">
+                                <p class="edit" mat-menu-item (click)="editCustomer(customer)">edit <mat-icon>edit</mat-icon></p>
+                                <p class="delete" mat-menu-item (click)="deleteCustomer(customer)">delete <mat-icon>delete</mat-icon></p>
+                            </mat-menu>
                           </td>
                         }
-                        <td class="no-border">
-                            <div style="display: flex;" >
-                                <button mat-button (click)="$event.stopPropagation(); editCustomer(customer)">
-                                    <mat-icon>edit</mat-icon>
-                                </button>
-                                <button mat-button (click)="$event.stopPropagation(); deleteCustomer(customer)">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                            </div>
-                        </td>
                     </tr>
                 </tbody>
             </table>
