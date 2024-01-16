@@ -4,6 +4,7 @@ import { Product } from "./product";
 import { Packaging } from "../interfaces/packaging";
 
 export class Log {
+    private _id: string;
     private _account: Account;
     private _product: Product;
     private _packaging: Packaging;
@@ -19,12 +20,21 @@ export class Log {
         date: Date,
         time: Time
     ) {
+        this._id = '';
         this._account = account;
         this._product = product;
         this._packaging = packaging;
         this._packagingamount = packagingamount;
         this._date = date;
         this._time = time;
+    }
+
+    get id(): string {
+        return this._id;
+    }
+
+    set id(id: string) {
+        this._id = id;
     }
 
     get account(): Account {

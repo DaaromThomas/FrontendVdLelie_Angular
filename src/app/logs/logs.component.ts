@@ -33,16 +33,8 @@ export class LogsComponent implements OnInit{
   }
 
   revertLog(log: Log){
-    const product: Product = log.product;
-    const packaging: Packaging = log.packaging;
-    const packagingAmount = log.packagingamount;
-
-
-    //Make sure this works
-    packaging.amountinstock += packagingAmount;
-
-    
-    this.dataStorageService.changeIsPackedRequest(false, product.productnumber);
+    console.log(log.id)
+    this.logService.revertLog(log);
   }
 
 

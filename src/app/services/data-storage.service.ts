@@ -8,6 +8,9 @@ import { InventoryData } from '../interfaces/InventoryData.interface';
 import { Account } from '../interfaces/account.interface';
 import { ChangeIsPackedRequestData } from '../models/ChangeIsPackedRequestData';
 import { Customer } from '../interfaces/customer.interface';
+import { CookieService } from '../login/cookie.service';
+import { Log } from '../models/Log';
+
 
 @Injectable({
   providedIn: 'root',
