@@ -11,6 +11,7 @@ export class Log {
     private _packagingamount: number;
     private _date: Date;
     private _time: Time;
+    private _reverted: boolean;
 
     constructor(
         account: Account,
@@ -18,7 +19,8 @@ export class Log {
         packaging: Packaging,
         packagingamount: number,
         date: Date,
-        time: Time
+        time: Time,
+        reverted: boolean
     ) {
         this._id = '';
         this._account = account;
@@ -27,6 +29,7 @@ export class Log {
         this._packagingamount = packagingamount;
         this._date = date;
         this._time = time;
+        this._reverted = reverted;
     }
 
     get id(): string {
@@ -83,5 +86,13 @@ export class Log {
 
     set time(time: Time) {
         this._time = time;
+    }
+
+    get reverted(): boolean {
+        return this._reverted;
+    }
+
+    set reverted(reverted: boolean) {
+        this._reverted = reverted;
     }
 }

@@ -19,7 +19,8 @@
                     <td>{{log.packagingamount}}</td>
                     <td>{{log.date}} {{log.time}}</td>
                     <td>
-                        <button class="button-63" role="button" (click)="revertLog(log)">Revert</button>
+                        <button *ngIf="!log.reverted" class="button-63" role="button" (click)="revertLog(log)">Revert</button>
+                        <p *ngIf="log.reverted">Reverted</p>
                     </td>
                 </tr>
             </tbody>

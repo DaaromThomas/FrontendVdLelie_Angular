@@ -34,6 +34,7 @@ export class LogsComponent implements OnInit{
 
   revertLog(log: Log){
     console.log(log.id)
+    log.reverted = true;
     this.logService.revertLog(log);
   }
 

@@ -49,14 +49,7 @@ export class LogService implements OnInit{
         packagingAmount: log.packagingamount
     };
 
-    return this.http.patch(this.baseurl, body).subscribe(
-        (data) => {
-            console.log(data);
-        },
-        (error) => {
-            console.error(error);
-        }
-    );
+    return this.http.patch(this.baseurl, body).subscribe();
 }
 
 
