@@ -25,7 +25,6 @@ export class LoginService {
       throw new Error('username or password not valid')
     }
     this.wrongPassWordChange.next(false)
-    this.cookieService.setCookie('currentUser', login.username, this.expirationTimeInDays);
     this.http.post(this.baseurl + '/login', login).subscribe(
       (res) => {
         this.handleRes(res);

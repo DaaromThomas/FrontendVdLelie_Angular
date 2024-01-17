@@ -8,7 +8,6 @@ import { InventoryData } from '../interfaces/InventoryData.interface';
 import { Account } from '../interfaces/account.interface';
 import { ChangeIsPackedRequestData } from '../models/ChangeIsPackedRequestData';
 import { Customer } from '../interfaces/customer.interface';
-import { CookieService } from '../login/cookie.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,13 +17,11 @@ export class DataStorageService {
   allInventoryData$: Subject<InventoryData> = new Subject<InventoryData>();
   locationList$: Subject<Location[]> = new Subject<Location[]>();
   private locationList: Location[] = [];
-  private currentUser: string = '';
   private currentAccount: Account | undefined;
-  private currentStock: Stock | undefined;
   private currentStockId: string = '';
   customerList$: Subject<Customer[]> = new Subject<Customer[]>();
 
-  constructor(private http: HttpClient, private cookieService: CookieService) {}
+  constructor(private http: HttpClient) { }
 
   storePackage(newPackage: Packaging) {
     const httpOptions = {
@@ -114,9 +111,10 @@ export class DataStorageService {
     this.getLocationStock();
   }
 
-  getCurrentLocation(): Promise<Account> {
+  async getCurrentLocation(): Promise<Account> {
+    let currentUser = await this.getCurrentUser();
     const httpOptions = {
-      params: new HttpParams().set('name', this.cookieService.getCookie('currentUser')),
+      params: new HttpParams().set('name', currentUser),
     };
 
     return this.http
@@ -150,6 +148,19 @@ export class DataStorageService {
   getStockId() {
     return this.currentStockId;
   }
+
+  async getCurrentUser(): Promise<string> {
+    try {
+    const response = await this.http.get(this.baseurl + '/currentuser', { responseType: 'text' }).toPromise();
+    if (!response) {
+      throw new Error('Failed to get current user');
+    }
+    return response;
+    } catch (error) {
+    console.error(error);
+    throw error;
+    }
+   }   
 
   changeIsPackedRequest(isPacked: boolean, productNumber: number) {
     let data: ChangeIsPackedRequestData = new ChangeIsPackedRequestData(isPacked, productNumber);
