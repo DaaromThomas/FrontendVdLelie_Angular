@@ -106,24 +106,22 @@ export class DataStorageService {
   }
 
   async getCurrentStockId() {
-    await this.getCurrentLocation();
     await this.delay(1000) // this should probably not be allowed but genuinly cant think of a better fix rn
     this.getLocationStock();
   }
 
-  async getCurrentLocation(): Promise<Account> {
+  async setCurrentAccount() {
     let currentUser = await this.getCurrentUser();
     const httpOptions = {
       params: new HttpParams().set('name', currentUser),
     };
 
-    return this.http
+    this.http
       .get<Account>(this.baseurl + '/accounts/name', httpOptions)
       .toPromise()
       .then((res) => {
         if (res) {
           this.currentAccount = res;
-          return this.currentAccount;
         } else {
           throw new Error('Failed to get current location');
         }
