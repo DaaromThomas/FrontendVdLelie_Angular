@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Login } from '../interfaces/login.interface';
 import { CookieService } from './cookie.service';
+import { DataStorageService } from '../services/data-storage.service';
 
 
 @Injectable({
@@ -18,6 +19,7 @@ export class LoginService {
     private http: HttpClient,
     private router: Router,
     private cookieService: CookieService,
+    private datastorageservice: DataStorageService,
   ) {}
 
   loginRequest(login: Login) {
@@ -45,6 +47,7 @@ export class LoginService {
       this.cookieService.setCookie('refreshToken', res.refreshToken, this.expirationTimeInDays);
       this.router.navigateByUrl('/scan-order');
       this.Jwttoken = res.token;
+      this.datastorageservice.setCurrentAccount();
     }
 
 
@@ -69,6 +72,7 @@ export class LoginService {
           if (data != null) {
             this.Jwttoken = data.accessToken;
             this.router.navigateByUrl('/scan-order');
+            this.datastorageservice.setCurrentAccount();
           }
         });
     }
