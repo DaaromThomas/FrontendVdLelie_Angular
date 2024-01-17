@@ -100,7 +100,6 @@ export class SelectPackagePopupComponent {
           this.error = '';
 
           const account: Account | undefined = this.dataStorageService.GAccount;
-
           if (account !== undefined) {
             this.sendLogToDB(account, this.product, data, this.quantity);
           }else{

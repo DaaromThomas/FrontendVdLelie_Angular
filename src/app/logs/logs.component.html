@@ -1,4 +1,10 @@
 <div class="container">
+    <div class="filters-container">
+        <img src="assets/filter.png" alt="icon" class="icon">
+        <input type="text" placeholder="Account">
+        <input type="text" placeholder="Product">
+        <input type="text" placeholder="Time">
+    </div>
     <div class="table-wrapper">
         <table class="table">
             <thead class="table-head">
@@ -19,7 +25,7 @@
                     <td>{{log.packagingamount}}</td>
                     <td>{{log.date}} {{log.time}}</td>
                     <td>
-                        <button *ngIf="!log.reverted" class="button-63" role="button" (click)="revertLog(log)">Revert</button>
+                        <button *ngIf="!log.reverted" class="button-62" role="button" (click)="revertLog(log)">Revert</button>
                         <p *ngIf="log.reverted">Reverted</p>
                     </td>
                 </tr>
