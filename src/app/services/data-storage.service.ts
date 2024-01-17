@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Location } from '../interfaces/location';
 import { Packaging } from '../interfaces/packaging';
-import { Subject, forkJoin, Observable } from 'rxjs';
+import { Subject, forkJoin, Observable, BehaviorSubject, takeUntil } from 'rxjs';
 import { Stock } from '../interfaces/stock';
 import { InventoryData } from '../interfaces/InventoryData.interface';
 import { Account } from '../interfaces/account.interface';
@@ -19,6 +19,7 @@ export class DataStorageService {
   private locationList: Location[] = [];
   private currentAccount: Account | undefined;
   private currentStockId: string = '';
+  isDataLoaded$ = new BehaviorSubject<boolean>(false);
   customerList$: Subject<Customer[]> = new Subject<Customer[]>();
 
   constructor(private http: HttpClient) { }
@@ -57,6 +58,7 @@ export class DataStorageService {
   }
 
   getPackagesAndLocations() {
+    this.isDataLoaded$.next(false);
     forkJoin([
       this.http.get<Packaging[]>(this.baseurl + '/packages'),
       this.http.get<Location[]>(this.baseurl + '/locations'),
@@ -78,6 +80,7 @@ export class DataStorageService {
         locationNames,
       };
       this.allInventoryData$.next(inventoryData);
+      this.isDataLoaded$.next(true);
     });
   }
 
@@ -106,8 +109,15 @@ export class DataStorageService {
   }
 
   async getCurrentStockId() {
-    await this.delay(1000) // this should probably not be allowed but genuinly cant think of a better fix rn
-    this.getLocationStock();
+    const unsubscribe$ = new Subject<void>();
+    this.allInventoryData$.pipe(takeUntil(unsubscribe$)).subscribe(isLoaded => {
+      if (isLoaded) {
+        this.getLocationStock().then(() => {
+          unsubscribe$.next();
+          unsubscribe$.complete();
+        });
+      }
+    })
   }
 
   async setCurrentAccount() {
@@ -128,15 +138,21 @@ export class DataStorageService {
       });
   }
 
-  getLocationStock() {
-    if (this.currentAccount != undefined) {
-      for (let location of this.locationList) {
-        if (location.id === ((this.currentAccount.location as unknown) as Location).id) {
-          this.currentStockId = location.stock.id
-        }
-      }
-    }
-  }
+  getLocationStock(): Promise<void> {
+    return new Promise((resolve, reject) => {
+     if (this.currentAccount != undefined) {
+       for (let location of this.locationList) {
+         if (location.id === ((this.currentAccount.location as unknown) as Location).id) {
+           this.currentStockId = location.stock.id
+         }
+       }
+       resolve();
+     } else {
+       reject("Current account is undefined");
+     }
+    });
+   }
+   
 
   delay(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
