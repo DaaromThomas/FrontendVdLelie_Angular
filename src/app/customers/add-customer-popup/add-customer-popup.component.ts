@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Output, AfterViewInit, Renderer2, OnDestroy, inject } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { DataStorageService } from '../../services/data-storage.service';
 import { Customer } from '../../interfaces/customer.interface';
 import { CustomerValidationService } from '../CustomerValidationService';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Packaging } from '../../interfaces/packaging';
 
 declare var intlTelInput: any;
@@ -90,9 +90,6 @@ export class AddCustomerPopupComponent implements AfterViewInit, OnDestroy {
   }
 
   discardForm(): void {
-    if (this.preferredPackage) {
-      console.log(this.preferredPackage)
-    }
     this.dialogRef.close();
   }
 
