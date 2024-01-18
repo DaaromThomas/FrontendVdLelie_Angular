@@ -8,4 +8,5 @@ export interface Customer{
     phonenumber: string | null;
     email: string;
     preferredPackaging?: Packaging;
+    ignoreSorting?: boolean;
 }

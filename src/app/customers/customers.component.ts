@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Customer } from '../interfaces/customer.interface';
 import { DataStorageService } from '../services/data-storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditCustomerComponent } from './edit-customer/edit-customer/edit-customer.component';
 import { DeleteCustomerComponent } from './delete-customer/delete-customer.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-customers',
@@ -12,11 +15,17 @@ import { DeleteCustomerComponent } from './delete-customer/delete-customer.compo
 })
 export class CustomersComponent {
   subscription: any;
-  customerList: Customer[] = [];
+  customerList!: MatTableDataSource<Customer>;
   displayAddCustomer: boolean = false;
   applyBlur: boolean = false;
   tableWrapperClass: string = 'table-wrapper';
   selectedCustomerId : string = "";
+  displayedColumns: string[] = ['name', 'address', 'phoneNumber', 'e-mail', 'preferredPackaging', "customerOptions"];
+  customersPerPage: number = 15;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
 
 
   constructor(
@@ -32,7 +41,14 @@ export class CustomersComponent {
   populateCustomerData(): void {
     this.subscription = this.dataStorageService.customerList$.subscribe(
       (customerData) => {
-        this.customerList = customerData;
+        this.customerList = new MatTableDataSource(customerData);
+        while (this.customerList.data.length % this.customersPerPage !== 0) {
+          const emptyItem = Object.create(null);
+          emptyItem.ignoreSorting = true;
+          this.customerList.data.push(emptyItem);
+        }        
+        this.customerList.paginator = this.paginator;
+        this.customerList.sort = this.sort;
       }
     );
   }

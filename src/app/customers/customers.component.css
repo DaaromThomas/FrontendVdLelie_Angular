@@ -8,66 +8,45 @@
     padding-top: 5%;
 }
 
-.table-wrapper {
-    width: fit-content;
-    max-height: 75vh;
-    height: fit-content;
-    overflow: auto;
-    display: block;
-    margin: auto;
-}
-
-th {
-    background-color: #4a5b73;
-    color: white;
-    padding: 0 15px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
 td, th {
     text-align: left;
     padding: 5px 5px;
-    border: 1px solid black;
-    border-collapse: collapse;
 }
 
-table {
-    width: 1300px;
-    border-collapse: collapse;
-    border-radius: 10px;
-    display: table;
-    margin: auto;
-}
-
-tbody {
-    max-height: 80%;
-    overflow: auto;
-}
-
-tr td:not(.no-border){
-    background-color: #ffffff;
+th {
+    background-color: #f4812b;
 }
 
 tr:hover td:not(.no-border) {
     background-color: #60c9b3;
 }
 
-td.editable:hover {
-    background-color: #2c636c;
-    color: white;
-}
-
 button {
     float: right;
     border-radius: 10px;
     margin-top: 1%;
-    margin-right: 10%;
+    margin-bottom: 1%;
+    margin-right: 1%;
 }
 
-mat-icon.options {
+button:hover {
+    background-color: #f4812b;
+}
+
+button {
+    background-color: #60c9b3;
+}
+
+th.header {
+    background-color: #f4812b;
+}
+
+mat-icon.options_icon {
     float: right;
+}
+
+mat-menu.options_menu {
+    border-radius: 10px;
 }
 
 p.delete {
@@ -111,20 +90,6 @@ p.delete:hover, p.edit:hover {
     z-index: 999;
 }
 
-.filter {
-    margin-top: 1%;
-    margin-right: 1%;
-    float: right;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.blur-effect {
-    filter: blur(1.5px);
-    pointer-events: none;
-}
-
 .overlay {
     position: fixed;
     top: 0;
@@ -135,26 +100,3 @@ p.delete:hover, p.edit:hover {
     filter: blur(5px);
     z-index: 998;
 }
-
-.no-border {
-    border: none;
-    display: flex;
-    justify-content: flex-start;
-    white-space: nowrap;
- }
-
- .no-border button {
-    background-color: #ffffff;
- }
-
-.edit-button-icon{
-  width: 15px;
-  height: 15px;
-  float: right;
-}
-
-.edit-button-icon:hover{
-    color: red;
-    cursor: pointer;
-}
-
