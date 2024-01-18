@@ -51,7 +51,6 @@ export class DataStorageService {
 
     if (newCustomer.preferredPackaging != null) {
       params = params.set('preferredPackageId', newCustomer.preferredPackaging.id!);
-      console.log(newCustomer.preferredPackaging.id!)
     }
 
 
