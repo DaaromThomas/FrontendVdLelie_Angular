@@ -1,4 +1,5 @@
-import { Packaging } from "./packaging.model";
+import {Packaging} from "./packaging.model";
+
 
 export class Customer{
     public address: string;
@@ -7,10 +8,10 @@ export class Customer{
     public id: string;
     public name: string;
     public phoneNumber: number;
-    public prefferedPackaging!: Packaging;
+    public preferredPackaging!: Packaging;
 
     constructor(
-         address: string,
+        address: string,
         customerNumber: number,
         email: string,
         id: string,
@@ -24,7 +25,7 @@ export class Customer{
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.prefferedPackaging = prefferedPackaging;
+        this.preferredPackaging = prefferedPackaging;
     }
 
 }

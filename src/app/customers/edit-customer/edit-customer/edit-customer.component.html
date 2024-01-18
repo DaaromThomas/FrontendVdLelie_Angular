@@ -1,0 +1,52 @@
+<div id="customer-edit-dialog" class="container">
+    <div class="image-section">
+        <img src="assets/Customer.png" class="centered-image" />
+    </div>
+    <div class="right-section">
+        <div class="header">
+            <h1 class="title-text">Edit Customer</h1>
+            <h3 class="error-message">{{ error }}</h3>
+        </div>
+    <div class="body">
+        <form [formGroup]="customerForm" class="form">
+            <div class="form-group">
+                <div class="label-input">
+                   <label for="name-input" class="label">Name: </label><input type="text" formControlName="name" class="input" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label-input">
+                   <label for="address-input" class="label">Address: </label><input type="text" formControlName="address" class="input" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label-input">
+                   <label for="phonenumber" class="label">Phone Number: </label><input id="phonenumber-input" formControlName="phonenumber" class="input" appNumericInput />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label-input">
+                   <label for="email-input" class="label">E-Mail: </label><input type="text" formControlName="email" id="email-input" class="input" />
+                </div>
+            </div>
+        </form>
+        <div class="footer">
+            <div class="package-input">
+                <label for="package-input" class="label">Preffered Package:</label>
+                <mat-form-field class="select"  id="package-input">
+                    <mat-label>Select a package</mat-label>
+                    <mat-select [(ngModel)]="prefferredPackage">
+                       <mat-option *ngFor="let package of packageList" [value]="package.id">
+                           {{ package.name }}
+                       </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="button-group">
+                <button (click)="onSubmit()" class="done-button">✔ Save</button>
+                <button (click)="close()" class="close-button">❌ Discard</button>
+            </div>
+        </div>
+    </div>
+  </div>
+  

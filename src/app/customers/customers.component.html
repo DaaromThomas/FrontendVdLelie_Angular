@@ -1,0 +1,54 @@
+<div *ngIf="applyBlur" class="overlay" (click)="onAddCustomerPopupClosed(true);"></div>
+<div class="blur" [ngClass]="{'blur-effect': displayAddCustomer}">
+    <div class="filter">
+    </div>
+    <div class="container">
+        <div class="spacer"></div>
+        <div [class]="tableWrapperClass">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>PhoneNumber</th>
+                        <th>E-Mail</th>
+                        <th>Preferred Package</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let customer of customerList; index as i">
+                        <td>{{customer.name}}</td>
+                        <td>{{customer.address}}</td>
+                        <td>{{customer.phonenumber ? customer.phonenumber : 'No phone number'}}</td>
+                        <td>{{customer.email ? customer.email : 'No e-mail'}}</td>
+                        @if (customer.preferredPackaging === null) {
+                          <td>
+                            -
+                            <mat-icon class="options" [matMenuTriggerFor]="customer_options" >more_vert</mat-icon>
+                            <mat-menu class="options" #customer_options="matMenu">
+                                <p class="edit" mat-menu-item (click)="editCustomer(customer)">edit <mat-icon>edit</mat-icon></p>
+                                <p class="delete" mat-menu-item (click)="deleteCustomer(customer)">delete <mat-icon>delete</mat-icon></p>
+                            </mat-menu>
+                          </td>
+                        } @else{
+                          <td>
+                            {{customer.preferredPackaging!.name}}
+                            <mat-icon class="options" [matMenuTriggerFor]="customer_options" >more_vert</mat-icon>
+                            <mat-menu class="options" #customer_options="matMenu">
+                                <p class="edit" mat-menu-item (click)="editCustomer(customer)">edit <mat-icon>edit</mat-icon></p>
+                                <p class="delete" mat-menu-item (click)="deleteCustomer(customer)">delete <mat-icon>delete</mat-icon></p>
+                            </mat-menu>
+                          </td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button (click)="displayAddCustomerPopup()">New Customer</button>
+    </div>
+</div>
+
+<div class="add-customer" *ngIf="displayAddCustomer">
+    <app-add-customer-popup class="customer-popup"
+        (popupClosed)="onAddCustomerPopupClosed($event)"></app-add-customer-popup>
+</div>

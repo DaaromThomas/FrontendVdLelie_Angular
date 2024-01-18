@@ -70,6 +70,10 @@ describe('LoginService', () => {
     expect(req.request.body).toEqual({ refreshToken: 'refreshToken' });
   
     req.flush({});
+
+    const reqCurrentUser = httpTestingController.expectOne('http://localhost:8080/currentuser');
+    expect(reqCurrentUser.request.method).toEqual('GET');
+    reqCurrentUser.flush({});
   });
   it('should set Jwttoken and navigate to /scan-order if response data is not null', () => {
     spyOn(cookieService, 'getCookie').and.returnValue('refreshToken');
@@ -78,6 +82,10 @@ describe('LoginService', () => {
   
     const req = httpTestingController.expectOne('http://localhost:8080/refreshtoken');
     req.flush({ accessToken: 'accessToken' });
+
+    const reqCurrentUser = httpTestingController.expectOne('http://localhost:8080/currentuser');
+    expect(reqCurrentUser.request.method).toEqual('GET');
+    reqCurrentUser.flush({});
   
     expect(cookieService.getCookie).toHaveBeenCalledWith('refreshToken');
     expect(loginService.Jwttoken).toBe('accessToken');

@@ -6,10 +6,6 @@ import { Product } from '../models/product';
 import { SelectPackagePopupComponent } from './select-package-popup/select-package-popup.component';
 import { ScanOrderService } from './services/scan-order.service';
 
-
-
-
-
 @Component({
   selector: 'app-scan-order',
   templateUrl: './scan-order.component.html',
@@ -17,18 +13,15 @@ import { ScanOrderService } from './services/scan-order.service';
 })
 export class ScanOrderComponent {
   public packaging: string[] = ["test package", "other package"];
-  public productColumns: string[] = [
-    "Product",
-    "Recommended Packaging",
-    "Amount available"
-  ];
   public scannedProduct!: Product;
   public InputProductNumber = '';
   public errorMessage = '';
+  public disableScan = false;
 
   public productName = '-';
   public packageName = '-';
   public amountAvailable = 0;
+  public isDialogOpen = false;
 
   selectedProduct: Product | undefined = undefined;
 
@@ -36,6 +29,9 @@ export class ScanOrderComponent {
 
   constructor(private scanOrderService: ScanOrderService, public dialog: MatDialog) { }
 
+    public ngOnInit(): void {
+      document.getElementById('productNumberInput')!.focus();
+    }
 
   public get getErrorMessage() {
     return this.errorMessage;
@@ -60,40 +56,36 @@ export class ScanOrderComponent {
               this.errorMessage = 'Product is already packed';
             }else{
               this.errorMessage = '';
-              this.scannedProduct = data;
-              this.productName = data.name;
-              this.packageName = data.prefferedpackage.name;
-              this.amountAvailable = data.prefferedpackage.amountinstock;
 
               this.selectedProduct = data;
+
               this.openDialog();
+              window.setTimeout(() => document.getElementById('productNumberInput')!.blur(), 0);
             }
           });
 
     }
   }
 
+  public onEnter(){
+    if(!this.isDialogOpen){
+      document.getElementById('scanButton')!.click();
+    }
+  }
+
   openDialog() {
+    this.isDialogOpen = true;
+    this.disableScan = true;
     const dialogRef = this.dialog.open(SelectPackagePopupComponent, {
       width: '750px',
       data: this.selectedProduct
     });
     dialogRef.afterClosed().subscribe(result => {
-      
+      this.isDialogOpen = false;
+      this.disableScan = false;
+      window.setTimeout(() => document.getElementById('productNumberInput')!.focus(), 0);
     });
   }
-
-  public selectProduct(index: number) {
-    if (this.selectedIndex == index) {
-      this.selectedIndex = -1;
-    }
-    else {
-      this.selectedIndex = index;
-    }
-  }
-
-
-
 
 
 }

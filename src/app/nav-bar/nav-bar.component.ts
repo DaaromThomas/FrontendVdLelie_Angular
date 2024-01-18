@@ -23,7 +23,7 @@ let params = new HttpParams().set("refreshToken",token);
       .delete(
         'http://localhost:8080/refreshtoken',
         {params: params}
-      ).subscribe(data => console.log(data))
+      ).subscribe()
     this.router.navigateByUrl('/login');
     this.loginService.Jwttoken = undefined;
   }

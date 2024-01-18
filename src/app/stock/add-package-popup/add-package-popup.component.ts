@@ -48,8 +48,7 @@ export class AddPackagePopupComponent {
   }
 
   checkNewPackage(packaging: Packaging): boolean {
-    let propertyName: string | undefined;
-    console.log(packaging)
+    let propertyName!: string;
 
     if (!packaging.name) {
       propertyName = 'name';
