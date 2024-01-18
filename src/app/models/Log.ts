@@ -10,7 +10,7 @@ export class Log {
     private _packaging: Packaging;
     private _packagingamount: number;
     private _date: Date;
-    private _time: Time;
+    private _time: number[];
     private _reverted: boolean;
 
     constructor(
@@ -19,7 +19,7 @@ export class Log {
         packaging: Packaging,
         packagingamount: number,
         date: Date,
-        time: Time,
+        time: number[],
         reverted: boolean
     ) {
         this._id = '';
@@ -80,11 +80,11 @@ export class Log {
         this._date = date;
     }
 
-    get time(): Time {
+    get time(): number[] {
         return this._time;
     }
 
-    set time(time: Time) {
+    set time(time: number[]) {
         this._time = time;
     }
 

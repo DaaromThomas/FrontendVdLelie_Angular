@@ -64,6 +64,10 @@ export class DataStorageService {
     return this.http.post(this.baseurl + '/customers', {}, httpOptions);
   }
 
+  public getAccountsByCurrentLocation(){
+    return this.http.get<Account[]>(this.baseurl + '/accountsbylocation/' + this.currentAccount?.location.id);
+  }
+
   getPackagesAndLocations() {
     this.isDataLoaded$.next(false);
     forkJoin([

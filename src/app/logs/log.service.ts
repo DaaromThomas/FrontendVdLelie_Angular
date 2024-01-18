@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Params } from '@angular/router';
 import { DataStorageService } from '../services/data-storage.service';
+import { Account } from '../interfaces/account.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,8 @@ export class LogService implements OnInit{
 
   private logList: Log[] = [];
   private logList$: BehaviorSubject<Log[]> = new BehaviorSubject<Log[]>([]);
+
+  private accountsInCurrentLocation!: Account[];
 
   constructor(
     private http: HttpClient,

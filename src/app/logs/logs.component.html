@@ -1,9 +1,17 @@
 <div class="container">
     <div class="filters-container">
         <img src="assets/filter.png" alt="icon" class="icon">
-        <input type="text" placeholder="Account">
-        <input type="text" placeholder="Product">
-        <input type="text" placeholder="Time">
+        <input type="text" placeholder="Account name" [(ngModel)]="nameFilter">     
+        <input type="text" placeholder="Product" [(ngModel)]="productFilter">
+        <button mat-button [matMenuTriggerFor]="menu">Date and time</button>
+        <mat-menu #menu="matMenu">
+            <input type="date" mat-menu-item (click)="$event.stopPropagation()" [(ngModel)]="filterDate">
+            <input type="time" mat-menu-item (click)="$event.stopPropagation()" [(ngModel)]="beginTime">
+            <input type="time" mat-menu-item (click)="$event.stopPropagation()" [(ngModel)]="endTime">
+        </mat-menu>
+        
+        
+        <button (click)="applyFilters()">Apply filters</button>
     </div>
     <div class="table-wrapper">
         <table class="table">
@@ -18,7 +26,7 @@
                 </tr>
             </thead>
             <tbody class="table-body">
-                <tr *ngFor="let log of logs; let i = index" class="row">
+                <tr *ngFor="let log of filteredLogs; let i = index" class="row">
                     <td>{{log.account.name}}</td>
                     <td>{{log.product.name}}</td>
                     <td>{{log.packaging.name}}</td>
