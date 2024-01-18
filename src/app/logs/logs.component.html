@@ -14,30 +14,53 @@
         <button (click)="applyFilters()">Apply filters</button>
     </div>
     <div class="table-wrapper">
-        <table class="table">
-            <thead class="table-head">
-                <tr id="top-row">
-                    <th>Account</th>
-                    <th>Product</th>
-                    <th>Packaging</th>
-                    <th>Packaging-amount</th>
-                    <th>Date and time</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody class="table-body">
-                <tr *ngFor="let log of filteredLogs; let i = index" class="row">
-                    <td>{{log.account.name}}</td>
-                    <td>{{log.product.name}}</td>
-                    <td>{{log.packaging.name}}</td>
-                    <td>{{log.packagingamount}}</td>
-                    <td>{{log.date}} {{log.time}}</td>
-                    <td>
-                        <button *ngIf="!log.reverted" class="button-62" role="button" (click)="revertLog(log)">Revert</button>
+        <mat-table [dataSource]="filteredLogs" class="table">
+            <ng-container matColumnDef="account" class="column">
+                <th mat-header-cell *matHeaderCellDef class="header"><p>Account</p></th>
+                <td mat-cell *matCellDef="let log"><p>{{ log.account?.name || '' }}</p></td>
+            </ng-container>
+        
+            <ng-container matColumnDef="product" class="column">
+                <th mat-header-cell *matHeaderCellDef class="header"><p>Product</p></th>
+                <td mat-cell *matCellDef="let log"><p>{{ log.product?.name || '' }}</p></td>
+            </ng-container>
+        
+            <ng-container matColumnDef="packaging" class="column">
+                <th mat-header-cell *matHeaderCellDef class="header"><p>Package</p></th>
+                <td mat-cell *matCellDef="let log"><p>{{ log.packaging?.name || '' }}</p></td>
+            </ng-container>
+        
+            <ng-container matColumnDef="amount" class="column">
+                <th mat-header-cell *matHeaderCellDef class="header"><p>Amount</p></th>
+                <td mat-cell *matCellDef="let log"><p>{{ log?.packagingamount || '' }}</p></td>
+            </ng-container>
+        
+            <ng-container matColumnDef="dateTime" class="column">
+                <th mat-header-cell *matHeaderCellDef class="header"><p>Date and Time</p></th>
+                <td mat-cell *matCellDef="let log"><p>{{log.date}} {{log.time}}</p></td>
+            </ng-container>
+        
+            <ng-container matColumnDef="reverted" class="column">
+                <th mat-header-cell *matHeaderCellDef class="header"><p>Action</p></th>
+                <td mat-cell *matCellDef="let log" class="button-holder">
+                    <div class="holder">
+                        <button *ngIf="!log.reverted  && log.account" class="button-62" (click)="revertLog(log)">Revert</button>
                         <p *ngIf="log.reverted">Reverted</p>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                    </div>
+                </td>
+            </ng-container>
+            
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns" class="headers"></tr>
+            <tr
+                mat-row
+                *matRowDef="let row; columns: displayedColumns;"
+            ></tr>
+        </mat-table>
+        <mat-paginator 
+            #paginator
+            [pageSize]="pageSize"
+            showFirstLastButtons>
+        </mat-paginator>
     </div>
 </div>

@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Log } from '../models/Log';
 import { LogService } from './log.service';
 import { Product } from '../models/product';
 import { Account } from '../interfaces/account.interface';
 import { DataStorageService } from '../services/data-storage.service';
 import { Packaging } from '../interfaces/packaging';
+import { MatTableDataSource } from '@angular/material/table';
+import { log } from 'console';
+import { MatPaginator } from '@angular/material/paginator';
+import { app } from '../../../server';
 
 @Component({
   selector: 'app-logs',
@@ -12,8 +16,9 @@ import { Packaging } from '../interfaces/packaging';
   styleUrls: ['./logs.component.css']
 })
 export class LogsComponent implements OnInit {
+  pageSize: number = 13;
   logs: Log[] = [];
-  filteredLogs: Log[] = this.logs;
+  filteredLogs!: MatTableDataSource<Log>;
   private packageList: Packaging[] = [];
 
   accounts!: Account[];
@@ -25,12 +30,15 @@ export class LogsComponent implements OnInit {
   beginTime!: string | null;
   endTime!: string | null;
 
+  displayedColumns: string[] = ['account', 'product', 'packaging', 'amount', 'dateTime', 'reverted']
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   constructor(
     private logService: LogService,
     private dataStorageService: DataStorageService,
   ) {}
 
   ngOnInit() {
+    this.filteredLogs = new MatTableDataSource();
     this.dataStorageService.getAccountsByCurrentLocation().subscribe((data) => {
       this.accounts = data;
     });
@@ -38,7 +46,9 @@ export class LogsComponent implements OnInit {
     this.logService.getLogs();
     this.logService.logs().subscribe((logs) => {
       this.logs = logs;
-      this.filteredLogs = logs;
+      this.filteredLogs.data = logs.slice().reverse();
+      this.appendNullObjects();      
+      this.filteredLogs.paginator = this.paginator;
     });
 
     this.dataStorageService.allInventoryData$.subscribe((inventoryData) => {
@@ -47,21 +57,33 @@ export class LogsComponent implements OnInit {
   }
 
   applyFilters() {
-    if (!this.nameFilter && !this.productFilter && !this.filterDate && !this.beginTime && !this.endTime) {
-      this.filteredLogs = this.logs;
-    } else {
-      this.filteredLogs = this.logs.filter(log => {
+    let filteredLogs = this.logs.slice().reverse();
+  
+    if (this.nameFilter || this.productFilter || this.filterDate || this.beginTime || this.endTime) {
+      filteredLogs = filteredLogs.filter(log => {
+        if (log === null) {
+          return false; // Exclude null objects from filtering
+        }
+  
         const nameMatches = !this.nameFilter || log.account.name.toLowerCase().includes(this.nameFilter.toLowerCase());
         const productMatches = !this.productFilter || log.product.name.toLowerCase().includes(this.productFilter.toLowerCase());
-        const dateMatches = this.dateMatches(log.date);
+        const dateMatches = !this.filterDate || this.dateMatches(log.date);
         const timeMatches = this.timeMatches(log.time);
 
+        console.log(nameMatches, productMatches, dateMatches, timeMatches)
+  
         return nameMatches && productMatches && dateMatches && timeMatches;
       });
     }
 
+    while (filteredLogs.length % this.pageSize !== 0) {
+      filteredLogs.push(Object.create(null));
+    }
+  
+    this.filteredLogs.data = filteredLogs;
     this.resetFilters();
   }
+
   private dateMatches(logDate: Date): boolean {
     if(this.beginTime && this.endTime && !this.filterDate){
       this.filterDate = new Date();
@@ -110,5 +132,11 @@ export class LogsComponent implements OnInit {
   revertLog(log: Log) {
     log.reverted = true;
     this.logService.revertLog(log);
+  }
+
+  private appendNullObjects() {
+    while (this.filteredLogs.data.length % this.pageSize !== 0) {
+      this.filteredLogs.data.push(Object.create(null))
+    }
   }
 }
