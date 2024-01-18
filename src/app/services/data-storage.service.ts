@@ -152,7 +152,7 @@ export class DataStorageService {
      }
     });
    }
-   
+
 
   delay(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -174,7 +174,7 @@ export class DataStorageService {
     console.error(error);
     throw error;
     }
-   }   
+   }
 
   changeIsPackedRequest(isPacked: boolean, productNumber: number) {
     let data: ChangeIsPackedRequestData = new ChangeIsPackedRequestData(isPacked, productNumber);
@@ -186,15 +186,8 @@ export class DataStorageService {
 
     return this.http.patch(this.baseurl + "/packages/" + id, null, { params }).subscribe();
   }
-  updatePackage(Packaging: Packaging, name: any, amountinstock: any, minimumAmount: any) {;
-    const changeRequest = {
-      id: Packaging.id,
-      amountInStock: amountinstock,
-      minAmount: minimumAmount,
-      name: name,
-    }
-console.log
-    this.http.post(this.baseurl + '/packages/update', changeRequest).subscribe(data => console.log(data));
+  updatePackage(packaging: Packaging) {;
+    this.http.post(this.baseurl + '/packages/update', packaging).subscribe(data => console.log(data));
   }
 
   updateCustomer(params: HttpParams, customerId: string) {

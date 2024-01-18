@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { DataStorageService } from '../services/data-storage.service';
 import { Stock } from '../interfaces/stock';
 import { Location } from '../interfaces/location';
 import { Packaging } from '../interfaces/packaging';
 import { Subject, takeUntil } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
-import e from 'express';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -14,9 +14,7 @@ import e from 'express';
   styleUrls: ['./stock.component.css'],
 })
 export class StockComponent {
-  
-  editingPackageIndex: number | null = null;
-  selection = new SelectionModel<Element>(true, []);
+ selection = new SelectionModel<Element>(true, []);
   subscription: any;
   displayPackage: boolean = false;
   applyBlur: boolean = false;
@@ -27,19 +25,27 @@ export class StockComponent {
   stockList: Stock[] = [];
   locationNames: string[] = [];
 
-  constructor(private dataStorageService: DataStorageService) {}
-  
+  constructor(private fb: FormBuilder,
+    private _formBuilder: FormBuilder, private dataStorageService: DataStorageService) {}
+
+
+  onPackageChange(package_:Packaging){
+this.saveChanges(package_);
+  }
+
+  saveChanges(packaging: Packaging) {
+    this.dataStorageService.updatePackage(packaging);
+  }
 
   displayPackagePopup() {
     this.displayPackage = true;
     this.applyBlur = true;
-    
+
   }
 
 onPopupClosed(isClosed: boolean) {
   this.displayPackage = isClosed;
   this.applyBlur = isClosed;
-  this.editingPackageIndex = null;
 }
 
   setLocationFilter(location: Event) {
@@ -89,20 +95,6 @@ onPopupClosed(isClosed: boolean) {
     })
   }
 
-  startEditing(index: number) {
-    this.editingPackageIndex = index;
-  }
-
-  saveChanges(packaging: Packaging,  name: any, amountinstock: any, minimumAmount: any) {
-    console.log(amountinstock)
-    this.dataStorageService.updatePackage(packaging, name.textContent, amountinstock.textContent, minimumAmount.textContent);
-    this.editingPackageIndex = null;
-  }
-
-  cancelEditing(index: number) {
-
-    this.editingPackageIndex = null;
-  }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
