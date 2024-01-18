@@ -32,10 +32,10 @@
         </form>
         <div class="footer">
             <div class="package-input">
-                <label for="package-input" class="label">Preffered Package:</label>
+                <label for="package-input" class="label">Preferred Package:</label>
                 <mat-form-field class="select"  id="package-input">
                     <mat-label>Select a package</mat-label>
-                    <mat-select [(ngModel)]="prefferredPackage">
+                    <mat-select [(ngModel)]="preferredPackage">
                        <mat-option *ngFor="let package of packageList" [value]="package.id">
                            {{ package.name }}
                        </mat-option>
