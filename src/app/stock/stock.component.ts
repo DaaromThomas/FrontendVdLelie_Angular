@@ -4,6 +4,9 @@ import { Stock } from '../interfaces/stock';
 import { Location } from '../interfaces/location';
 import { Packaging } from '../interfaces/packaging';
 import { Subject, takeUntil } from 'rxjs';
+import { SelectionModel } from '@angular/cdk/collections';
+import e from 'express';
+
 
 @Component({
   selector: 'app-stock',
@@ -11,6 +14,9 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrls: ['./stock.component.css'],
 })
 export class StockComponent {
+  
+  editingPackageIndex: number | null = null;
+  selection = new SelectionModel<Element>(true, []);
   subscription: any;
   displayPackage: boolean = false;
   applyBlur: boolean = false;
@@ -22,16 +28,19 @@ export class StockComponent {
   locationNames: string[] = [];
 
   constructor(private dataStorageService: DataStorageService) {}
+  
 
   displayPackagePopup() {
     this.displayPackage = true;
     this.applyBlur = true;
+    
   }
 
-  onPopupClosed(isClosed: boolean) {
-    this.displayPackage = isClosed;
-    this.applyBlur = isClosed;
-  }
+onPopupClosed(isClosed: boolean) {
+  this.displayPackage = isClosed;
+  this.applyBlur = isClosed;
+  this.editingPackageIndex = null;
+}
 
   setLocationFilter(location: Event) {
     let filterValue = (event?.target as HTMLInputElement).value;
@@ -78,6 +87,21 @@ export class StockComponent {
       this.locationList = inventoryData.locationList;
       this.locationNames = inventoryData.locationNames;
     })
+  }
+
+  startEditing(index: number) {
+    this.editingPackageIndex = index;
+  }
+
+  saveChanges(packaging: Packaging,  name: any, amountinstock: any, minimumAmount: any) {
+    console.log(amountinstock)
+    this.dataStorageService.updatePackage(packaging, name.textContent, amountinstock.textContent, minimumAmount.textContent);
+    this.editingPackageIndex = null;
+  }
+
+  cancelEditing(index: number) {
+
+    this.editingPackageIndex = null;
   }
 
   ngOnDestroy() {

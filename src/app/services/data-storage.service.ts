@@ -133,4 +133,14 @@ export class DataStorageService {
   
     return this.http.patch(this.baseurl + "/packages/" + id, null, { params });
   }
+  updatePackage(Packaging: Packaging, name: any, amountinstock: any, minimumAmount: any) {;
+    const changeRequest = {
+      id: Packaging.id,
+      amountInStock: amountinstock,
+      minAmount: minimumAmount,
+      name: name,
+    }
+console.log
+    this.http.post(this.baseurl + '/packages/update', changeRequest).subscribe(data => console.log(data));
+  }
 }

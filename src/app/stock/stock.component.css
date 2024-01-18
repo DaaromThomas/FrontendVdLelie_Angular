@@ -7,7 +7,9 @@
 .spacer {
     padding-top: 5%;
 }
-
+input{
+    border: none;
+}
 .table-wrapper {
     width: fit-content;
     max-height: 75vh;
