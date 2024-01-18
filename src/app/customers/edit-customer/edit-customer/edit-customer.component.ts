@@ -1,5 +1,4 @@
 import {
-  AfterViewChecked,
   AfterViewInit,
   Component,
   EventEmitter,
@@ -11,7 +10,7 @@ import {
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Customer } from '../../../interfaces/customer.interface';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { CustomerValidationService } from '../../CustomerValidationService';
 import { HttpParams } from '@angular/common/http';
 import { DataStorageService } from '../../../services/data-storage.service';
@@ -40,7 +39,6 @@ export class EditCustomerComponent implements AfterViewInit, OnDestroy, OnInit {
   constructor(
     public dialogRef: MatDialogRef<EditCustomerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: FormBuilder,
     private customerValidationService: CustomerValidationService,
     private renderer: Renderer2,
     private dataStorageService: DataStorageService
