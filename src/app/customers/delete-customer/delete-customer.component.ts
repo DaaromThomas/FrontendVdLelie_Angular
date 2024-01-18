@@ -44,7 +44,7 @@ export class DeleteCustomerComponent implements OnInit {
       this.dataStorageService
         .deleteCustomer(this.customer.id)
         .subscribe(() => this.dataStorageService.getCustomers());
-      this.close
+      this.close();
     } else if (!isSafeToDelete) {
       this.error = 'Customer still has unpacked products'
     }
