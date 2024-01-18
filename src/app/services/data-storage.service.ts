@@ -16,11 +16,6 @@ export class DataStorageService {
   private baseurl: string = 'http://localhost:8080';
   allInventoryData$: Subject<InventoryData> = new Subject<InventoryData>();
   locationList$: Subject<Location[]> = new Subject<Location[]>();
-  locationList: Location[] = [];
-   currentUser: string = '';
-   currentAccount: Account | undefined;
-   currentStock: Stock | undefined;
-   currentStockId: string = '';
   private locationList: Location[] = [];
   private currentAccount: Account | undefined;
   private currentStockId: string = '';
