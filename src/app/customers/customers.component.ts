@@ -7,6 +7,7 @@ import { DeleteCustomerComponent } from './delete-customer/delete-customer.compo
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { AddCustomerPopupComponent } from './add-customer-popup/add-customer-popup.component';
 
 @Component({
   selector: 'app-customers',
@@ -57,18 +58,8 @@ export class CustomersComponent {
     this.subscription.unsubscribe();
   }
 
-  displayAddCustomerPopup() {
-    this.displayAddCustomer = true;
-    this.applyBlur = true;
-  }
-
-  onAddCustomerPopupClosed(isClosed: boolean) {
-    this.displayAddCustomer = !isClosed;
-    this.applyBlur = !isClosed;
-  }
-
-  trackByFn(index: number, customer: Customer) {
-    return customer.id; // unique id corresponding to the customer
+  addCustomer() {
+    this.dialog.open(AddCustomerPopupComponent)
   }
 
   editCustomer(customer: Customer) {

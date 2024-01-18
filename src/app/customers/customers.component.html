@@ -1,9 +1,4 @@
-<button mat-button (click)="displayAddCustomerPopup()">New Customer</button>
-
-<div class="add-customer" *ngIf="displayAddCustomer">
-    <app-add-customer-popup class="customer-popup"
-        (popupClosed)="onAddCustomerPopupClosed($event)"></app-add-customer-popup>
-</div>
+<button mat-button (click)="addCustomer()">New Customer</button>
 
 <table mat-table [dataSource]="customerList" class="mat-elevation-z8">
     <ng-container matColumnDef="name">
@@ -44,4 +39,4 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
-<mat-paginator #paginator [pageSize]="customersPerPage" showFirstLastButtons aria-label="temp"></mat-paginator>
+<mat-paginator #paginator [pageSize]="customersPerPage" showFirstLastButtons></mat-paginator>

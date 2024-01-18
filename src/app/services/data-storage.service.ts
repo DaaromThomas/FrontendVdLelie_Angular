@@ -49,6 +49,11 @@ export class DataStorageService {
       params = params.set('phonenumber', newCustomer.phonenumber);
     }
 
+    if (newCustomer.preferredPackaging != null) {
+      params = params.set('preferredPackageId', newCustomer.preferredPackaging.id!);
+      console.log(newCustomer.preferredPackaging.id!)
+    }
+
 
     const httpOptions = {
       params: params
