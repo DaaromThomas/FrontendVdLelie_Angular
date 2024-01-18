@@ -30,6 +30,8 @@
                 <p class="edit" mat-menu-item (click)="editCustomer(customer)">edit <mat-icon>edit</mat-icon> </p>
                 <p class="delete" mat-menu-item (click)="deleteCustomer(customer)">delete <mat-icon>delete</mat-icon> </p>
             </mat-menu> 
+            } @else {
+                <mat-icon class="options_icon" (click)="addCustomer()">add</mat-icon>
             }
         </td>
     </ng-container>
