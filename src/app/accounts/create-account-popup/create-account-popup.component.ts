@@ -1,11 +1,7 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { Component } from '@angular/core';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { DataStorageService } from '../../services/data-storage.service';
-import { Product } from '../../models/product';
-import { Account } from '../../interfaces/account.interface';
 import { Location } from '../../interfaces/location';
-import { AccountCreate } from '../../interfaces/account-create.interface';
-
 
 @Component({
   selector: 'app-create-account-popup',
@@ -13,55 +9,34 @@ import { AccountCreate } from '../../interfaces/account-create.interface';
   styleUrl: './create-account-popup.component.css'
 })
 export class CreateAccountPopupComponent {
-  locationList: Location[] = [];
+
+  name: string = "";
+  email: string = "";
+  password: string = "";
+  passcheck: string = "";
+  notifications: boolean = false;
+  selectedOption: string = "cdba1f68-f9e9-41c7-972e-0a12209763f4";
+
   subscription: any;
-  defaultLocation?: Location;
 
+  locations: Location[] = [];
 
-  constructor(
-    public dialogRef: MatDialogRef<CreateAccountPopupComponent>,
-    private dataStorageService: DataStorageService,
-    @Inject(MAT_DIALOG_DATA) public product: Product,
-    public dialog: MatDialogModule
-  ) {
+  constructor(public dialogRef: MatDialogRef<CreateAccountPopupComponent>, public dialog: MatDialog, private dataStorageService: DataStorageService) { }
 
+  ngOnInit(): void {
+    this.populateLocations();
   }
 
-
-  newEmployee: AccountCreate = {
-    location: this.defaultLocation!,
-    employeenumber: 0,
-    name: '',
-    password: '',
-    email: '',
-    noitification: false
+  populateLocations() {
+    this.dataStorageService.getPackagesAndLocations();
+    this.subscription = this.dataStorageService.allInventoryData$.subscribe((inventoryData) => {
+      this.locations = inventoryData.locationList;
+    })
   }
 
-  ngOnInit() {
-    this.dataStorageService.getLocations();
-    this.populateLocationData();
-    this.dataStorageService.getLocationById("0b965849-6bba-428a-920a-94cc3b4fe821").subscribe((data: Location) => {
-      this.defaultLocation = data;
-    });
-    
-  }
-
-  populateLocationData(): void {
-    this.subscription = this.dataStorageService.locationList$.subscribe(
-      (locationData) => {
-        console.log(locationData);
-        this.locationList = locationData;
-      }
-    );
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
-
-  onClose(save: boolean): void {
-    if (save){
+  closeDialog(save: boolean) {
+    if (save == true) {
+      console.log(this.name + " " + this.email + " " + this.password + " " + this.passcheck + " " + this.notifications + " " + this.selectedOption);
 
     }
     this.dialogRef.close();

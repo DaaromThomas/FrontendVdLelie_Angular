@@ -8,10 +8,18 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { EmailNotificationPopupComponent } from './select-package-popup/email-notification-popup/email-notification-popup.component';
+import { CreateAccountPopupComponent } from '../accounts/create-account-popup/create-account-popup.component';
 
 @NgModule({
-  declarations: [ScanOrderComponent, SelectPackagePopupComponent, EmailNotificationPopupComponent],
-  imports: [CommonModule, BrowserModule, MatDialogModule, FormsModule, MatFormFieldModule, MatSelectModule],
+  declarations: [ScanOrderComponent, SelectPackagePopupComponent, EmailNotificationPopupComponent, CreateAccountPopupComponent],
+  imports: [
+    CommonModule,
+    BrowserModule,
+    MatDialogModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatSelectModule
+  ],
   exports: [ScanOrderComponent],
 })
 export class ScanOrderModule { }

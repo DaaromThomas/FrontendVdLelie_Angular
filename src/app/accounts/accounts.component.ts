@@ -17,7 +17,7 @@ export class AccountsComponent {
   constructor(
     private dataStorageService: DataStorageService,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.dataStorageService.getAccounts();
@@ -45,4 +45,5 @@ export class AccountsComponent {
 
     });
   }
+
 }
