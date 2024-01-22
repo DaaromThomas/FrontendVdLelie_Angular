@@ -1,10 +1,9 @@
 <div class="top-bar">
-    <input type="text" placeholder="Customer name" [(ngModel)]="nameFilter">
-    <input type="text" placeholder="Address" [(ngModel)]="addressFilter">
-    <input type="text" placeholder="PhoneNumber" [(ngModel)]="phoneFilter">
-    <input type="text" placeholder="E-mail" [(ngModel)]="emailFilter">
-    <input type="text" placeholder="preferredPackaging" [(ngModel)]="packageFilter">
-    <button mat-button (click)="applyFilters()">Apply filters</button>
+    <input type="text" placeholder="Customer name" [(ngModel)]="nameFilter" (input)="applyFilters()">
+    <input type="text" placeholder="Address" [(ngModel)]="addressFilter" (input)="applyFilters()">
+    <input type="text" placeholder="PhoneNumber" [(ngModel)]="phoneFilter" (input)="applyFilters()">
+    <input type="text" placeholder="E-mail" [(ngModel)]="emailFilter" (input)="applyFilters()">
+    <input type="text" placeholder="preferredPackaging" [(ngModel)]="packageFilter" (input)="applyFilters()">
     <button mat-button class="addCustomer" (click)="addCustomer()">New Customer</button>
 </div>
 
