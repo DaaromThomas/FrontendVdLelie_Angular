@@ -9,12 +9,14 @@
             <input matInput placeholder="email" [(ngModel)]="email" id="email">
             <input matInput placeholder="password" [(ngModel)]="password" id="password">
             <input matInput placeholder="password again" [(ngModel)]="passcheck" id="passcheck">
+            <input matInput type="number" placeholder="employeenumber" [(ngModel)]="employeenumber" id="employeenumber">
             <input matInput type="checkbox" [(ngModel)]="notifications" id="notifications">
             <mat-select [(ngModel)]="selectedOption">
                 <mat-option *ngFor="let location of locations" [value]="location.id">
                     {{ location.address }}
                 </mat-option>
             </mat-select>
+            <label class="error">{{error}}</label>
         </mat-dialog-content>
         <mat-dialog-actions>
             <button mat-button (click)="closeDialog(false)">Cancel</button>

@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { EmailNotificationPopupComponent } from './select-package-popup/email-notification-popup/email-notification-popup.component';
 import { CreateAccountPopupComponent } from '../accounts/create-account-popup/create-account-popup.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [ScanOrderComponent, SelectPackagePopupComponent, EmailNotificationPopupComponent, CreateAccountPopupComponent],
@@ -18,7 +19,7 @@ import { CreateAccountPopupComponent } from '../accounts/create-account-popup/cr
     MatDialogModule,
     FormsModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
   ],
   exports: [ScanOrderComponent],
 })
