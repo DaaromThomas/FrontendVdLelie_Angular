@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Account } from '../interfaces/account.interface';
 import { DataStorageService } from '../services/data-storage.service';
 import { debug } from 'console';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateAccountPopupComponent } from './create-account-popup/create-account-popup.component';
 
 @Component({
   selector: 'app-accounts',
@@ -14,6 +16,7 @@ export class AccountsComponent {
 
   constructor(
     private dataStorageService: DataStorageService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -32,5 +35,14 @@ export class AccountsComponent {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(CreateAccountPopupComponent, {
+      width: '750px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 }

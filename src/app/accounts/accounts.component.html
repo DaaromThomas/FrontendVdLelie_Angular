@@ -4,7 +4,6 @@
             <thead>
                 <tr>
                     <th>name</th>
-                    <th>employee number</th>
                     <th>role</th>
                     <th>email</th>
                     <th>notification</th>
@@ -14,13 +13,13 @@
                 @for(account of accountList; track $index){
                     <tr >
                         <td>{{account.name}}</td>
-                        <td>{{account.employeenumber.toString()}}</td>
                         <td>{{account.role}}</td>
                         <td>{{account.email}}</td>
-                        <td><input type="checkbox" ng-model="account.checkbox" readonly=></td>
+                        <td><input type="checkbox" ng-model="account.checkbox" readonly="true"></td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
+    <button (click)="openDialog()">Add Employee</button>
 </div>
