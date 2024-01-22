@@ -1,11 +1,10 @@
-import { Location  } from "./location";
+import { Location } from "./location";
 
-export interface Account {
-  id: string;
+export interface AccountCreate {
   location: Location;
   employeenumber: Number;
   name: string;
-  role: string;
+  password: string;
   email: string;
   noitification: boolean;
 }

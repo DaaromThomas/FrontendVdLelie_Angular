@@ -1,0 +1,22 @@
+<div class="popup-container">
+    <div class="sidebar">
+        <img src="assets/package.png" alt="">
+    </div>
+    <div class="content-container">
+        <h3 mat-dialog-title>Create new employee</h3>
+        <mat-dialog-content>
+            <mat-form-field class="select">
+                <mat-label>Select a package</mat-label>
+                <mat-select [(ngModel)]="defaultLocation">
+                    <mat-option *ngFor="let location of locationList" [value]="location.id">
+                        {{ location.address }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </mat-dialog-content>
+        <mat-dialog-actions>
+            <button mat-button (click)="onClose(false)">Close</button>
+            <button mat-button (click)="onClose(true)">Ok</button>
+        </mat-dialog-actions>
+    </div>
+</div>

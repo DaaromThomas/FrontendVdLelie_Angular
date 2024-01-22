@@ -217,6 +217,16 @@ export class DataStorageService {
       this.accountList$.next(accounts);
     })
   }
+
+  getLocations(){
+    this.http.get<Location[]>(this.baseurl + '/locations').subscribe((locations: Location[]) => {
+      this.locationList$.next(locations);
+    })
+  }
+
+  getLocationById(id: String): Observable<Location> {
+    return this.http.get<Location>(this.baseurl + '/locations/' + id);
+  }
 }
 
 
