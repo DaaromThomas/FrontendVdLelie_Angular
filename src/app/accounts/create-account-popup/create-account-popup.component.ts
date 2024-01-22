@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { DataStorageService } from '../../services/data-storage.service';
 import { Location } from '../../interfaces/location';
+import { Signup } from '../../interfaces/signup.interface';
 
 @Component({
   selector: 'app-create-account-popup',
@@ -10,6 +11,8 @@ import { Location } from '../../interfaces/location';
 })
 export class CreateAccountPopupComponent {
 
+  signup: Signup | undefined;
+  employeenumber: number = 0;
   name: string = "";
   email: string = "";
   password: string = "";
@@ -20,6 +23,8 @@ export class CreateAccountPopupComponent {
   subscription: any;
 
   locations: Location[] = [];
+
+  error = '';
 
   constructor(public dialogRef: MatDialogRef<CreateAccountPopupComponent>, public dialog: MatDialog, private dataStorageService: DataStorageService) { }
 
@@ -36,8 +41,23 @@ export class CreateAccountPopupComponent {
 
   closeDialog(save: boolean) {
     if (save == true) {
-      console.log(this.name + " " + this.email + " " + this.password + " " + this.passcheck + " " + this.notifications + " " + this.selectedOption);
-
+      if (this.password != this.passcheck) {
+        this.error = "passwords do not match";
+        return;
+      }
+      if (this.employeenumber == 0 || this.name == "" || this.email == "" || this.password == "" || this.passcheck == "") {
+        this.error = "some fields are left empty";
+        return;
+      }
+      this.signup = {
+        employeenumber: this.employeenumber,
+        username: this.name,
+        password: this.password,
+        locationID: this.selectedOption,
+        email: this.email,
+        notification: this.notifications
+      };
+      this.dataStorageService.postSignup(this.signup);
     }
     this.dialogRef.close();
   }

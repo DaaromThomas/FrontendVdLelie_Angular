@@ -11,12 +11,15 @@
             </thead>
             <tbody>
                 @for(account of accountList; track $index){
-                    <tr >
-                        <td>{{account.name}}</td>
-                        <td>{{account.role}}</td>
-                        <td>{{account.email}}</td>
-                        <td><input type="checkbox" ng-model="account.checkbox" readonly="true"></td>
-                    </tr>
+                <tr>
+                    <td>{{account.name}}</td>
+                    <td>{{account.role}}</td>
+                    <td>{{account.email}}</td>
+                    <td><input type="checkbox" ng-model="account.checkbox" readonly="true">
+                        <button mat-icon-button (click)="deleteUser(account.id)">Delete
+                        </button>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

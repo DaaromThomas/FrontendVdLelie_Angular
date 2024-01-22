@@ -8,6 +8,8 @@ import { InventoryData } from '../interfaces/InventoryData.interface';
 import { Account } from '../interfaces/account.interface';
 import { ChangeIsPackedRequestData } from '../models/ChangeIsPackedRequestData';
 import { Customer } from '../interfaces/customer.interface';
+import { Signup } from '../interfaces/signup.interface';
+import { url } from 'inspector';
 
 @Injectable({
   providedIn: 'root',
@@ -145,19 +147,19 @@ export class DataStorageService {
 
   getLocationStock(): Promise<void> {
     return new Promise((resolve, reject) => {
-     if (this.currentAccount != undefined) {
-       for (let location of this.locationList) {
-         if (location.id === ((this.currentAccount.location as unknown) as Location).id) {
-           this.currentStockId = location.stock.id
-         }
-       }
-       resolve();
-     } else {
-       reject("Current account is undefined");
-     }
+      if (this.currentAccount != undefined) {
+        for (let location of this.locationList) {
+          if (location.id === ((this.currentAccount.location as unknown) as Location).id) {
+            this.currentStockId = location.stock.id
+          }
+        }
+        resolve();
+      } else {
+        reject("Current account is undefined");
+      }
     });
-   }
-   
+  }
+
 
   delay(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -169,16 +171,16 @@ export class DataStorageService {
 
   async getCurrentUser(): Promise<string> {
     try {
-    const response = await this.http.get(this.baseurl + '/currentuser', { responseType: 'text' }).toPromise();
-    if (!response) {
-      throw new Error('Failed to get current user');
-    }
-    return response;
+      const response = await this.http.get(this.baseurl + '/currentuser', { responseType: 'text' }).toPromise();
+      if (!response) {
+        throw new Error('Failed to get current user');
+      }
+      return response;
     } catch (error) {
-    console.error(error);
-    throw error;
+      console.error(error);
+      throw error;
     }
-   }   
+  }
 
   changeIsPackedRequest(isPacked: boolean, productNumber: number) {
     let data: ChangeIsPackedRequestData = new ChangeIsPackedRequestData(isPacked, productNumber);
@@ -218,7 +220,7 @@ export class DataStorageService {
     })
   }
 
-  getLocations(){
+  getLocations() {
     this.http.get<Location[]>(this.baseurl + '/locations').subscribe((locations: Location[]) => {
       this.locationList$.next(locations);
     })
@@ -226,6 +228,21 @@ export class DataStorageService {
 
   getLocationById(id: String): Observable<Location> {
     return this.http.get<Location>(this.baseurl + '/locations/' + id);
+  }
+
+  postSignup(signup: Signup) {
+    this.http.post(this.baseurl + '/signup', signup).subscribe(
+      (res) => {
+
+      },
+      (error) => {
+        console.log(error)
+      }
+    );
+  }
+
+  deleteAccount(id: string) {
+    return this.http.delete(this.baseurl + "/accounts/" + id).subscribe();
   }
 }
 

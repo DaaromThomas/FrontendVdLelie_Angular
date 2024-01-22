@@ -16,18 +16,17 @@ export class AccountsComponent {
 
   constructor(
     private dataStorageService: DataStorageService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit() {
-    this.dataStorageService.getAccounts();
     this.populateAccountData();
   }
 
   populateAccountData(): void {
+    this.dataStorageService.getAccounts();
     this.subscription = this.dataStorageService.accountList$.subscribe(
       (accountData) => {
-        console.log(accountData);
         this.accountList = accountData;
       }
     );
@@ -42,8 +41,14 @@ export class AccountsComponent {
       width: '750px',
     });
     dialogRef.afterClosed().subscribe(result => {
-
+      if (result) {
+        this.populateAccountData();
+      }
     });
+  }
+
+  deleteUser(id: string) {
+    this.dataStorageService.deleteAccount(id);
   }
 
 }
