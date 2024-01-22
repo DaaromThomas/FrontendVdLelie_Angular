@@ -9,7 +9,7 @@ import {Customer} from "../../models/Customer";
   providedIn: 'root'
 })
 export class ScanOrderService {
-  baseURL = 'https://vps.ronp.nl/ipsenapi/';
+  private baseURL: string = 'https://vps.ronp.nl/ipsenapi/';
 
   constructor(private http: HttpClient) {
 
