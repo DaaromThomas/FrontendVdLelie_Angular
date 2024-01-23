@@ -3,29 +3,42 @@
         <button class="addEmployee" (click)="openDialog()">Add Employee</button>
     </div>
     <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>name</th>
-                    <th>role</th>
-                    <th>email</th>
-                    <th>notification</th>
-                    <th>delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for(account of accountList; track $index){
-                <tr>
-                    <td>{{account.name}}</td>
-                    <td>{{account.role}}</td>
-                    <td>{{account.email}}</td>
-                    <td><input type="checkbox" onclick="return false" [checked]="account.notification"></td>
-                    <td><button class="deleteButton" mat-icon-button (click)="deleteUser(account.id)"><img
-                                src="../../assets/delete.png" width="16px">
-                        </button></td>
-                </tr>
-                }
-            </tbody>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="name">
+                <th class="header" mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let account">{{ account.name }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="role">
+                <th class="header" mat-header-cell *matHeaderCellDef>Role</th>
+                <td mat-cell *matCellDef="let account">{{ account.role }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+                <th class="header" mat-header-cell *matHeaderCellDef>Email</th>
+                <td mat-cell *matCellDef="let account">{{ account.email }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="notification">
+                <th class="header" mat-header-cell *matHeaderCellDef>Notification</th>
+                <td mat-cell *matCellDef="let account">
+                    <input type="checkbox" [checked]="account.notification" disabled>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="delete">
+                <th class="header" mat-header-cell *matHeaderCellDef>Delete</th>
+                <td mat-cell *matCellDef="let account">
+                    <button class="deleteButton" mat-icon-button (click)="deleteUser(account.id)">
+                        <img src="../../assets/delete.png" width="16px">
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['name', 'role', 'email', 'notification', 'delete']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['name', 'role', 'email', 'notification', 'delete']"></tr>
+
         </table>
+        <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
     </div>
 </div>

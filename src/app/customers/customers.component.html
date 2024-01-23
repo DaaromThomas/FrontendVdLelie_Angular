@@ -32,13 +32,14 @@
         <th class="header" mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let customer">
             @if (customer.name) {
-               <mat-icon class="options_icon" [matMenuTriggerFor]="customer_options">more_vert</mat-icon>
+            <mat-icon class="options_icon" [matMenuTriggerFor]="customer_options">more_vert</mat-icon>
             <mat-menu class="options_menu" #customer_options="matMenu">
                 <p class="edit" mat-menu-item (click)="editCustomer(customer)">edit <mat-icon>edit</mat-icon> </p>
-                <p class="delete" mat-menu-item (click)="deleteCustomer(customer)">delete <mat-icon>delete</mat-icon> </p>
-            </mat-menu> 
+                <p class="delete" mat-menu-item (click)="deleteCustomer(customer)">delete <mat-icon>delete</mat-icon>
+                </p>
+            </mat-menu>
             } @else {
-                <mat-icon class="options_icon" (click)="addCustomer()">add</mat-icon>
+            <mat-icon class="options_icon" (click)="addCustomer()">add</mat-icon>
             }
         </td>
     </ng-container>
