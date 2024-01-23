@@ -6,9 +6,10 @@ import { Account } from '../interfaces/account.interface';
 import { DataStorageService } from '../services/data-storage.service';
 import { Packaging } from '../interfaces/packaging';
 import { MatTableDataSource } from '@angular/material/table';
-import { log } from 'console';
+import { log, time } from 'console';
 import { MatPaginator } from '@angular/material/paginator';
 import { app } from '../../../server';
+import { Time } from '@angular/common';
 
 @Component({
   selector: 'app-logs',
@@ -67,7 +68,7 @@ export class LogsComponent implements OnInit {
   
         const nameMatches = !this.nameFilter || log.account.name.toLowerCase().includes(this.nameFilter.toLowerCase());
         const productMatches = !this.productFilter || log.product.name.toLowerCase().includes(this.productFilter.toLowerCase());
-        const dateMatches = !this.filterDate || this.dateMatches(log.date);
+        const dateMatches = this.dateMatches(log.date);
         const timeMatches = this.timeMatches(log.time);
 
         console.log(nameMatches, productMatches, dateMatches, timeMatches)
@@ -84,12 +85,13 @@ export class LogsComponent implements OnInit {
     this.resetFilters();
   }
 
-  private dateMatches(logDate: Date): boolean {
+  private dateMatches(logDate: number[]): boolean {
+    let date: string = logDate[0] + "," + logDate[1] + "," + logDate[2]
     if(this.beginTime && this.endTime && !this.filterDate){
       this.filterDate = new Date();
     }
     try {
-      const logDateObj = new Date(logDate);
+      const logDateObj = new Date(date);
       const filterDate = new Date(this.filterDate as Date);
       return logDateObj.toDateString() === filterDate.toDateString();
     } catch (error) {
@@ -138,5 +140,21 @@ export class LogsComponent implements OnInit {
     while (this.filteredLogs.data.length % this.pageSize !== 0) {
       this.filteredLogs.data.push(Object.create(null))
     }
+  }
+
+  
+  convertDateToShowableString(log: Log): string{
+    const year: string = log.date[0].toString();
+    const month: string = log.date[1].toString().padStart(2, '0');
+    const day: string = log.date[2].toString().padStart(2, '0');
+    const string: string = year + " - " + month + " - " + day
+    return string;
+  }
+
+  convertTimeToShowableString(log: Log): string {
+    const hour: string = log.time[0].toString().padStart(2, '0');
+    const minute: string = log.time[1].toString().padStart(2, '0');
+    
+    return hour + ":" + minute;
   }
 }

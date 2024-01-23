@@ -9,7 +9,7 @@ export class Log {
     private _product: Product;
     private _packaging: Packaging;
     private _packagingamount: number;
-    private _date: Date;
+    private _date: number[];
     private _time: number[];
     private _reverted: boolean;
 
@@ -18,7 +18,7 @@ export class Log {
         product: Product,
         packaging: Packaging,
         packagingamount: number,
-        date: Date,
+        date: number[],
         time: number[],
         reverted: boolean
     ) {
@@ -72,11 +72,11 @@ export class Log {
         this._packagingamount = amount;
     }
 
-    get date(): Date {
+    get date(): number[] {
         return this._date;
     }
 
-    set date(date: Date) {
+    set date(date: number[]) {
         this._date = date;
     }
 

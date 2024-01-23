@@ -34,6 +34,10 @@
     height: 100%;
 }
 
+.header > p{
+    color: white;
+}
+
 .holder{
     width: 100% !important;
     height: 52px !important;

@@ -5,6 +5,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Params } from '@angular/router';
 import { DataStorageService } from '../services/data-storage.service';
 import { Account } from '../interfaces/account.interface';
+import { Time } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -29,13 +30,30 @@ export class LogService implements OnInit{
     return this.logList$.asObservable();
   }
 
-  public getLogs(){
+  public getLogs() {
     this.http.get<Log[]>(this.baseurl)
       .subscribe((logs) => {
-        this.logList = logs;
+        this.logList = logs.sort((a, b) => {
+          const dateA = new Date(a.date[0], a.date[1] - 1, a.date[2]).getTime();
+          const dateB = new Date(b.date[0], b.date[1] - 1, b.date[2]).getTime();
+  
+          if (dateA !== dateB) {
+            return dateB - dateA;
+          }
+  
+          const timeA = a.time[0] * 3600 + a.time[1] * 60 + a.time[2];
+          const timeB = b.time[0] * 3600 + b.time[1] * 60 + b.time[2];
+  
+          return timeB - timeA;
+        });
+
+        this.logList.reverse();
+  
         this.logList$.next(this.logList);
-      })
+      });
   }
+  
+  
 
   public createLog(params: HttpParams){
 
@@ -53,7 +71,7 @@ export class LogService implements OnInit{
     };
 
     return this.http.patch(this.baseurl, body).subscribe();
-}
+  }
 
 
   
