@@ -1,4 +1,7 @@
 <div class="container">
+    <div class="topBar">
+        <button class="addEmployee" (click)="openDialog()">Add Employee</button>
+    </div>
     <div class="table-wrapper">
         <table>
             <thead>
@@ -7,6 +10,7 @@
                     <th>role</th>
                     <th>email</th>
                     <th>notification</th>
+                    <th>delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -15,14 +19,13 @@
                     <td>{{account.name}}</td>
                     <td>{{account.role}}</td>
                     <td>{{account.email}}</td>
-                    <td><input type="checkbox" ng-model="account.checkbox" readonly="true">
-                        <button mat-icon-button (click)="deleteUser(account.id)">Delete
-                        </button>
-                    </td>
+                    <td><input type="checkbox" onclick="return false" [checked]="account.notification"></td>
+                    <td><button class="deleteButton" mat-icon-button (click)="deleteUser(account.id)"><img
+                                src="../../assets/delete.png" width="16px">
+                        </button></td>
                 </tr>
                 }
             </tbody>
         </table>
     </div>
-    <button (click)="openDialog()">Add Employee</button>
 </div>

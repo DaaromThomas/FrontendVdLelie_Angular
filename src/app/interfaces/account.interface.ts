@@ -1,4 +1,4 @@
-import { Location  } from "./location";
+import { Location } from "./location";
 
 export interface Account {
   id: string;
@@ -7,5 +7,5 @@ export interface Account {
   name: string;
   role: string;
   email: string;
-  noitification: boolean;
+  notification: boolean;
 }

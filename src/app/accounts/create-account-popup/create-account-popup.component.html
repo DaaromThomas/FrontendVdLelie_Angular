@@ -2,13 +2,13 @@
     <div class="sidebar">
         <img src="assets/package.png" alt="">
     </div>
-    <h1>Create new account</h1>
     <div class="content-container">
+        <h1>Create new account</h1>
         <mat-dialog-content>
             <input matInput placeholder="name" [(ngModel)]="name" id="name">
-            <input matInput placeholder="email" [(ngModel)]="email" id="email">
-            <input matInput placeholder="password" [(ngModel)]="password" id="password">
-            <input matInput placeholder="password again" [(ngModel)]="passcheck" id="passcheck">
+            <input matInput type="email" placeholder="email" [(ngModel)]="email" id="email">
+            <input matInput type="password" placeholder="password" [(ngModel)]="password" id="password">
+            <input matInput type="password" placeholder="password again" [(ngModel)]="passcheck" id="passcheck">
             <input matInput type="number" placeholder="employeenumber" [(ngModel)]="employeenumber" id="employeenumber">
             <input matInput type="checkbox" [(ngModel)]="notifications" id="notifications">
             <mat-select [(ngModel)]="selectedOption">
