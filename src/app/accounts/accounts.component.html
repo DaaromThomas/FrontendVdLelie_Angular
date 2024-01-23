@@ -1,1 +1,57 @@
-<p>accounts works!</p>
+<div class="container">
+    <div class="topBar">
+        <button class="addEmployee" (click)="openDialog()">Add Employee</button>
+    </div>
+    <div class="table-wrapper">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="name">
+                <th class="header" mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let account">{{ account.name }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="role">
+                <th class="header" mat-header-cell *matHeaderCellDef>Role</th>
+                <td mat-cell *matCellDef="let account">{{ account.role }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+                <th class="header" mat-header-cell *matHeaderCellDef>Email</th>
+                <td mat-cell *matCellDef="let account">{{ account.email }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="notification">
+                <th class="header" mat-header-cell *matHeaderCellDef>Notification</th>
+                <td mat-cell *matCellDef="let account">
+                    <input type="checkbox" [checked]="account.notification" disabled>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="delete">
+                <th class="header" mat-header-cell *matHeaderCellDef></th>
+                <td class="editlocation" mat-cell *matCellDef="let account">
+                    <mat-icon class="options_icon" [matMenuTriggerFor]="account_options">more_vert</mat-icon>
+                    <mat-menu class="options_menu" #account_options="matMenu">
+                        @if (account.role == "ROLE_USER") {
+                        <p class="edit" mat-menu-item (click)="editRole(account, 'ROLE_ADMIN')">Make admin
+                            <mat-icon>edit</mat-icon>
+                        </p>
+                        }
+                        @else {
+                        <p class="edit" mat-menu-item (click)="editRole(account, 'ROLE_USER')">Make user
+                            <mat-icon>edit</mat-icon>
+                        </p>
+                        }
+                        <p class="delete" mat-menu-item (click)="deleteUser(account.id)">delete
+                            <mat-icon>delete</mat-icon>
+                        </p>
+                    </mat-menu>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['name', 'role', 'email', 'notification', 'delete']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['name', 'role', 'email', 'notification', 'delete']"></tr>
+
+        </table>
+        <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+    </div>
+</div>
