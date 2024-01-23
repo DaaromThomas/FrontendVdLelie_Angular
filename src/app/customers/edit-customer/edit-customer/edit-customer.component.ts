@@ -1,5 +1,4 @@
 import {
-  AfterViewChecked,
   AfterViewInit,
   Component,
   EventEmitter,
@@ -11,7 +10,7 @@ import {
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Customer } from '../../../interfaces/customer.interface';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { CustomerValidationService } from '../../CustomerValidationService';
 import { HttpParams } from '@angular/common/http';
 import { DataStorageService } from '../../../services/data-storage.service';
@@ -33,14 +32,13 @@ export class EditCustomerComponent implements AfterViewInit, OnDestroy, OnInit {
   phoneNumberWithCountry!: string;
   subscription: any;
   packageList: Packaging[] = [];
-  prefferredPackage!: string;
+  preferredPackage!: string;
 
   @Output() popupClosed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     public dialogRef: MatDialogRef<EditCustomerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: FormBuilder,
     private customerValidationService: CustomerValidationService,
     private renderer: Renderer2,
     private dataStorageService: DataStorageService
@@ -58,7 +56,7 @@ export class EditCustomerComponent implements AfterViewInit, OnDestroy, OnInit {
     this.dataStorageService.getPackagesAndLocations();
     this.populatePackageList();
     if (this.customer.preferredPackaging?.id) {
-      this.prefferredPackage = this.customer.preferredPackaging.id
+      this.preferredPackage = this.customer.preferredPackaging.id
     }
   }
 
@@ -114,8 +112,8 @@ export class EditCustomerComponent implements AfterViewInit, OnDestroy, OnInit {
       if (customerData.phonenumber) {
         params = params.set('phonenumber', customerData.phonenumber);
       }
-      if (this.prefferredPackage) {
-        params = params.set('prefferedPackageId', this.prefferredPackage);
+      if (this.preferredPackage) {
+        params = params.set('prefferedPackageId', this.preferredPackage);
       }
       if (this.customer.id) {
         this.dataStorageService

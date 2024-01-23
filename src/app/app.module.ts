@@ -1,4 +1,4 @@
-import {APP_INITIALIZER, InjectionToken, NgModule} from '@angular/core';
+import { APP_INITIALIZER, InjectionToken, NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { ScanOrderModule } from './scan-order/scan-order.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -16,9 +16,10 @@ import { LoginService } from './login/login.service';
 import { GlobalErrorHandler } from './ErrorHandling/global-error-handler';
 import { LoadingcomponentComponent } from './ErrorHandling/loadingcomponent/loadingcomponent.component';
 
-import {FormsModule} from "@angular/forms";
-import {MatMenuModule} from "@angular/material/menu";
-import {MatDialogModule} from "@angular/material/dialog";
+import { FormsModule } from "@angular/forms";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatDialogModule } from "@angular/material/dialog";
+
 
 @NgModule({
   declarations: [AppComponent, NavBarComponent, LoadingcomponentComponent],
@@ -49,4 +50,4 @@ import {MatDialogModule} from "@angular/material/dialog";
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
