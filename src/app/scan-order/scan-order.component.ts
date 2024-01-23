@@ -14,25 +14,19 @@ import { ScanOrderService } from './services/scan-order.service';
 })
 export class ScanOrderComponent {
   public packaging: string[] = ["test package", "other package"];
-  public scannedProduct!: Product;
   public InputProductNumber = '';
   public errorMessage = '';
   public disableScan = false;
-
-  public productName = '-';
-  public packageName = '-';
-  public amountAvailable = 0;
   public isDialogOpen = false;
 
   selectedProduct: Product | undefined = undefined;
 
-  selectedIndex = -1;
 
   constructor(private scanOrderService: ScanOrderService, public dialog: MatDialog) { }
 
-    public ngOnInit(): void {
-      document.getElementById('productNumberInput')!.focus();
-    }
+  public ngOnInit(): void {
+    document.getElementById('productNumberInput')!.focus();
+  }
 
   public get getErrorMessage() {
     return this.errorMessage;
@@ -95,13 +89,15 @@ export class ScanOrderComponent {
       width: '750px'
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result.data != ''){
-        this.selectedProduct = result.data;
-        this.openDialog()
-      }
       this.isDialogOpen = false;
       this.disableScan = false;
       window.setTimeout(() => document.getElementById('productNumberInput')!.focus(), 0);
+
+      if(result != null && result.data != ''){
+        this.selectedProduct = result.data;
+        this.openDialog()
+      }
+
     });
   }
 
