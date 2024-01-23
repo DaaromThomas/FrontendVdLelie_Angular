@@ -37,6 +37,7 @@ export class ScanOrderComponent {
   }
 
   public getOrders(){
+    document.getElementById('productNumberInput')!.focus();
     if(this.InputProductNumber === null || this.InputProductNumber === ''){
       this.errorMessage="please scan a product";
     } else if(isNaN(Number(this.InputProductNumber))){

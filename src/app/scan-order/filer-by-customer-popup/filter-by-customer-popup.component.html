@@ -5,7 +5,7 @@
 
   <div class="Customer-filter-container" [hidden]="filterIsHidden">
     <h2>Customer List</h2>
-    <input id="filter" type="text" [(ngModel)]="filter" class="filter-customer"><br><br>
+    <input id="filter" type="text" [(ngModel)]="filter" class="filter-customer"><br>
     <div class="customer-list">
       <table>
         <thead>
@@ -21,25 +21,28 @@
           </tr>
         </tbody>
       </table>
-
+    </div>
+    <div class="close-button-container">
+      <button class="close-button" (click)="onClose()">close</button>
     </div>
   </div>
 
   <div class="Customer-product-container" [hidden]="!filterIsHidden">
     <h3>Products for customer {{selectedCustomer?.name}}</h3>
+    <p class="error-message">{{errorMessage}}</p>
     <div class="product-list">
       <table>
         <thead>
           <tr>
             <th>product</th>
-            <th> </th>
+            <th>product number</th>
             <th>Is packed?</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let product of getCustomerProducts(); index as i" (click)="selectProduct(product)">
             <td>{{product.name}}</td>
-            <td> </td>
+            <td>{{product.productnumber}}</td>
             <td>{{product.packed}}</td>
           </tr>
         </tbody>

@@ -13,10 +13,14 @@ import {Customer} from "../../interfaces/customer.interface";
 export class FilterByCustomerPopupComponent {
   public customers: Customer[] = [];
   public products: Product[] = [];
+
   private subscription: any;
+
   public filter: string = '';
   public filterIsHidden = false;
   public selectedCustomer: Customer | undefined = undefined;
+
+  public errorMessage = "";
 
   constructor(
     public dialogRef: MatDialogRef<FilterByCustomerPopupComponent>,
@@ -75,12 +79,15 @@ export class FilterByCustomerPopupComponent {
   public selectProduct(product: Product){
     if(!product.packed){
       this.dialogRef.close({data: product});
+    }else{
+      this.errorMessage="product is already packed";
     }
   }
 
   public onBackToCustomers(){
     this.filterIsHidden = false;
     window.setTimeout(() => document.getElementById('filter')!.focus(), 0);
+    this.errorMessage = "";
   }
 
   public onClose(){
