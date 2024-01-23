@@ -29,9 +29,22 @@
             <ng-container matColumnDef="delete">
                 <th class="header" mat-header-cell *matHeaderCellDef>Delete</th>
                 <td mat-cell *matCellDef="let account">
-                    <button class="deleteButton" mat-icon-button (click)="deleteUser(account.id)">
-                        <img src="../../assets/delete.png" width="16px">
-                    </button>
+                    <mat-icon class="options_icon" [matMenuTriggerFor]="account_options">more_vert</mat-icon>
+                    <mat-menu class="options_menu" #account_options="matMenu">
+                        @if (account.role == "ROLE_USER") {
+                        <p class="edit" mat-menu-item (click)="editRole(account, 'ROLE_ADMIN')">Make admin
+                            <mat-icon>edit</mat-icon>
+                        </p>
+                        }
+                        @else {
+                        <p class="edit" mat-menu-item (click)="editRole(account, 'ROLE_USER')">Make user
+                            <mat-icon>edit</mat-icon>
+                        </p>
+                        }
+                        <p class="delete" mat-menu-item (click)="deleteUser(account.id)">delete
+                            <mat-icon>delete</mat-icon>
+                        </p>
+                    </mat-menu>
                 </td>
             </ng-container>
 

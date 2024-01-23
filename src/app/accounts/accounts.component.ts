@@ -74,5 +74,8 @@ export class AccountsComponent {
   }
 
 
+  editRole(account: Account, role: string): void {
+    this.dataStorageService.editRole(account, role);
+  }
 
 }
