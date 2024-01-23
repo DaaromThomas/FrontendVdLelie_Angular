@@ -2,9 +2,6 @@ table {
   width: 100%;
 }
 
-.mat-paginator-range-label {
-    display: none;
-}
 input {
   border: none; 
   border-bottom: 1px solid #000; 

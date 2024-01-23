@@ -1,7 +1,8 @@
-import { Component, ElementRef, EventEmitter, Input, Output, QueryList, Renderer2, ViewChildren } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { Packaging } from '../../interfaces/packaging';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-stock-table',
@@ -9,6 +10,7 @@ import { Packaging } from '../../interfaces/packaging';
   styleUrl: './stock-table.component.css'
 })
 export class StockTableComponent {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @Input() data:any
   @Output() packageChangeEvent = new EventEmitter<Packaging>();
   displayedColumns: string[] = ['group','name', 'amountInStock', 'minAmount','location','edit'];
@@ -18,16 +20,9 @@ export class StockTableComponent {
   });
   isEditableNew: boolean = true;  
 
-  constructor(private fb: FormBuilder, private _formBuilder: FormBuilder, private renderer2: Renderer2, private el: ElementRef) {
+  constructor(private fb: FormBuilder, private _formBuilder: FormBuilder) {
   }
 
-  ngAfterViewInit(): void {
-    const editableFields = this.el.nativeElement;
-    // editableFields.forEach((input: HTMLElement) => {
-    //   input.style.border = 'none';
-    //   // Additional styling if needed
-    // });
-  }
 
   ngOnChanges(): void {
     this.VOForm = this.fb.group({
@@ -49,6 +44,7 @@ export class StockTableComponent {
     this.dataSource = new MatTableDataSource(
       (this.VOForm.get('VORows') as FormArray).controls
     );
+    this.dataSource.paginator = this.paginator;
   }
 
   SaveVO(VOFormElement:any, i:any) {

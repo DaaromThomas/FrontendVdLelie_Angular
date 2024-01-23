@@ -10,10 +10,11 @@ import {MatCardModule} from '@angular/material/card';
 import { StockTableComponent } from './stock-table/stock-table.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from "@angular/material/input";
+import { MatPaginatorModule } from "@angular/material/paginator";
 
 @NgModule({
   declarations: [StockComponent, AddPackagePopupComponent, StockTableComponent],
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, MatIconModule, FormsModule, MatTableModule, MatCardModule,MatFormFieldModule, MatInputModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, MatIconModule, FormsModule, MatTableModule, MatCardModule,MatFormFieldModule, MatInputModule, MatPaginatorModule],
   exports: [StockComponent, AddPackagePopupComponent],
 })
 export class StockModule {}
