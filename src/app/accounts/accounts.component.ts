@@ -4,6 +4,8 @@ import { DataStorageService } from '../services/data-storage.service';
 import { debug } from 'console';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateAccountPopupComponent } from './create-account-popup/create-account-popup.component';
+import { NoPermissionsForThisComponent } from './no-permissions-for-this/no-permissions-for-this.component';
+
 
 @Component({
   selector: 'app-accounts',
@@ -13,6 +15,8 @@ import { CreateAccountPopupComponent } from './create-account-popup/create-accou
 export class AccountsComponent {
   accountList: Account[] = [];
   subscription: any;
+
+  currentUser: string = "";
 
   constructor(
     private dataStorageService: DataStorageService,
@@ -41,14 +45,21 @@ export class AccountsComponent {
       width: '750px',
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.populateAccountData();
-      }
+
     });
   }
+
+  openNoPermissionDialog() {
+    const dialogRef = this.dialog.open(NoPermissionsForThisComponent, {
+      width: '750px',
+    });
+  }
+
 
   deleteUser(id: string) {
     this.dataStorageService.deleteAccount(id);
   }
+
+
 
 }

@@ -233,7 +233,7 @@ export class DataStorageService {
   postSignup(signup: Signup) {
     this.http.post(this.baseurl + '/signup', signup).subscribe(
       (res) => {
-
+        this.getAccounts();
       },
       (error) => {
         console.log(error)
@@ -242,7 +242,7 @@ export class DataStorageService {
   }
 
   deleteAccount(id: string) {
-    return this.http.delete(this.baseurl + "/accounts/" + id).subscribe();
+    return this.http.delete(this.baseurl + "/accounts/" + id).subscribe(() => { this.getAccounts(); });
   }
 }
 

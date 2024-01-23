@@ -7,10 +7,11 @@ import { CreateAccountPopupComponent } from './create-account-popup/create-accou
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { NoPermissionsForThisComponent } from './no-permissions-for-this/no-permissions-for-this.component';
 
 
 @NgModule({
-  declarations: [AccountsComponent],
+  declarations: [AccountsComponent, NoPermissionsForThisComponent],
   imports: [
     CommonModule,
     MatDialogModule,
