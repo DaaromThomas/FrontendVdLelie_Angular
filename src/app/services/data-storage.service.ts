@@ -9,7 +9,6 @@ import { Account } from '../interfaces/account.interface';
 import { ChangeIsPackedRequestData } from '../models/ChangeIsPackedRequestData';
 import { Customer } from '../interfaces/customer.interface';
 import { Signup } from '../interfaces/signup.interface';
-import { url } from 'inspector';
 
 @Injectable({
   providedIn: 'root',

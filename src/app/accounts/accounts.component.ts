@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Account } from '../interfaces/account.interface';
 import { DataStorageService } from '../services/data-storage.service';
-import { debug } from 'console';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateAccountPopupComponent } from './create-account-popup/create-account-popup.component';
 import { NoPermissionsForThisComponent } from './no-permissions-for-this/no-permissions-for-this.component';
