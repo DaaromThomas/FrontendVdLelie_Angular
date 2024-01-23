@@ -17,7 +17,7 @@ import { Time } from '@angular/common';
   styleUrls: ['./logs.component.css']
 })
 export class LogsComponent implements OnInit {
-  pageSize: number = 13;
+  pageSize: number = 10;
   logs: Log[] = [];
   filteredLogs!: MatTableDataSource<Log>;
   private packageList: Packaging[] = [];
@@ -63,15 +63,13 @@ export class LogsComponent implements OnInit {
     if (this.nameFilter || this.productFilter || this.filterDate || this.beginTime || this.endTime) {
       filteredLogs = filteredLogs.filter(log => {
         if (log === null) {
-          return false; // Exclude null objects from filtering
+          return false;
         }
   
         const nameMatches = !this.nameFilter || log.account.name.toLowerCase().includes(this.nameFilter.toLowerCase());
         const productMatches = !this.productFilter || log.product.name.toLowerCase().includes(this.productFilter.toLowerCase());
         const dateMatches = this.dateMatches(log.date);
         const timeMatches = this.timeMatches(log.time);
-
-        console.log(nameMatches, productMatches, dateMatches, timeMatches)
   
         return nameMatches && productMatches && dateMatches && timeMatches;
       });
@@ -86,7 +84,10 @@ export class LogsComponent implements OnInit {
   }
 
   private dateMatches(logDate: number[]): boolean {
-    let date: string = logDate[0] + "," + logDate[1] + "," + logDate[2]
+    let date: string = logDate[0] + "," + logDate[1] + "," + logDate[2];
+    if(!this.filterDate){
+      return true;
+    }
     if(this.beginTime && this.endTime && !this.filterDate){
       this.filterDate = new Date();
     }

@@ -23,10 +23,6 @@
     height: 20px;
 }
 
-.table{
-    width: 100%;
-}
-
 
 .header {
     background-color: #f4812b !important;
@@ -49,6 +45,10 @@
 
 p{
     font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+mat-paginator{
+    margin-top: 30px;
 }
 
 .button-62 {
@@ -79,27 +79,4 @@ p{
 
 .button-62:not([disabled]):hover {
     background: #b15712;
-}
-
-@media all and (max-width: 767px) {
-    th, td {
-        display: block;
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    th {
-        text-align: left;
-    }
-
-    tr {
-        margin-bottom: 15px;
-    }
-
-    td:before {
-        content: attr(data-label);
-        display: inline-block;
-        font-weight: bold;
-        margin-right: 5px;
-    }
 }

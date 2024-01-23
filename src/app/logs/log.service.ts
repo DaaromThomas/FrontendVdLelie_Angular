@@ -57,9 +57,7 @@ export class LogService implements OnInit{
 
   public createLog(params: HttpParams){
 
-    this.http.post(this.baseurl, params).subscribe((data) => {
-      console.log(data);
-    });
+    this.http.post(this.baseurl, params).subscribe();
   }
 
   revertLog(log: Log) {
