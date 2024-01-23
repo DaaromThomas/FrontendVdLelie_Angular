@@ -78,3 +78,7 @@ th.header {
     background-color: #f4812b;
     color: white;
 }
+
+.editlocation {
+    text-align: right;
+}
