@@ -1,6 +1,13 @@
-<button mat-button (click)="addCustomer()">New Customer</button>
+<div class="top-bar">
+    <input type="text" placeholder="Customer name" [(ngModel)]="nameFilter" (input)="applyFilters()">
+    <input type="text" placeholder="Address" [(ngModel)]="addressFilter" (input)="applyFilters()">
+    <input type="text" placeholder="PhoneNumber" [(ngModel)]="phoneFilter" (input)="applyFilters()">
+    <input type="text" placeholder="E-mail" [(ngModel)]="emailFilter" (input)="applyFilters()">
+    <input type="text" placeholder="preferredPackaging" [(ngModel)]="packageFilter" (input)="applyFilters()">
+    <button mat-button class="addCustomer" (click)="addCustomer()">New Customer</button>
+</div>
 
-<table mat-table [dataSource]="customerList" class="mat-elevation-z8">
+<table mat-table [dataSource]="filteredCustomerList" class="mat-elevation-z8">
     <ng-container matColumnDef="name">
         <th class="header" mat-header-cell *matHeaderCellDef> Name </th>
         <td mat-cell *matCellDef="let customer"> {{customer.name}} </td>
