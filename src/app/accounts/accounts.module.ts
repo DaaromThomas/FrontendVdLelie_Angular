@@ -8,6 +8,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { NoPermissionsForThisComponent } from './no-permissions-for-this/no-permissions-for-this.component';
+import { MatTableModule } from '@angular/material/table';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { NoPermissionsForThisComponent } from './no-permissions-for-this/no-perm
     MatSelectModule,
     MatCheckboxModule,
     FormsModule,
+    MatTableModule,
   ],
   exports: [AccountsComponent],
 })

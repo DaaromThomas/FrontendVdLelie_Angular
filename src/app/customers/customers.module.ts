@@ -16,10 +16,11 @@ import { DeleteCustomerComponent } from './delete-customer/delete-customer.compo
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table'
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { AccountsComponent } from '../accounts/accounts.component';
 
 @NgModule({
-  declarations: [CustomersComponent, AddCustomerPopupComponent, EditCustomerComponent, DeleteCustomerComponent],
+  declarations: [CustomersComponent, AddCustomerPopupComponent, EditCustomerComponent, DeleteCustomerComponent, AccountsComponent],
   imports: [CommonModule, ReactiveFormsModule, SharedModule, MatButtonModule, MatDialogContent, MatFormFieldModule, MatIconModule, MatOptionModule, MatSelectModule, FormsModule, MatInputModule, MatMenuModule, MatTableModule, MatPaginatorModule],
-  exports: [CustomersComponent, AddCustomerPopupComponent, EditCustomerComponent],
+  exports: [CustomersComponent, AddCustomerPopupComponent, EditCustomerComponent, AccountsComponent],
 })
 export class CustomersModule { }
