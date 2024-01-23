@@ -21,6 +21,7 @@ export class StockComponent {
   tableWrapperClass: string = 'table-wrapper';
   locationFilter: string = '';
   packageList: Packaging[] = [];
+  sortedList: Packaging[] = [];
   locationList: Location[] = [];
   stockList: Stock[] = [];
   locationNames: string[] = [];
@@ -40,6 +41,7 @@ this.saveChanges(package_);
   displayPackagePopup() {
     this.displayPackage = true;
     this.applyBlur = true;
+    console.log(this.locationNames)
 
   }
 
@@ -48,10 +50,16 @@ onPopupClosed(isClosed: boolean) {
   this.applyBlur = isClosed;
 }
 
-  setLocationFilter(location: Event) {
-    let filterValue = (event?.target as HTMLInputElement).value;
-    this.locationFilter = filterValue;
+applyFilter() {
+  if(this.locationFilter === '') {
+    this.sortedList = this.packageList;
+    return;
   }
+
+  this.sortedList = this.packageList.filter((package_) => {
+    return package_.location?.toLowerCase()?.includes(this.locationFilter.toLowerCase());
+  });
+}
 
   previousValue: string = '';
 
@@ -90,6 +98,7 @@ onPopupClosed(isClosed: boolean) {
   populateInventoryData(): void {
     this.subscription = this.dataStorageService.allInventoryData$.subscribe((inventoryData) => {
       this.packageList = inventoryData.packageList;
+      this.sortedList = inventoryData.packageList;
       this.locationList = inventoryData.locationList;
       this.locationNames = inventoryData.locationNames;
     })
