@@ -7,7 +7,7 @@
     height: 100%;
     font-family: Arial, Helvetica, sans-serif;
   }
-  
+
   .container img {
     width: 100%;
     height: 100vh;
@@ -16,7 +16,7 @@
     top: 0;
     left: 0;
   }
-  
+
   .filter {
     position: absolute;
     top: 0;
@@ -28,7 +28,7 @@
     justify-content: center;
     align-items: center;
   }
-  
+
   .textbox {
     width: 500px;
     height: 250px;
@@ -40,14 +40,14 @@
     align-items: center;
     background-color: rgba(221, 221, 221, 0.8);
   }
-  
+
   .title {
     font-size: 42px;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: black;
     color: black;
   }
-  
+
   .scan-input {
     width: 70%;
     padding: 5px;
@@ -56,21 +56,21 @@
     border-radius: 3px;
     border-width: 1px;
   }
-  
+
   .scan-input.selected {
     border-width: 3px;
   }
-  
+
   .selected {
     background-color: #60c9b3;
   }
-  
+
   .error {
     color: darkred;
     position: fixed;
     margin-top: 85px;
   }
-  
+
   .scan-button {
     padding: 10px 15px;
     border: none;
@@ -81,8 +81,29 @@
     background-color: #4a5b73;
     border-radius: 3px;
   }
-  
+
   .scan-button:hover {
     background-color: #60c9b3;
   }
-  
+
+  .FilterByCustomerButton{
+    border: none;
+    background: transparent;
+    margin-top: 6px;
+    margin-right: 8px;
+    font-size: 16px;
+  }
+
+  .FilterByCustomerButton:hover{
+    color: darkred;
+    cursor: pointer;
+  }
+
+  .CustomerButton{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+

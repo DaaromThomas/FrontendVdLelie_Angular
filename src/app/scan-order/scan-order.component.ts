@@ -4,6 +4,7 @@ import { Order } from '../models/order';
 import { MatDialog } from '@angular/material/dialog';
 import { Product } from '../models/product';
 import { SelectPackagePopupComponent } from './select-package-popup/select-package-popup.component';
+import { FilterByCustomerPopupComponent} from './filer-by-customer-popup/filter-by-customer-popup.component'
 import { ScanOrderService } from './services/scan-order.service';
 
 @Component({
@@ -81,6 +82,23 @@ export class ScanOrderComponent {
       data: this.selectedProduct
     });
     dialogRef.afterClosed().subscribe(result => {
+      this.isDialogOpen = false;
+      this.disableScan = false;
+      window.setTimeout(() => document.getElementById('productNumberInput')!.focus(), 0);
+    });
+  }
+
+  openFilterByCustomerPopup(){
+    this.isDialogOpen = true;
+    this.disableScan = true;
+    const dialogRef = this.dialog.open(FilterByCustomerPopupComponent, {
+      width: '750px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.data != ''){
+        this.selectedProduct = result.data;
+        this.openDialog()
+      }
       this.isDialogOpen = false;
       this.disableScan = false;
       window.setTimeout(() => document.getElementById('productNumberInput')!.focus(), 0);

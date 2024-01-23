@@ -156,7 +156,7 @@ export class DataStorageService {
      }
     });
    }
-   
+
 
   delay(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -178,7 +178,7 @@ export class DataStorageService {
     console.error(error);
     throw error;
     }
-   }   
+   }
 
   changeIsPackedRequest(isPacked: boolean, productNumber: number) {
     let data: ChangeIsPackedRequestData = new ChangeIsPackedRequestData(isPacked, productNumber);
