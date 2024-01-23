@@ -187,7 +187,7 @@ export class DataStorageService {
     return this.http.patch(this.baseurl + "/packages/" + id, null, { params }).subscribe();
   }
   updatePackage(packaging: Packaging) {;
-    this.http.post(this.baseurl + '/packages/update', packaging).subscribe(data => console.log(data));
+    this.http.put(this.baseurl + '/packages/update', packaging).subscribe(data => console.log(data));
   }
 
   updateCustomer(params: HttpParams, customerId: string) {

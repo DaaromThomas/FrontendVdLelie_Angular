@@ -1,10 +1,9 @@
-<div style="margin-bottom: 20px">
-</div>
 <div class="mat-elevation-z8">
   <form [formGroup]="VOForm" autocomplete="off">
     <ng-container formArrayName="VORows">
-      <table #table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <table #table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mat-table">
 
+        <!-- Group Column -->
         <ng-container matColumnDef="group">
           <th mat-header-cell *matHeaderCellDef>Group</th>
           <td mat-cell *matCellDef="let element; let i = index">
@@ -18,29 +17,21 @@
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>Name</th>
           <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
-            <ng-container *ngIf="getIsEditable(i); else editableField">
-              <span>{{ element.get('name').value }}</span>
-            </ng-container>
-            <ng-template #editableField>
-              <mat-form-field style="width: 70px">
-                <input matInput type="text" formControlName="name" [readonly]="getIsEditable(i)" />
-              </mat-form-field>
-            </ng-template>
+            <div class="input-container">
+              <span [hidden]="!getIsEditable(i)">{{ element.get('name').value }}</span>
+              <input [hidden]="getIsEditable(i)" type="text" formControlName="name" [readonly]="getIsEditable(i)" />
+            </div>
           </td>
         </ng-container>
 
-        <!-- Symbol Column -->
+        <!-- Amount In Stock Column -->
         <ng-container matColumnDef="amountInStock">
           <th mat-header-cell *matHeaderCellDef>Amount In Stock</th>
           <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
-            <ng-container *ngIf="getIsEditable(i); else editableField">
-              <span>{{ element.get('amountInStock').value }}</span>
-            </ng-container>
-            <ng-template #editableField>
-              <mat-form-field style="width: 70px">
-                <input matInput type="text" formControlName="amountInStock" [readonly]="getIsEditable(i)" />
-              </mat-form-field>
-            </ng-template>
+            <div class="input-container">
+              <span [hidden]="!getIsEditable(i)">{{ element.get('amountInStock').value }}</span>
+              <input [hidden]="getIsEditable(i)" type="text" formControlName="amountInStock" [readonly]="getIsEditable(i)" />
+            </div>
           </td>
         </ng-container>
 
@@ -48,14 +39,10 @@
         <ng-container matColumnDef="minAmount">
           <th mat-header-cell *matHeaderCellDef>Min Amount</th>
           <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
-            <ng-container *ngIf="getIsEditable(i); else editableField">
-              <span>{{ element.get('minAmount').value }}</span>
-            </ng-container>
-            <ng-template #editableField>
-              <mat-form-field style="width: 70px">
-                <input matInput type="text" formControlName="minAmount" [readonly]="getIsEditable(i)" />
-              </mat-form-field>
-            </ng-template>
+            <div class="input-container">
+              <span [hidden]="!getIsEditable(i)">{{ element.get('minAmount').value }}</span>
+              <input [hidden]="getIsEditable(i)" type="text" formControlName="minAmount" [readonly]="getIsEditable(i)" />
+            </div>
           </td>
         </ng-container>
 
@@ -73,21 +60,22 @@
         <ng-container matColumnDef="edit">
           <th mat-header-cell *matHeaderCellDef>Edit</th>
           <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
-            <button mat-icon-button class="material-icons app-toolbar-menu save-button" matTooltip="Save Changes"
-              (click)="SaveVO(VOForm, i)" *ngIf="!getIsEditable(i)" color="primary">
-              <mat-icon>check_circle</mat-icon>
-            </button>
+            <div class="button-container">
+              <button mat-icon-button class="material-icons app-toolbar-menu save-button" matTooltip="Save Changes"
+                (click)="SaveVO(VOForm, i)" *ngIf="!getIsEditable(i)" color="primary">
+                <mat-icon>check_circle</mat-icon>
+              </button>
 
-            <button mat-icon-button class="material-icons app-toolbar-menu cancel-button" matTooltip="Cancel Changes" color="warn"
-            (click)="cancelEditVO(VOForm, i)" *ngIf="!getIsEditable(i)" >
-              <mat-icon>cancel</mat-icon>
-            </button>
+              <button mat-icon-button class="material-icons app-toolbar-menu cancel-button" matTooltip="Cancel Changes"
+                color="warn" (click)="cancelEditVO(VOForm, i)" *ngIf="!getIsEditable(i)">
+                <mat-icon>cancel</mat-icon>
+              </button>
 
-            <button mat-icon-button class="material-icons app-toolbar-menu save-button"
-              *ngIf="getIsEditable(i)" matTooltip="Edit" color="primary"
-              (click)="EditSVO(VOForm, i)">
-              <mat-icon>edit</mat-icon>
-            </button>
+              <button mat-icon-button class="material-icons app-toolbar-menu save-button" *ngIf="getIsEditable(i)"
+                matTooltip="Edit" color="primary" (click)="EditSVO(VOForm, i)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
           </td>
         </ng-container>
 
@@ -97,4 +85,3 @@
     </ng-container>
   </form>
 </div>
-

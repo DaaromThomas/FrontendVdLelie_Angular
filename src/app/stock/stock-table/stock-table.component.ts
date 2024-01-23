@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, QueryList, Renderer2, ViewChildren } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { Packaging } from '../../interfaces/packaging';
@@ -13,18 +13,23 @@ export class StockTableComponent {
   @Output() packageChangeEvent = new EventEmitter<Packaging>();
   displayedColumns: string[] = ['group','name', 'amountInStock', 'minAmount','location','edit'];
   dataSource = new MatTableDataSource<any>();
-  isLoading = true;
   VOForm = this._formBuilder.group({
     VORows: this._formBuilder.array([]),
   });
-  isEditableNew: boolean = true;
+  isEditableNew: boolean = true;  
 
-  constructor(private fb: FormBuilder, private _formBuilder: FormBuilder) {
+  constructor(private fb: FormBuilder, private _formBuilder: FormBuilder, private renderer2: Renderer2, private el: ElementRef) {
+  }
+
+  ngAfterViewInit(): void {
+    const editableFields = this.el.nativeElement;
+    // editableFields.forEach((input: HTMLElement) => {
+    //   input.style.border = 'none';
+    //   // Additional styling if needed
+    // });
   }
 
   ngOnChanges(): void {
-    console.log(this.data)
-    console.log('KFK')
     this.VOForm = this.fb.group({
       VORows: this.fb.array(
         this.data.map((val:any) =>
@@ -41,39 +46,17 @@ export class StockTableComponent {
         )
       ),
     });
-    this.isLoading = false;
     this.dataSource = new MatTableDataSource(
       (this.VOForm.get('VORows') as FormArray).controls
     );
-    console.log(this.VOForm)
   }
 
-  AddNewRow() {
-    // this.getBasicDetails();
-    const control = this.VOForm.get('VORows') as FormArray;
-    control.insert(0, this.initiateVOForm());
-    this.dataSource = new MatTableDataSource(control.controls);
-  }
-  initiateVOForm(): FormGroup {
-    return this.fb.group({
-      id: new FormControl(''),
-      group: new FormControl(''),
-      name: new FormControl(''),
-      location: new FormControl(''),
-      amountInStock: new FormControl(''),
-      minAmount: new FormControl(''),
-      isEditable: new FormControl(false),
-      isNewRow: new FormControl(true),
-    });
-  }
   SaveVO(VOFormElement:any, i:any) {
     VOFormElement.get('VORows').at(i).get('isEditable').patchValue(true);
     this.packageChangeEvent.emit(VOFormElement.get('VORows').at(i).value);
   }
   EditSVO(VOFormElement:any, i:any) {
-    // VOFormElement.get('VORows').at(i).get('name').disabled(false)
     VOFormElement.get('VORows').at(i).get('isEditable').patchValue(false);
-    // this.isEditableNew = true;
   }
   cancelEditVO(VOFormElement:any, i:any) {
     VOFormElement.get('VORows').at(i).get('isEditable').patchValue(true);
@@ -83,4 +66,6 @@ export class StockTableComponent {
     const rowValue = this.VOForm.get('VORows')?.value?.[index] as any;
     return rowValue ? rowValue.isEditable : false;
   }
+
+  
 }

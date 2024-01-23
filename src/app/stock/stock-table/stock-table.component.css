@@ -5,19 +5,50 @@ table {
 .mat-paginator-range-label {
     display: none;
 }
+input {
+  border: none; 
+  border-bottom: 1px solid #000; 
+}
+input:focus {
+  outline: none;
+}
+.button-container {
+ width: 10px;
+}
 
-.mat-form-field {
-  font-size: 14px;
+.input-container {
+  display: flex;
+  align-items: center;
+  width: 150px; 
+}
+
+.input-container input{
+  font-family: inherit; 
+  font-size: inherit;
+}
+.input-container span {
   width: 100%;
+  box-sizing: border-box;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
 }
 
 
-/* Border */
-.mat-form-field-appearance-outline .mat-form-field-outline {
-  color: rgb(255, 255, 255);
-  /* background-color: white; */
+button {
+  border-radius: 10px;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  margin-right: 1%;
+  background-color: #60c9b3;
 }
-/* Font color */
-input.mat-input-element {
-  color: rgb(0, 0, 0);
+
+button:hover {
+  background-color: #f4812b;
+}
+
+.mat-header-cell {
+  background-color: #f4812b;
 }
