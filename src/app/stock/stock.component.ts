@@ -31,11 +31,16 @@ export class StockComponent {
 
 
   onPackageChange(package_:Packaging){
-this.saveChanges(package_);
+    this.dataStorageService.updatePackage(package_);
   }
-
-  saveChanges(packaging: Packaging) {
-    this.dataStorageService.updatePackage(packaging);
+  onPackageDelete(package_:Packaging){
+    this.dataStorageService.deletePackage(package_);
+    this.sortedList = this.sortedList.filter((package__) => {
+      return package__.id !== package_.id;
+    });
+    this.packageList = this.packageList.filter((package__) => {
+      return package__.id !== package_.id;
+    })
   }
 
   displayPackagePopup() {

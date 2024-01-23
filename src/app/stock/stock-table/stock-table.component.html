@@ -68,8 +68,13 @@
 
               <button mat-icon-button class="material-icons app-toolbar-menu cancel-button" matTooltip="Cancel Changes"
                 color="warn" (click)="cancelEditVO(VOForm, i)" *ngIf="!getIsEditable(i)">
-                <mat-icon>cancel</mat-icon>
+                <img style="width: 24px; height: 24px;" src="./assets/undo.png">
               </button>
+              
+              <button mat-icon-button class="material-icons app-toolbar-menu cancel-button" matTooltip="Cancel Changes"
+              color="warn" (click)="deleteVO(VOForm, i)" *ngIf="!getIsEditable(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
 
               <button mat-icon-button class="material-icons app-toolbar-menu save-button" *ngIf="getIsEditable(i)"
                 matTooltip="Edit" color="primary" (click)="EditSVO(VOForm, i)">

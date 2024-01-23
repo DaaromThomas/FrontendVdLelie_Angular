@@ -13,6 +13,7 @@ export class StockTableComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @Input() data:any
   @Output() packageChangeEvent = new EventEmitter<Packaging>();
+  @Output() deletePackageEvent = new EventEmitter<Packaging>();
   displayedColumns: string[] = ['group','name', 'amountInStock', 'minAmount','location','edit'];
   dataSource = new MatTableDataSource<any>();
   VOForm = this._formBuilder.group({
@@ -57,6 +58,9 @@ export class StockTableComponent {
   cancelEditVO(VOFormElement:any, i:any) {
     VOFormElement.get('VORows').at(i).get('isEditable').patchValue(true);
     this.ngOnChanges();
+  }
+  deleteVO(VOFormElement:any, i:any) {
+    this.deletePackageEvent.emit(VOFormElement.get('VORows').at(i).value);
   }
   getIsEditable(index: number): boolean {
     const rowValue = this.VOForm.get('VORows')?.value?.[index] as any;
