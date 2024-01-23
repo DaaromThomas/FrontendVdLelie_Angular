@@ -82,3 +82,10 @@ th.header {
 .editlocation {
     text-align: right;
 }
+
+input {
+    margin-top: 20px;
+    white-space: nowrap;
+    border-radius: 10px;
+    margin-left: 10px;
+}
