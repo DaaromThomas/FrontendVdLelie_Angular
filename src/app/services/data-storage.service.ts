@@ -243,6 +243,13 @@ export class DataStorageService {
   deleteAccount(id: string) {
     return this.http.delete(this.baseurl + "/accounts/" + id).subscribe(() => { this.getAccounts(); });
   }
+
+  editRole(account: Account, role: string) {
+    const params = new HttpParams()
+      .set('role', role);
+
+    return this.http.patch(this.baseurl + "/accounts/" + account.id, null, { params }).subscribe(() => { this.getAccounts(); });
+  }
 }
 
 

@@ -12,7 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 
 
 @NgModule({
-  declarations: [AccountsComponent, NoPermissionsForThisComponent],
+  declarations: [AccountsComponent, NoPermissionsForThisComponent,],
   imports: [
     CommonModule,
     MatDialogModule,
