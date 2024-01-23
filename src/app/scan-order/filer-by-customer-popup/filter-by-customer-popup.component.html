@@ -1,0 +1,54 @@
+<div class="popup-container">
+  <div class="sidebar">
+    <img src="assets/package.png" alt="">
+  </div>
+
+  <div class="Customer-filter-container" [hidden]="filterIsHidden">
+    <h2>Customer List</h2>
+    <input id="filter" type="text" [(ngModel)]="filter" class="filter-customer"><br><br>
+    <div class="customer-list">
+      <table>
+        <thead>
+          <tr>
+            <th>Customer:</th>
+            <th>Preffered Packaging:</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let customer of getFilteredCustomers(); index as i" (click)="selectCustomer(customer)">
+            <td>{{customer.name}}</td>
+            <td>{{customer.preferredPackaging?.name}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <div class="Customer-product-container" [hidden]="!filterIsHidden">
+    <h3>Products for customer {{selectedCustomer?.name}}</h3>
+    <div class="product-list">
+      <table>
+        <thead>
+          <tr>
+            <th>product</th>
+            <th> </th>
+            <th>Is packed?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of getCustomerProducts(); index as i" (click)="selectProduct(product)">
+            <td>{{product.name}}</td>
+            <td> </td>
+            <td>{{product.packed}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="back-button-container">
+      <button class="back-button" (click)="onBackToCustomers()">back</button>
+    </div>
+  </div>
+
+</div>

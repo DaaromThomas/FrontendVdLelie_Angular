@@ -1,0 +1,92 @@
+.popup-container {
+  display: flex;
+  height: 450px;
+}
+
+.sidebar {
+  background-color: #4bc8b6;
+  width: 20%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+img {
+  width: 70%;
+  aspect-ratio: 1/1;
+}
+
+.Customer-filter-container {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+
+.Customer-product-container {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+  flex-direction: column;
+}
+
+h2{
+  font-size: 48px;
+  margin-bottom: 30px;
+  margin-top: 0px;
+  display: flex;
+  align-content: center;
+}
+
+h3{
+  font-size: 32px;
+  margin-bottom: 30px;
+  margin-top: 0px;
+  display: flex;
+  align-content: center;
+}
+
+.customer-list{
+
+}
+
+th{
+  text-align: left;
+}
+
+tr{
+  width: 100%;
+  align-items: flex-start;
+}
+
+tbody>tr:hover{
+  background: #60c9b3;
+  cursor: pointer;
+}
+
+td{
+  border: none;
+  margin: 0px;
+  text-align: left;
+}
+
+table{
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.back-button{
+  background-color: #d7e0e8;
+  border-radius: 10px;
+  font-weight: bold;
+  display: block;
+}
+
+.product-list{
+  height: 73%;
+  overflow-y: scroll;
+}
+
