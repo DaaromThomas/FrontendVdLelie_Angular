@@ -21,6 +21,9 @@ export class AccountsComponent {
 
   currentUser: string = "";
 
+  nameFilter: string = '';
+  roleFilter: string = '';
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   dataSource!: MatTableDataSource<any>;
@@ -76,6 +79,14 @@ export class AccountsComponent {
 
   editRole(account: Account, role: string): void {
     this.dataStorageService.editRole(account, role);
+  }
+
+  applyFilters(): void {
+    this.dataSource.data = this.accountList
+      .filter(account =>
+        account.name.toLowerCase().includes(this.nameFilter.toLowerCase()) &&
+        account.role.toLowerCase().includes(this.roleFilter.toLowerCase())
+      );
   }
 
 }
