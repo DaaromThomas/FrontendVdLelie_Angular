@@ -5,7 +5,7 @@
 
         <!-- Group Column -->
         <ng-container matColumnDef="group">
-          <th mat-header-cell *matHeaderCellDef>Group</th>
+          <th style="background-color:  #f4812b;" mat-header-cell *matHeaderCellDef>Group</th>
           <td mat-cell *matCellDef="let element; let i = index">
             <ng-container>
               <span>{{ element.get('group').value }}</span>
@@ -15,7 +15,7 @@
 
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <th style="background-color:  #f4812b;"  mat-header-cell *matHeaderCellDef>Name</th>
           <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
             <div class="input-container">
               <span [hidden]="!getIsEditable(i)">{{ element.get('name').value }}</span>
@@ -26,7 +26,7 @@
 
         <!-- Amount In Stock Column -->
         <ng-container matColumnDef="amountInStock">
-          <th mat-header-cell *matHeaderCellDef>Amount In Stock</th>
+          <th style="background-color:  #f4812b;" mat-header-cell *matHeaderCellDef>Amount In Stock</th>
           <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
             <div class="input-container">
               <span [hidden]="!getIsEditable(i)">{{ element.get('amountInStock').value }}</span>
@@ -37,7 +37,7 @@
 
         <!-- Min Amount Column -->
         <ng-container matColumnDef="minAmount">
-          <th mat-header-cell *matHeaderCellDef>Min Amount</th>
+          <th style="background-color:  #f4812b;" mat-header-cell *matHeaderCellDef>Min Amount</th>
           <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
             <div class="input-container">
               <span [hidden]="!getIsEditable(i)">{{ element.get('minAmount').value }}</span>
@@ -48,7 +48,7 @@
 
         <!-- Location Column -->
         <ng-container matColumnDef="location">
-          <th mat-header-cell *matHeaderCellDef>Location</th>
+          <th style="background-color:  #f4812b;" mat-header-cell *matHeaderCellDef>Location</th>
           <td mat-cell *matCellDef="let element; let i = index">
             <ng-container>
               <span>{{ element.get('location').value }}</span>
@@ -58,7 +58,7 @@
 
         <!-- Edit Column -->
         <ng-container matColumnDef="edit">
-          <th mat-header-cell *matHeaderCellDef>Edit</th>
+          <th style="background-color:  #f4812b;" mat-header-cell *matHeaderCellDef>Edit</th>
           <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
             <div class="button-container">
               <button mat-icon-button class="material-icons app-toolbar-menu save-button" matTooltip="Save Changes"
