@@ -17,9 +17,10 @@ export class AccountsComponent {
   accountList: Account[] = [];
   subscription: any;
 
-  accountsPerPage: number = 2;
-
   currentUser: string = "";
+
+  nameFilter: string = '';
+  roleFilter: string = ''
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -43,7 +44,8 @@ export class AccountsComponent {
     this.subscription = this.dataStorageService.accountList$.subscribe(
       (accountData) => {
         this.accountList = accountData;
-        this.dataSource.data = this.accountList
+
+        this.applyFilters();
         this.dataSource.paginator = this.paginator;
       }
     );
@@ -76,6 +78,13 @@ export class AccountsComponent {
 
   editRole(account: Account, role: string): void {
     this.dataStorageService.editRole(account, role);
+  }
+
+  applyFilters(): void {
+    this.dataSource.data = this.accountList
+      .filter(account =>
+        account.name.toLowerCase().includes(this.nameFilter.toLowerCase()) &&
+        account.role.toLowerCase().includes(this.roleFilter.toLowerCase()));
   }
 
 }
