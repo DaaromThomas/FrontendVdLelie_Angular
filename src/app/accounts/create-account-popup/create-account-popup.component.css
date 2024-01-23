@@ -55,3 +55,22 @@ img {
     margin-left: 10px;
     color: red;
 }
+
+mat-dialog-content {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    margin-bottom: 10px;
+}
+
+.saveButton {
+    background-color: #4bc8b6;
+    color: black;
+}
+
+.discardButton {
+    background-color: #d7e0e8;
+    color: black;
+}
