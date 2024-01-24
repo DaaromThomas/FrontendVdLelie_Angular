@@ -66,6 +66,4 @@ export class StockTableComponent {
     const rowValue = this.VOForm.get('VORows')?.value?.[index] as any;
     return rowValue ? rowValue.isEditable : false;
   }
-
-  
 }

@@ -1,24 +1,19 @@
 .top-bar {
     background-color: #2c636c;
-    height: 61px;
+    height: 100px;
     padding-right: 125px;
+    display: flex;
+    align-items: center;
 }
 
-.top-bar :first-child {
-    margin-left: 5px;
-}
 
 .top-bar .addCustomer {
-     position: absolute;
-     top: -4px;
-     right: 0;
+    margin-left: 350px;
 }
 
 input {
-    margin-top: 20px;
-    white-space: nowrap;
-    border-radius: 10px;
-    margin-right: 10px;
+    height: 20px;
+    margin-left: 10px;
 }
 
 .spacer {
@@ -78,18 +73,14 @@ p.delete:hover, p.edit:hover {
     background-color: #f4812b;
 }
 
-.add-customer {
-    width: fit-content;
-    height: fit-content;
+.addCustomer {
+    height: 40px;
+    border-color: rgba(168, 168, 168, 0.0);
+    font-weight: bold;
+    font-weight: 5px;
     display: flex;
     justify-content: center;
-    align-self: center;
-    margin: 0 auto;
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 999;
+    align-items: center;
 }
 
 .change-preffered-package {

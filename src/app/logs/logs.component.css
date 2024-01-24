@@ -23,6 +23,10 @@
     height: 20px;
 }
 
+.filters-container > :first-child{
+    margin-left: 10px;
+}
+
 
 .header {
     background-color: #f4812b !important;
@@ -32,7 +36,7 @@
 
 .header > p{
     color: white;
-    margin: 20px;
+    margin-top: 20px;
 }
 
 .holder{

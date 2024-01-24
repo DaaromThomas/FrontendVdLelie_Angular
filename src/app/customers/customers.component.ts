@@ -28,7 +28,7 @@ export class CustomersComponent {
   tableWrapperClass: string = 'table-wrapper';
   selectedCustomerId: string = "";
   displayedColumns: string[] = ['name', 'address', 'phoneNumber', 'e-mail', 'preferredPackaging', "customerOptions"];
-  customersPerPage: number = 15;
+  customersPerPage: number = 13;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

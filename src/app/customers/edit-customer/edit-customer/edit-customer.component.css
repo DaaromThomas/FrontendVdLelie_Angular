@@ -35,9 +35,7 @@
  .title-text {
   width: max-content;
   font-size: 60px;
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: black;
-  color: #d7e0e8;
+  color: black;
   margin: 10px;
   margin-bottom: 20px;
  }

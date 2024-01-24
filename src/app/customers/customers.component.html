@@ -4,7 +4,7 @@
     <input type="text" placeholder="PhoneNumber" [(ngModel)]="phoneFilter" (input)="applyFilters()">
     <input type="text" placeholder="E-mail" [(ngModel)]="emailFilter" (input)="applyFilters()">
     <input type="text" placeholder="preferredPackaging" [(ngModel)]="packageFilter" (input)="applyFilters()">
-    <button mat-button class="addCustomer" (click)="addCustomer()">New Customer</button>
+    <button class="addCustomer" (click)="addCustomer()">New Customer</button>
 </div>
 
 <table mat-table [dataSource]="filteredCustomerList" class="mat-elevation-z8">
