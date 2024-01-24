@@ -10,20 +10,22 @@
       <table>
         <thead>
           <tr>
-            <th>Customer:</th>
+            <th><div class="first-column">Customer:</div></th>
             <th>Preffered Packaging:</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let customer of getFilteredCustomers(); index as i" (click)="selectCustomer(customer)">
-            <td>{{customer.name}}</td>
+            <td><div class="first-column">{{customer.name}}</div></td>
             <td>{{customer.preferredPackaging?.name}}</td>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="close-button-container">
+      <div class="close-button-filler"></div>
       <button class="close-button" (click)="onClose()">close</button>
+      <div class="close-button-filler"></div>
     </div>
   </div>
 
@@ -35,14 +37,14 @@
       <table>
         <thead>
           <tr>
-            <th>product</th>
+            <th><div class="first-column">product</div></th>
             <th>product number</th>
             <th>Is packed?</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let product of getCustomerProducts(); index as i" (click)="selectProduct(product)">
-            <td>{{product.name}}</td>
+            <td><div class="first-column">{{product.name}}</div></td>
             <td>{{product.productnumber}}</td>
             <td>{{product.packed}}</td>
           </tr>
@@ -51,6 +53,8 @@
     </div>
 
     <div class="back-button-container">
+      <div class="close-button-filler"></div>
+      <button class="close-button" (click)="onClose()">close</button>
       <button class="back-button" (click)="onBackToCustomers()">back</button>
     </div>
   </div>

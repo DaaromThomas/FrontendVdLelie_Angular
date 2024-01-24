@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, HostListener, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {DataStorageService} from "../../services/data-storage.service";
 import {Product} from "../../models/product";
@@ -33,6 +33,13 @@ export class FilterByCustomerPopupComponent {
     this.dataStorageService.getCustomers();
     this.populateCustomerData();
     window.setTimeout(() => document.getElementById('filter')!.focus(), 0);
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent): void {
+    if (event.key === "Backspace" && this.filterIsHidden){
+      this.onBackToCustomers();
+    }
   }
 
   private populateCustomerData(): void {
@@ -94,5 +101,4 @@ export class FilterByCustomerPopupComponent {
     this.dialogRef.close({data:''});
   }
 
-  protected readonly undefined = undefined;
 }

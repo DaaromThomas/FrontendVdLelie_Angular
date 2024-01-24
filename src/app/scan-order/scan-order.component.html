@@ -6,8 +6,10 @@
       <label for="scanButton" class="error">{{getErrorMessage}}</label>
       <input id="productNumberInput" type="text" class="scan-input" (input)="onInputOrderNumber($event)" (keyup.enter)="onEnter()" [disabled]="disableScan"><br>
       <button id="scanButton" name="hello" class="scan-button" (click)="getOrders()">Load product</button>
-      <div class="CustomerButton">
-        <button id="FilterByCustomerButton" class="FilterByCustomerButton" (click)="openFilterByCustomerPopup()">Filter by customer</button>
+      <div class="CustomerButtonContainer">
+        <button id="FilterByCustomerButton" class="FilterByCustomerButton" (click)="openFilterByCustomerPopup()">
+          <div class="FilterByCustomerButtonText">Filter by customer</div>
+        </button>
       </div>
     </div>
   </div>

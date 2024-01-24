@@ -87,12 +87,15 @@ th{
   text-align: left;
   background-color: #f4812b;
   height: 30px;
+  color: white;
 }
 
 tr{
   width: 100%;
   align-items: flex-start;
   border-bottom: 1px;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
 }
 
 tbody>tr:hover{
@@ -103,7 +106,7 @@ tbody>tr:hover{
 td{
   margin: 0px;
   text-align: left;
-  height: 20px;
+  height: 30px;
 }
 
 table{
@@ -111,10 +114,11 @@ table{
   border-collapse: collapse;
 }
 
-.close-button-container, .back-button-container{
+.back-button-container, .close-button-container{
   display: flex;
-  align-items: flex-start;
+  flex-direction: row;
   width: 100%;
+  justify-content: space-between;
 }
 
 .close-button, .back-button {
@@ -128,6 +132,14 @@ table{
   margin-left: 20px;
 }
 
+.back-button{
+  margin-right: 20px;
+}
+
+.close-button-container > .close-button{
+  margin-right: 40px;
+}
+
 button:hover {
   background-color: #F4812B;
   cursor: pointer;
@@ -138,4 +150,12 @@ button:hover {
   color: red;
   margin-top: 0px;
   margin-left: 20px
+}
+
+.first-column{
+  padding-left: 5px;
+}
+
+.close-button-filler{
+  width: 80px;
 }

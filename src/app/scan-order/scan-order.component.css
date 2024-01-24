@@ -79,7 +79,6 @@
     font-size: 16px;
     color: white;
     background-color: #4a5b73;
-    border-radius: 3px;
   }
 
   .scan-button:hover {
@@ -87,23 +86,31 @@
   }
 
   .FilterByCustomerButton{
-    border: none;
-    background: transparent;
+    color: white;
+    background-color: #4a5b73;
+    border-radius: 10px;
+    font-weight: bold;
     margin-top: 6px;
     margin-right: 8px;
+    margin-bottom: 5px;
     font-size: 16px;
   }
 
   .FilterByCustomerButton:hover{
-    color: darkred;
+    background-color: #60c9b3;
     cursor: pointer;
   }
 
-  .CustomerButton{
+  .CustomerButtonContainer{
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+  }
+
+  .FilterByCustomerButtonText{
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
 
