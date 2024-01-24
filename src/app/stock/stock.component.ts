@@ -56,8 +56,6 @@ export class StockComponent {
   displayPackagePopup() {
     this.displayPackage = true;
     this.applyBlur = true;
-    console.log(this.locationNames)
-
   }
 
 onPopupClosed(isClosed: boolean) {
