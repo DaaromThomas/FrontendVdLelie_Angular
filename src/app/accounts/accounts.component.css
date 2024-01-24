@@ -1,0 +1,91 @@
+.table-wrapper {
+    width: 100%;
+    max-height: 75vh;
+    height: fit-content;
+    overflow: auto;
+    display: block;
+    margin: auto;
+}
+
+th {
+    background-color: #f4812b;
+}
+
+td,
+th {
+    text-align: left;
+    padding: 5px 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    display: table;
+    margin: auto;
+}
+
+tbody {
+    max-height: 80%;
+    overflow: auto;
+}
+
+tr td:not(.no-border) {
+    background-color: #ffffff;
+}
+
+tr:hover td:not(.no-border) {
+    background-color: #60c9b3;
+}
+
+td.editable:hover {
+    background-color: #2c636c;
+    color: white;
+}
+
+.addEmployee {
+    float: right;
+    border-radius: 10px;
+    background-color: #60c9b3;
+    border-color: rgba(24, 100, 171, 0);
+    height: 40px;
+    margin-top: .5%;
+}
+
+.addEmployee:hover {
+    background-color: #f4812b;
+    border-color: rgba(24, 100, 171, 0);
+}
+
+.deleteButton {
+    background-color: rgba(24, 100, 171, 0);
+    border-color: rgba(24, 100, 171, 0);
+    border-radius: 25px;
+
+}
+
+.deleteButton:hover {
+    background-color: rgba(24, 100, 171, 0.5);
+}
+
+.topBar {
+    background-color: #2c636c;
+    height: 61px;
+    padding-right: 125px;
+}
+
+th.header {
+    background-color: #f4812b;
+    color: white;
+}
+
+.editlocation {
+    text-align: right;
+}
+
+input {
+    margin-top: 20px;
+    white-space: nowrap;
+    border-radius: 10px;
+    margin-left: 10px;
+}
