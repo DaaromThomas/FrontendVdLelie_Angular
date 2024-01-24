@@ -43,9 +43,6 @@
  .error-message {
   width: 100%;
   text-align: center;
-  margin-bottom: 10px;
-  position: absolute;
-  top: 60%;
   color: #cc0000;
  }
  
