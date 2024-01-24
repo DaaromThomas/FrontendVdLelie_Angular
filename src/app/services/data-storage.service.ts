@@ -226,6 +226,7 @@ export class DataStorageService {
 
   get GAccount(){
     return this.currentAccount
+  }
 
   getAccounts() {
     this.http.get<Account[]>(this.baseurl + '/accounts').subscribe((accounts: Account[]) => {
@@ -265,8 +266,6 @@ export class DataStorageService {
     return this.http.patch(this.baseurl + "/accounts/" + account.id, null, { params }).subscribe(() => { this.getAccounts(); });
   }
 }
-
-
 
 
 
