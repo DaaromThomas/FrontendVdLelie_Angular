@@ -14,7 +14,7 @@ import { Signup } from '../interfaces/signup.interface';
   providedIn: 'root',
 })
 export class DataStorageService {
-  private baseurl: string = 'https://vps.ronp.nl/ipsenapi';
+  private baseurl: string = 'http://localhost:8080';
   allInventoryData$: Subject<InventoryData> = new Subject<InventoryData>();
   locationList$: Subject<Location[]> = new Subject<Location[]>();
   private locationList: Location[] = [];
@@ -195,7 +195,7 @@ export class DataStorageService {
     this.http.put(this.baseurl + '/packages/update', packaging);
   }
   deletePackage(packaging: Packaging) {
-    this.http.delete(this.baseurl + '/packages/' + packaging.id);
+    this.http.delete(this.baseurl + '/packages/' + packaging.id).subscribe();
   }
 
   updateCustomer(params: HttpParams, customerId: string) {
