@@ -9,10 +9,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { NoPermissionsForThisComponent } from './no-permissions-for-this/no-permissions-for-this.component';
 import { MatTableModule } from '@angular/material/table';
+import { ThisIsYouComponent } from './this-is-you/this-is-you.component';
 
 
 @NgModule({
-  declarations: [AccountsComponent, NoPermissionsForThisComponent,],
+  declarations: [AccountsComponent, NoPermissionsForThisComponent, ThisIsYouComponent,],
   imports: [
     CommonModule,
     MatDialogModule,
