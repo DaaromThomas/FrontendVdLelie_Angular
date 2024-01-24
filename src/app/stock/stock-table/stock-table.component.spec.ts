@@ -34,7 +34,7 @@ describe('StockTableComponent', () => {
 
     fixture = TestBed.createComponent(StockTableComponent);
     component = fixture.componentInstance;
-    component.data = mockData; // Provide mock data
+    component.data = mockData;
     fixture.detectChanges();
   });
 

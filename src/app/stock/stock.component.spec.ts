@@ -32,7 +32,6 @@ describe('StockComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(StockComponent);
     component = fixture.componentInstance;
-    // Stub the async observable
     mockDataStorageService.allInventoryData$ = new Subject();
     fixture.detectChanges();
   });
