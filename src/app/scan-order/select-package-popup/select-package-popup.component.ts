@@ -4,13 +4,12 @@ import { DataStorageService } from '../../services/data-storage.service';
 import { Packaging } from '../../interfaces/packaging';
 import { SelectedPackaging } from '../models/selected-packaging';
 import { Product } from '../../models/product';
-import { Customer } from '../../models/Customer';
 import { EmailNotificationPopupComponent } from './email-notification-popup/email-notification-popup.component';
 import { LogService } from '../../logs/log.service';
 import { Account } from '../../interfaces/account.interface';
 import { HttpParams } from '@angular/common/http';
-import { Params } from '@angular/router';
-import { Stock } from '../../models/stock.model';
+import { Location } from '../../interfaces/location';
+import {Stock} from "../../interfaces/stock";
 
 
 
@@ -22,6 +21,7 @@ import { Stock } from '../../models/stock.model';
 export class SelectPackagePopupComponent {
   subscription: any;
   packageList: Packaging[] = [];
+  locationList: Location[] = [];
 
 
   selectedOption!: string;
@@ -37,15 +37,25 @@ export class SelectPackagePopupComponent {
     public dialog: MatDialog, private logService: LogService
   ) {}
 
+  public getPackagesFromCurrentLocation(): Packaging[]{
+    let currentLocation: Location | undefined = this.dataStorageService.GAccount?.location;
+    let sortedPackageList: Packaging[] = [];
 
+    for(let i = 0; i<this.packageList.length; i++){
+      if(this.packageList[i].location === currentLocation?.address){
+        sortedPackageList.push(this.packageList[i]);
+      }
+    }
+    return sortedPackageList;
+  }
 
 
 
   public ngOnInit(): void {
     this.dataStorageService.getPackagesAndLocations();
     this.populateInventoryData();
-
     this.selectedOption = this.product.order.customer.preferredPackaging.id;
+    // this.dataStorageService.getPackagesAndLocations();
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -60,6 +70,7 @@ export class SelectPackagePopupComponent {
   populateInventoryData(): void {
     this.subscription = this.dataStorageService.allInventoryData$.subscribe((inventoryData) => {
       this.packageList = inventoryData.packageList;
+      this.locationList = inventoryData.locationList;
     })
   }
 
