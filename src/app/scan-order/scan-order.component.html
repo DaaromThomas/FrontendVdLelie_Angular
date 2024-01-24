@@ -5,7 +5,12 @@
       <h1 class="title" for="name">Enter Productnumber: </h1>
       <label for="scanButton" class="error">{{getErrorMessage}}</label>
       <input id="productNumberInput" type="text" class="scan-input" (input)="onInputOrderNumber($event)" (keyup.enter)="onEnter()" [disabled]="disableScan"><br>
-      <button id="scanButton" name="hello" class="scan-button" (click)="getOrders()">Load product</button><br>
+      <button id="scanButton" name="hello" class="scan-button" (click)="getOrders()">Load product</button>
+      <div class="CustomerButtonContainer">
+        <button id="FilterByCustomerButton" class="FilterByCustomerButton" (click)="openFilterByCustomerPopup()">
+          <div class="FilterByCustomerButtonText">Filter by customer</div>
+        </button>
+      </div>
     </div>
   </div>
 </div>

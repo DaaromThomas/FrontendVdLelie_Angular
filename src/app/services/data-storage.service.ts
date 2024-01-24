@@ -166,7 +166,7 @@ export class DataStorageService {
         reject("Current account is undefined");
       }
     });
-  }
+   }
 
 
   delay(ms: number): Promise<void> {
@@ -188,8 +188,7 @@ export class DataStorageService {
       console.error(error);
       throw error;
     }
-  }
-
+   }
 
   changeIsPackedRequest(isPacked: boolean, productNumber: number) {
     let data: ChangeIsPackedRequestData = new ChangeIsPackedRequestData(isPacked, productNumber);

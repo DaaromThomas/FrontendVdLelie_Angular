@@ -19,7 +19,7 @@ export class ScanOrderService {
     return this.http.get<Order[]>(this.baseURL+"orders");
   }
 
-  getProduct(): Observable<Product[]>{
+  getProducts(): Observable<Product[]>{
     return this.http.get<Product[]>(this.baseURL+"products");
   }
 

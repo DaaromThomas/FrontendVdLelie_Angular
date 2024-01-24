@@ -1,0 +1,161 @@
+.popup-container {
+  display: flex;
+  height: 450px;
+}
+
+.sidebar {
+  background-color: #4bc8b6;
+  width: 20%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+img {
+  width: 70%;
+  aspect-ratio: 1/1;
+}
+
+.Customer-filter-container, .Customer-product-container {
+  flex: 1;
+  display: flex;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  box-sizing: border-box;
+  flex-flow: column;
+}
+
+.Customer-filter-container{
+  align-items: center;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+h2{
+  font-size: 48px;
+  margin-bottom: 10px;
+  margin-top: 0px;
+  display: flex;
+  height: 58px;
+  margin-left: 20px;
+  height: fit-content;
+}
+
+h3{
+  height: 73px;
+  font-size: 32px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  display: flex;
+  margin-left: 20px;
+  height: fit-content;
+}
+
+h4{
+  height: fit-content;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  margin-left: 20px;
+}
+
+.customer-list{
+  flex-grow: 1;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.product-list{
+  flex-grow: 1;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.filter-customer{
+  width: 70%;
+  padding: 5px;
+  margin-top: 0%;
+  margin-bottom: 0%;
+  border-radius: 3px;
+  border-width: 1px;
+  margin-left: 20px;
+}
+
+th{
+  text-align: left;
+  background-color: #f4812b;
+  height: 30px;
+  color: white;
+}
+
+tr{
+  width: 100%;
+  align-items: flex-start;
+  border-bottom: 1px;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+}
+
+tbody>tr:hover{
+  background: #60c9b3;
+  cursor: pointer;
+}
+
+td{
+  margin: 0px;
+  text-align: left;
+  height: 30px;
+}
+
+table{
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.back-button-container, .close-button-container{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.close-button, .back-button {
+  width: 80px;
+  height: 40px;
+  border-radius: 20px;
+  border-color: #4D4E53;
+  background-color: #4D4E53;
+  font-weight: 700;
+  color: white;
+  margin-left: 20px;
+}
+
+.back-button{
+  margin-right: 20px;
+}
+
+.close-button-container > .close-button{
+  margin-right: 40px;
+}
+
+button:hover {
+  background-color: #F4812B;
+  cursor: pointer;
+}
+
+.error-message{
+  height: 8px;
+  color: red;
+  margin-top: 0px;
+  margin-left: 20px
+}
+
+.first-column{
+  padding-left: 5px;
+}
+
+.close-button-filler{
+  width: 80px;
+}
