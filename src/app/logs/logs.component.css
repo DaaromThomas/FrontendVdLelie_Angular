@@ -32,6 +32,7 @@
 
 .header > p{
     color: white;
+    margin: 20px;
 }
 
 .holder{
@@ -40,7 +41,6 @@
 
     display: flex;
     align-items: center;
-    justify-content: center;
 }
 
 p{
