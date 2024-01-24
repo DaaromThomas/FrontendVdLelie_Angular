@@ -1,20 +1,33 @@
 <div class="top-bar">
     <div class="filter">
-        <input placeholder="Filter Location" type="text" autocomplete="on" list="locationNames" [(ngModel)]="locationFilter" (input)="applyFilter()">
+        <input placeholder="Filter Location" type="text" autocomplete="on" list="locationNames"
+            [(ngModel)]="locationFilter" (input)="applyFilter()">
         <datalist id="locationNames">
-            @for (location of locationNames; track $index) {
-                <option [value]="location"></option>
-            }
+            <option *ngFor="let location of locationNames" [value]="location"></option>
         </datalist>
+        <input placeholder="Filter Name" type="text" [(ngModel)]="nameFilter" (input)="applyFilter()">
+        <input placeholder="Filter Group" type="text" [(ngModel)]="groupFilter" (input)="applyFilter()">
     </div>
-    <button (click)="displayPackagePopup()">Add Package</button>
+    <div class="sorting-options">
+        <label for="sortProperty">Sort by:</label>
+        <select id="sortProperty" [(ngModel)]="selectedSortProperty" (change)="sortList()">
+            <option value="minAmount">Min Amount</option>
+            <option value="amountinstock">Amount</option>
+        </select>
+        <label for="sortOrder">Sort order:</label>
+        <select id="sortOrder" [(ngModel)]="selectedSortOrder" (change)="sortList()">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+        </select>
+    </div>
+    <button class="addPackageButton" (click)="displayPackagePopup()">Add Package</button>
 </div>
 <div class="add-package" *ngIf="displayPackage">
-  <app-add-package-popup class="package-popup" (popupClosed)="onPopupClosed($event)"></app-add-package-popup>
+    <app-add-package-popup class="package-popup" (popupClosed)="onPopupClosed($event)"></app-add-package-popup>
 </div>
 <div *ngIf="applyBlur" class="overlay" (click)="onPopupClosed(false)"></div>
 <div class="blur" [ngClass]="{'blur-effect': displayPackage}">
-<app-stock-table [data]="sortedList" (deletePackageEvent)="onPackageDelete($event)" (packageChangeEvent)='onPackageChange($event)'></app-stock-table>
 
-
-
+    <app-stock-table [data]="sortedList" (deletePackageEvent)="onPackageDelete($event)"
+        (packageChangeEvent)='onPackageChange($event)'></app-stock-table>
+</div>
