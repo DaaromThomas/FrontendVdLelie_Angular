@@ -20,4 +20,6 @@ export class StockDeletePopupComponent {
   onDeleteClick(): void {
     this.dialogRef.close(true);
   }
+
+  
 }
