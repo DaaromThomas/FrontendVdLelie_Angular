@@ -11,7 +11,7 @@ import { Time } from '@angular/common';
   providedIn: 'root'
 })
 export class LogService implements OnInit{
-  private baseurl: string = 'http://localhost:8080/logs';
+  private baseurl: string = 'https://vps.ronp.nl/ipsenapi/logs';
 
   private logList: Log[] = [];
   private logList$: BehaviorSubject<Log[]> = new BehaviorSubject<Log[]>([]);

@@ -17,7 +17,7 @@ import { Time } from '@angular/common';
   styleUrls: ['./logs.component.css']
 })
 export class LogsComponent implements OnInit {
-  pageSize: number = 10;
+  pageSize: number = 13;
   logs: Log[] = [];
   filteredLogs!: MatTableDataSource<Log>;
   private packageList: Packaging[] = [];
@@ -40,9 +40,6 @@ export class LogsComponent implements OnInit {
 
   ngOnInit() {
     this.filteredLogs = new MatTableDataSource();
-    this.dataStorageService.getAccountsByCurrentLocation().subscribe((data) => {
-      this.accounts = data;
-    });
 
     this.logService.getLogs();
     this.logService.logs().subscribe((logs) => {
@@ -85,15 +82,17 @@ export class LogsComponent implements OnInit {
 
   private dateMatches(logDate: number[]): boolean {
     let date: string = logDate[0] + "," + logDate[1] + "," + logDate[2];
-    if(!this.filterDate){
-      return true;
-    }
+    
     if(this.beginTime && this.endTime && !this.filterDate){
       this.filterDate = new Date();
     }
+    else if(!this.filterDate){
+      return true;
+    }
     try {
       const logDateObj = new Date(date);
-      const filterDate = new Date(this.filterDate as Date);
+      const filterDate = new Date(this.filterDate); 
+      console.log(filterDate);
       return logDateObj.toDateString() === filterDate.toDateString();
     } catch (error) {
       console.error('Error processing date:', error);
