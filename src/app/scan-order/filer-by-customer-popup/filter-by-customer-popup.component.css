@@ -63,13 +63,13 @@ h4{
 
 .customer-list{
   flex-grow: 1;
-  overflow-y: scroll;
+  overflow-y: auto;
   width: 100%;
 }
 
 .product-list{
   flex-grow: 1;
-  overflow-y: scroll;
+  overflow-y: auto;
   width: 100%;
 }
 
