@@ -28,8 +28,7 @@ export class StockComponent {
   stockList: Stock[] = [];
   locationNames: string[] = [];
 
-  constructor(private fb: FormBuilder,
-    private _formBuilder: FormBuilder, private dataStorageService: DataStorageService, public dialog: MatDialog) {}
+  constructor(private dataStorageService: DataStorageService, public dialog: MatDialog) {}
 
 
   onPackageChange(package_:Packaging){
