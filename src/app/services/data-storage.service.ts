@@ -9,6 +9,12 @@ import { Account } from '../interfaces/account.interface';
 import { ChangeIsPackedRequestData } from '../models/ChangeIsPackedRequestData';
 import { Customer } from '../interfaces/customer.interface';
 
+import { CookieService } from '../login/cookie.service';
+import { Log } from '../models/Log';
+
+import { Signup } from '../interfaces/signup.interface';
+
+
 @Injectable({
   providedIn: 'root',
 })
@@ -21,6 +27,7 @@ export class DataStorageService {
   private currentStockId: string = '';
   isDataLoaded$ = new BehaviorSubject<boolean>(false);
   customerList$: Subject<Customer[]> = new Subject<Customer[]>();
+  accountList$: Subject<Account[]> = new Subject<Account[]>();
 
   constructor(private http: HttpClient) { }
 
@@ -59,6 +66,10 @@ export class DataStorageService {
     };
 
     return this.http.post(this.baseurl + '/customers', {}, httpOptions);
+  }
+
+  public getAccountsByCurrentLocation(){
+    return this.http.get<Account[]>(this.baseurl + '/accountsbylocation/' + this.currentAccount?.location.id);
   }
 
   getPackagesAndLocations() {
@@ -144,16 +155,16 @@ export class DataStorageService {
 
   getLocationStock(): Promise<void> {
     return new Promise((resolve, reject) => {
-     if (this.currentAccount != undefined) {
-       for (let location of this.locationList) {
-         if (location.id === ((this.currentAccount.location as unknown) as Location).id) {
-           this.currentStockId = location.stock.id
-         }
-       }
-       resolve();
-     } else {
-       reject("Current account is undefined");
-     }
+      if (this.currentAccount != undefined) {
+        for (let location of this.locationList) {
+          if (location.id === ((this.currentAccount.location as unknown) as Location).id) {
+            this.currentStockId = location.stock.id
+          }
+        }
+        resolve();
+      } else {
+        reject("Current account is undefined");
+      }
     });
    }
 
@@ -162,21 +173,20 @@ export class DataStorageService {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-
   getStockId() {
     return this.currentStockId;
   }
 
   async getCurrentUser(): Promise<string> {
     try {
-    const response = await this.http.get(this.baseurl + '/currentuser', { responseType: 'text' }).toPromise();
-    if (!response) {
-      throw new Error('Failed to get current user');
-    }
-    return response;
+      const response = await this.http.get(this.baseurl + '/currentuser', { responseType: 'text' }).toPromise();
+      if (!response) {
+        throw new Error('Failed to get current user');
+      }
+      return response;
     } catch (error) {
-    console.error(error);
-    throw error;
+      console.error(error);
+      throw error;
     }
    }
 
@@ -211,6 +221,50 @@ export class DataStorageService {
 
     return this.http.post(this.baseurl + '/email/lowonstock', null, { params }).subscribe();
   }
+
+
+  get GAccount(){
+    return this.currentAccount
+  }
+
+  getAccounts() {
+    this.http.get<Account[]>(this.baseurl + '/accounts').subscribe((accounts: Account[]) => {
+      this.accountList$.next(accounts);
+    })
+  }
+
+  getLocations() {
+    this.http.get<Location[]>(this.baseurl + '/locations').subscribe((locations: Location[]) => {
+      this.locationList$.next(locations);
+    })
+  }
+
+  getLocationById(id: String): Observable<Location> {
+    return this.http.get<Location>(this.baseurl + '/locations/' + id);
+  }
+
+  postSignup(signup: Signup) {
+    this.http.post(this.baseurl + '/signup', signup).subscribe(
+      (res) => {
+        this.getAccounts();
+      },
+      (error) => {
+        console.log(error)
+      }
+    );
+  }
+
+  deleteAccount(id: string) {
+    return this.http.delete(this.baseurl + "/accounts/" + id).subscribe(() => { this.getAccounts(); });
+  }
+
+  editRole(account: Account, role: string) {
+    const params = new HttpParams()
+      .set('role', role);
+
+    return this.http.patch(this.baseurl + "/accounts/" + account.id, null, { params }).subscribe(() => { this.getAccounts(); });
+  }
 }
+
 
 

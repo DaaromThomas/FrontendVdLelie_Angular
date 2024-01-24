@@ -20,6 +20,10 @@ export class Packaging {
         return this.amount_;
     }
 
+    public set amount(amount: number){
+        this.amount = amount;
+    }
+
     public get minAmount(): number {
         return this.minAmount_;
     }
