@@ -6,6 +6,8 @@ import { Packaging } from '../interfaces/packaging';
 import { Subject, takeUntil } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { StockDeletePopupComponent } from './stock-delete-popup/stock-delete-popup.component';
 
 
 @Component({
@@ -27,20 +29,29 @@ export class StockComponent {
   locationNames: string[] = [];
 
   constructor(private fb: FormBuilder,
-    private _formBuilder: FormBuilder, private dataStorageService: DataStorageService) {}
+    private _formBuilder: FormBuilder, private dataStorageService: DataStorageService, public dialog: MatDialog) {}
 
 
   onPackageChange(package_:Packaging){
     this.dataStorageService.updatePackage(package_);
   }
   onPackageDelete(package_:Packaging){
-    this.dataStorageService.deletePackage(package_);
-    this.sortedList = this.sortedList.filter((package__) => {
-      return package__.id !== package_.id;
+    const dialogRef = this.dialog.open(StockDeletePopupComponent, {
+      data: { package_: package_ },
     });
-    this.packageList = this.packageList.filter((package__) => {
-      return package__.id !== package_.id;
-    })
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      this.dataStorageService.deletePackage(package_);
+      this.sortedList = this.sortedList.filter((package__) => {
+        return package__.id !== package_.id;
+      });
+      this.packageList = this.packageList.filter((package__) => {
+        return package__.id !== package_.id;
+      })
+    } 
+  });
+  
   }
 
   displayPackagePopup() {

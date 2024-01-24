@@ -11,9 +11,10 @@ import { StockTableComponent } from './stock-table/stock-table.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from "@angular/material/input";
 import { MatPaginatorModule } from "@angular/material/paginator";
+import { StockDeletePopupComponent } from './stock-delete-popup/stock-delete-popup.component';
 
 @NgModule({
-  declarations: [StockComponent, AddPackagePopupComponent, StockTableComponent],
+  declarations: [StockComponent, AddPackagePopupComponent, StockTableComponent, StockDeletePopupComponent],
   imports: [CommonModule, ReactiveFormsModule, HttpClientModule, MatIconModule, FormsModule, MatTableModule, MatCardModule,MatFormFieldModule, MatInputModule, MatPaginatorModule],
   exports: [StockComponent, AddPackagePopupComponent],
 })
