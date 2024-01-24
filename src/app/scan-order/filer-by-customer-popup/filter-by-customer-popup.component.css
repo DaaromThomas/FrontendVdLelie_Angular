@@ -20,11 +20,14 @@ img {
 .Customer-filter-container, .Customer-product-container {
   flex: 1;
   display: flex;
-  padding: 5px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 5px;
   box-sizing: border-box;
-  flex-direction: column;
+  flex-flow: column;
+}
+
+.Customer-filter-container{
+  align-items: center;
 }
 
 [hidden] {
@@ -36,8 +39,9 @@ h2{
   margin-bottom: 10px;
   margin-top: 0px;
   display: flex;
-  align-content: center;
   height: 58px;
+  margin-left: 20px;
+  height: fit-content;
 }
 
 h3{
@@ -46,12 +50,27 @@ h3{
   margin-bottom: 0px;
   margin-top: 0px;
   display: flex;
-  align-content: center;
+  margin-left: 20px;
+  height: fit-content;
+}
+
+h4{
+  height: fit-content;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  margin-left: 20px;
 }
 
 .customer-list{
   flex-grow: 1;
   overflow-y: scroll;
+  width: 100%;
+}
+
+.product-list{
+  flex-grow: 1;
+  overflow-y: scroll;
+  width: 100%;
 }
 
 .filter-customer{
@@ -61,16 +80,19 @@ h3{
   margin-bottom: 0%;
   border-radius: 3px;
   border-width: 1px;
-  align-content: center;
+  margin-left: 20px;
 }
 
 th{
   text-align: left;
+  background-color: #f4812b;
+  height: 30px;
 }
 
 tr{
   width: 100%;
   align-items: flex-start;
+  border-bottom: 1px;
 }
 
 tbody>tr:hover{
@@ -79,14 +101,20 @@ tbody>tr:hover{
 }
 
 td{
-  border: none;
   margin: 0px;
   text-align: left;
+  height: 20px;
 }
 
 table{
   width: 100%;
   border-collapse: collapse;
+}
+
+.close-button-container, .back-button-container{
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
 }
 
 .close-button, .back-button {
@@ -97,18 +125,17 @@ table{
   background-color: #4D4E53;
   font-weight: 700;
   color: white;
+  margin-left: 20px;
 }
 
 button:hover {
   background-color: #F4812B;
-}
-
-.product-list{
-  flex-grow: 1;
-  overflow-y: scroll;
+  cursor: pointer;
 }
 
 .error-message{
   height: 8px;
   color: red;
+  margin-top: 0px;
+  margin-left: 20px
 }

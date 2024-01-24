@@ -93,4 +93,6 @@ export class FilterByCustomerPopupComponent {
   public onClose(){
     this.dialogRef.close({data:''});
   }
+
+  protected readonly undefined = undefined;
 }
