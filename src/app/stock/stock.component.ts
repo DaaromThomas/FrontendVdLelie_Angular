@@ -21,35 +21,41 @@ export class StockComponent {
   applyBlur: boolean = false;
   tableWrapperClass: string = 'table-wrapper';
   locationFilter: string = '';
+  nameFilter: string = '';
+  groupFilter: string = '';
   packageList: Packaging[] = [];
   sortedList: Packaging[] = [];
   locationList: Location[] = [];
   stockList: Stock[] = [];
   locationNames: string[] = [];
 
-  constructor(private dataStorageService: DataStorageService, public dialog: MatDialog) {}
+  selectedSortProperty: string = 'minAmount';
+  selectedSortOrder: string = 'asc';
 
 
-  onPackageChange(package_:Packaging){
+  constructor(private dataStorageService: DataStorageService, public dialog: MatDialog) { }
+
+
+  onPackageChange(package_: Packaging) {
     this.dataStorageService.updatePackage(package_);
   }
-  onPackageDelete(package_:Packaging){
+  onPackageDelete(package_: Packaging) {
     const dialogRef = this.dialog.open(StockDeletePopupComponent, {
       data: { package_: package_ },
     });
 
-  dialogRef.afterClosed().subscribe(result => {
-    if (result) {
-      this.dataStorageService.deletePackage(package_);
-      this.sortedList = this.sortedList.filter((package__) => {
-        return package__.id !== package_.id;
-      });
-      this.packageList = this.packageList.filter((package__) => {
-        return package__.id !== package_.id;
-      })
-    } 
-  });
-  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.dataStorageService.deletePackage(package_);
+        this.sortedList = this.sortedList.filter((package__) => {
+          return package__.id !== package_.id;
+        });
+        this.packageList = this.packageList.filter((package__) => {
+          return package__.id !== package_.id;
+        })
+      }
+    });
+
   }
 
   displayPackagePopup() {
@@ -57,21 +63,11 @@ export class StockComponent {
     this.applyBlur = true;
   }
 
-onPopupClosed(isClosed: boolean) {
-  this.displayPackage = isClosed;
-  this.applyBlur = isClosed;
-}
-
-applyFilter() {
-  if(this.locationFilter === '') {
-    this.sortedList = this.packageList;
-    return;
+  onPopupClosed(isClosed: boolean) {
+    this.displayPackage = isClosed;
+    this.applyBlur = isClosed;
   }
 
-  this.sortedList = this.packageList.filter((package_) => {
-    return package_.location?.toLowerCase()?.includes(this.locationFilter.toLowerCase());
-  });
-}
 
   previousValue: string = '';
 
@@ -119,5 +115,47 @@ applyFilter() {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  applyFilter() {
+    if (this.locationFilter === '' && this.nameFilter === '' && this.groupFilter === '') {
+      this.sortedList = this.packageList;
+      return;
+    }
+
+    this.sortedList = this.packageList.filter((package_) => {
+      const matchesLocation = package_.location?.toLowerCase()?.includes(this.locationFilter.toLowerCase()) || this.locationFilter === '';
+      const matchesName = package_.name?.toLowerCase()?.includes(this.nameFilter.toLowerCase()) || this.nameFilter === '';
+      const matchesGroup = package_.packagingGroup?.toLowerCase()?.includes(this.groupFilter.toLowerCase()) || this.groupFilter === '';
+
+      return matchesLocation && matchesName && matchesGroup;
+    });
+
+
+    this.sortedList.sort((a, b) => {
+      const aAmount = (a as any).amount || 0;
+      const bAmount = (b as any).amount || 0;
+      const aMinAmount = (a as any).minAmount || 0;
+      const bMinAmount = (b as any).minAmount || 0;
+
+
+      if (aMinAmount !== bMinAmount) {
+        return aMinAmount - bMinAmount;
+      }
+
+
+      return aAmount - bAmount;
+    });
+  }
+
+  sortList() {
+    const sortBy = this.selectedSortProperty;
+    const sortOrder = this.selectedSortOrder === 'asc' ? 1 : -1;
+
+    this.sortedList = this.packageList.slice().sort((a, b) => {
+      const aValue = (a as any)[sortBy] || 0;
+      const bValue = (b as any)[sortBy] || 0;
+      return (aValue - bValue) * sortOrder;
+    });
   }
 }
