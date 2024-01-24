@@ -16,7 +16,6 @@ import { StockDeletePopupComponent } from './stock-delete-popup/stock-delete-pop
   styleUrls: ['./stock.component.css'],
 })
 export class StockComponent {
- selection = new SelectionModel<Element>(true, []);
   subscription: any;
   displayPackage: boolean = false;
   applyBlur: boolean = false;
