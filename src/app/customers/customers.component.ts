@@ -26,7 +26,7 @@ export class CustomersComponent {
   filteredCustomerList!: MatTableDataSource<Customer>;
   displayAddCustomer: boolean = false;
   tableWrapperClass: string = 'table-wrapper';
-  selectedCustomerId : string = "";
+  selectedCustomerId: string = "";
   displayedColumns: string[] = ['name', 'address', 'phoneNumber', 'e-mail', 'preferredPackaging', "customerOptions"];
   customersPerPage: number = 15;
 
@@ -38,7 +38,7 @@ export class CustomersComponent {
   constructor(
     private dataStorageService: DataStorageService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.filteredCustomerList = new MatTableDataSource();
@@ -50,8 +50,8 @@ export class CustomersComponent {
     this.subscription = this.dataStorageService.customerList$.subscribe(
       async (customerData) => {
         this.customerList = (customerData);
-        this.filteredCustomerList.data = customerData.slice().reverse();     
-        this.filteredCustomerList.data = await this.appendNullObjects(this.filteredCustomerList.data); 
+        this.filteredCustomerList.data = customerData.slice().reverse();
+        this.filteredCustomerList.data = await this.appendNullObjects(this.filteredCustomerList.data);
         this.filteredCustomerList.paginator = this.paginator;
       }
     );
@@ -114,9 +114,9 @@ export class CustomersComponent {
     } else {
       while (filteredCustomerList.length % this.customersPerPage !== 0) {
         filteredCustomerList.push(emptyItem);
-      }  
+      }
     }
-    
+
     return filteredCustomerList
   }
 }
