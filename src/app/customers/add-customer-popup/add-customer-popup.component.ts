@@ -77,6 +77,8 @@ export class AddCustomerPopupComponent implements AfterViewInit, OnDestroy {
         this.dialogRef.close();
         this.saveCustomer(newCustomer);
         return;
+      } else {
+        this.error = "Some required fields are empty"
       }
   }
 
