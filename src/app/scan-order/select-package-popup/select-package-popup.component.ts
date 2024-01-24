@@ -55,7 +55,6 @@ export class SelectPackagePopupComponent {
     this.dataStorageService.getPackagesAndLocations();
     this.populateInventoryData();
     this.selectedOption = this.product.order.customer.preferredPackaging.id;
-    // this.dataStorageService.getPackagesAndLocations();
   }
 
   @HostListener('document:keydown', ['$event'])
