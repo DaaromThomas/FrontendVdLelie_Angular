@@ -1,0 +1,87 @@
+<div class="mat-elevation-z8">
+  <form [formGroup]="VOForm" autocomplete="off">
+    <ng-container formArrayName="VORows">
+      <table #table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mat-table">
+
+        <ng-container matColumnDef="group">
+          <th style="background-color:  #f4812b;" mat-header-cell *matHeaderCellDef>Group</th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <ng-container>
+              <span>{{ element.get('group').value }}</span>
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th style="background-color:  #f4812b;"  mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
+            <div class="input-container">
+              <span [hidden]="!getIsEditable(i)">{{ element.get('name').value }}</span>
+              <input [hidden]="getIsEditable(i)" type="text" formControlName="name" [readonly]="getIsEditable(i)" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amountInStock">
+          <th style="background-color:  #f4812b;" mat-header-cell *matHeaderCellDef>Amount In Stock</th>
+          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
+            <div class="input-container">
+              <span [hidden]="!getIsEditable(i)">{{ element.get('amountInStock').value }}</span>
+              <input [hidden]="getIsEditable(i)" type="text" formControlName="amountInStock" [readonly]="getIsEditable(i)" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="minAmount">
+          <th style="background-color:  #f4812b;" mat-header-cell *matHeaderCellDef>Min Amount</th>
+          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
+            <div class="input-container">
+              <span [hidden]="!getIsEditable(i)">{{ element.get('minAmount').value }}</span>
+              <input [hidden]="getIsEditable(i)" type="text" formControlName="minAmount" [readonly]="getIsEditable(i)" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="location">
+          <th style="background-color:  #f4812b;" mat-header-cell *matHeaderCellDef>Location</th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <ng-container>
+              <span>{{ element.get('location').value }}</span>
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="edit">
+          <th style="background-color:  #f4812b; min-width: 120px;" mat-header-cell *matHeaderCellDef>Edit</th>
+          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
+            <div class="button-container">
+              <button mat-icon-button class="material-icons app-toolbar-menu save-button" matTooltip="Save Changes"
+                (click)="SaveVO(VOForm, i)" *ngIf="!getIsEditable(i)" color="primary">
+                <mat-icon>check_circle</mat-icon>
+              </button>
+
+              <button mat-icon-button class="material-icons app-toolbar-menu cancel-button" matTooltip="Cancel Changes"
+                color="warn" (click)="cancelEditVO(VOForm, i)" *ngIf="!getIsEditable(i)">
+                <img style="width: 24px; height: 24px;" src="./assets/undo.png">
+              </button>
+              
+              <button mat-icon-button class="material-icons app-toolbar-menu cancel-button" matTooltip="Cancel Changes"
+              color="warn" (click)="deleteVO(VOForm, i)" *ngIf="!getIsEditable(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+
+              <button mat-icon-button class="material-icons app-toolbar-menu save-button" *ngIf="getIsEditable(i)"
+                matTooltip="Edit" color="primary" (click)="EditSVO(VOForm, i)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </ng-container>
+  </form>
+  <mat-paginator #paginator [pageSize]="15" showFirstLastButtons></mat-paginator>
+</div>

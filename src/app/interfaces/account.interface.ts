@@ -1,4 +1,4 @@
-import { Location } from "../interfaces/location";
+import { Location } from "./location";
 
 export interface Account {
   id: string;

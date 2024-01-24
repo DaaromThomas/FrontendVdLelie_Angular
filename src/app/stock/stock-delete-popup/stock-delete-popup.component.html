@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="image-section">
+        <img src="assets/box.webp" class="centered-image">
+    </div>
+    <div class="right-section">
+      <div class="title-text">Delete Confirmation</div>
+        <p>Are you sure you want to delete {{data.package_.name}}?</p>
+      <div class="button-group">
+        <button class="delete-button" (click)="onDeleteClick()">Delete</button>
+        <button class="cancel-button" (click)="onCancelClick()">Cancel</button>
+      </div>
+    </div>
+  </div>

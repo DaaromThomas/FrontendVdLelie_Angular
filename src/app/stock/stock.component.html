@@ -1,60 +1,20 @@
-<div *ngIf="applyBlur" class="overlay" (click)="onPopupClosed(false)"></div>
-<div class="blur" [ngClass]="{'blur-effect': displayPackage}">
+<div class="top-bar">
     <div class="filter">
-        <input type="text" autocomplete="on" list="mockLocations" (input)="setLocationFilter($event)">
-        <datalist id="mockLocations">
+        <input placeholder="Filter Location" type="text" autocomplete="on" list="locationNames" [(ngModel)]="locationFilter" (input)="applyFilter()">
+        <datalist id="locationNames">
             @for (location of locationNames; track $index) {
                 <option [value]="location"></option>
             }
         </datalist>
     </div>
-    <div class="container">
-        <div class="spacer"></div>
-        <div [class]="tableWrapperClass">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Group</th>
-                        <th>Name</th>
-                        <th>Amount</th>
-                        <th>Minimum Amount</th>
-                        <th>Location</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (locationNames.includes(locationFilter)) {
-                        @for (package of packageList; track $index) {
-                            @if (package.location === locationFilter) {
-                                <tr>
-                                    <td>{{package.packagingGroup}}</td>
-                                    <td>{{package.name}}</td>
-                                    <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{package.amountinstock}}</td>
-                                    <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{package.minAmount}}</td>
-                                    <td>{{package.location}}</td>
-                                </tr>
-                            }
-                        }
-
-                    } @else {
-
-                        @for (package of packageList; track $index) {
-                            <tr>
-                                <td>{{package.packagingGroup}}</td>
-                                <td>{{package.name}}</td>
-                                <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{package.amountinstock}}</td>
-                                <td class="editable" contenteditable="true" (input)="onInputChange($event)" (focus)="onFocusChange($event)" (blur)="onBlurChange($event)">{{package.minAmount}}</td>
-                                <td>{{package.location}}</td>
-                            </tr>
-                        }
-                    }
-                </tbody>
-            </table>
-        </div>
-        <button (click)="displayPackagePopup()">New Package</button>
-    </div>
+    <button (click)="displayPackagePopup()">Add Package</button>
 </div>
-
 <div class="add-package" *ngIf="displayPackage">
-        <app-add-package-popup class="package-popup" (popupClosed)="onPopupClosed($event)"></app-add-package-popup>
+  <app-add-package-popup class="package-popup" (popupClosed)="onPopupClosed($event)"></app-add-package-popup>
 </div>
+<div *ngIf="applyBlur" class="overlay" (click)="onPopupClosed(false)"></div>
+<div class="blur" [ngClass]="{'blur-effect': displayPackage}">
+<app-stock-table [data]="sortedList" (deletePackageEvent)="onPackageDelete($event)" (packageChangeEvent)='onPackageChange($event)'></app-stock-table>
+
+
 

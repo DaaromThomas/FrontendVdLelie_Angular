@@ -1,0 +1,92 @@
+
+  
+  .image-section {
+    background-color: #4bc8b6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 250px;
+  }
+  .container{
+    width: max-content;
+    background-color: #ffffff;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+  }
+  
+  .centered-image {
+    object-fit: contain;
+    max-height: 100%;
+    max-width: 100%;
+  }
+  
+  .right-section {
+    width: max-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .title-text {
+    font-size: 36px;
+    color: #333; 
+    margin: 10px 0;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  
+  
+  
+  .button-group {
+    margin-top: auto; 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; 
+    padding: 20px;
+  }
+  
+  .delete-button {
+    background-color: #e74c3c; 
+    color: #fff; 
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 15px;
+  }
+  .delete-button:hover {
+    background-color: #c0392b;
+  }
+
+  .cancel-button:hover {
+    background-color: #ccc; 
+    color: #fff;
+  }
+  .cancel-button {
+    border-radius: 15px;
+    background-color: #ccc; 
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .cancel-button:hover {
+    background-color: darkgray;
+    color: #fff; 
+  }
+
+  button {
+    margin-top: 10px;
+    width: 100px; 
+  }
