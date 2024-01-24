@@ -19,7 +19,7 @@ import { Signup } from '../interfaces/signup.interface';
   providedIn: 'root',
 })
 export class DataStorageService {
-  private baseurl: string = 'http://localhost:8080';
+  private baseurl: string = 'https://vps.ronp.nl/ipsenapi';
   allInventoryData$: Subject<InventoryData> = new Subject<InventoryData>();
   locationList$: Subject<Location[]> = new Subject<Location[]>();
   private locationList: Location[] = [];
@@ -68,7 +68,7 @@ export class DataStorageService {
     return this.http.post(this.baseurl + '/customers', {}, httpOptions);
   }
 
-  public getAccountsByCurrentLocation(){
+  public getAccountsByCurrentLocation() {
     return this.http.get<Account[]>(this.baseurl + '/accountsbylocation/' + this.currentAccount?.location.id);
   }
 
@@ -230,7 +230,7 @@ export class DataStorageService {
   }
 
 
-  get GAccount(){
+  get GAccount() {
     return this.currentAccount
   }
 
