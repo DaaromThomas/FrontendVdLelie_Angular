@@ -92,7 +92,6 @@ export class LogsComponent implements OnInit {
     try {
       const logDateObj = new Date(date);
       const filterDate = new Date(this.filterDate); 
-      console.log(filterDate);
       return logDateObj.toDateString() === filterDate.toDateString();
     } catch (error) {
       console.error('Error processing date:', error);
