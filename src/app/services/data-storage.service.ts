@@ -8,7 +8,12 @@ import { InventoryData } from '../interfaces/InventoryData.interface';
 import { Account } from '../interfaces/account.interface';
 import { ChangeIsPackedRequestData } from '../models/ChangeIsPackedRequestData';
 import { Customer } from '../interfaces/customer.interface';
+
+import { CookieService } from '../login/cookie.service';
+import { Log } from '../models/Log';
+
 import { Signup } from '../interfaces/signup.interface';
+
 
 @Injectable({
   providedIn: 'root',
@@ -61,6 +66,10 @@ export class DataStorageService {
     };
 
     return this.http.post(this.baseurl + '/customers', {}, httpOptions);
+  }
+
+  public getAccountsByCurrentLocation(){
+    return this.http.get<Account[]>(this.baseurl + '/accountsbylocation/' + this.currentAccount?.location.id);
   }
 
   getPackagesAndLocations() {
@@ -181,6 +190,7 @@ export class DataStorageService {
     }
   }
 
+
   changeIsPackedRequest(isPacked: boolean, productNumber: number) {
     let data: ChangeIsPackedRequestData = new ChangeIsPackedRequestData(isPacked, productNumber);
     return this.http.post(this.baseurl + "/product/ispacked", data);
@@ -212,6 +222,10 @@ export class DataStorageService {
 
     return this.http.post(this.baseurl + '/email/lowonstock', null, { params }).subscribe();
   }
+
+
+  get GAccount(){
+    return this.currentAccount
 
   getAccounts() {
     this.http.get<Account[]>(this.baseurl + '/accounts').subscribe((accounts: Account[]) => {
@@ -251,5 +265,8 @@ export class DataStorageService {
     return this.http.patch(this.baseurl + "/accounts/" + account.id, null, { params }).subscribe(() => { this.getAccounts(); });
   }
 }
+
+
+
 
 

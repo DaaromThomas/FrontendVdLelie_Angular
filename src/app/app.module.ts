@@ -12,6 +12,8 @@ import { StockModule } from './stock/stock.module';
 import { CustomersModule } from './customers/customers.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginService } from './login/login.service';
+import { LogsComponent } from './logs/logs.component';
+import { LogsModule } from './logs/logs.module';
 
 import { GlobalErrorHandler } from './ErrorHandling/global-error-handler';
 import { LoadingcomponentComponent } from './ErrorHandling/loadingcomponent/loadingcomponent.component';
@@ -36,7 +38,9 @@ import { MatDialogModule } from "@angular/material/dialog";
     GlobalErrorHandler,
     FormsModule,
     MatMenuModule,
-    MatDialogModule
+    MatDialogModule,
+    LogsModule
+
   ],
   providers: [
     provideClientHydration(),
