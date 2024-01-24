@@ -41,4 +41,12 @@ describe('StockDeletePopupComponent', () => {
       component.onDeleteClick();
       expect(mockMatDialogRef.close).toHaveBeenCalledWith(true);
     });
+    it('should create component successfully with MatDialogRef and MAT_DIALOG_DATA injected', () => {
+        const data = {};
+        const component = new StockDeletePopupComponent(mockMatDialogRef, data);
+  
+        expect(component).toBeTruthy();
+        expect(component.dialogRef).toBe(mockMatDialogRef);
+        expect(component.data).toBe(data);
+      });
   });
