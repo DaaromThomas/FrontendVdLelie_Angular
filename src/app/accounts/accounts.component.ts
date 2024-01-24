@@ -6,6 +6,7 @@ import { CreateAccountPopupComponent } from './create-account-popup/create-accou
 import { NoPermissionsForThisComponent } from './no-permissions-for-this/no-permissions-for-this.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { ThisIsYouComponent } from './this-is-you/this-is-you.component';
 
 
 @Component({
@@ -57,6 +58,7 @@ export class AccountsComponent {
   }
 
   openDialog() {
+    if (this.dataStorageService.GAccount!.role == 'ROLE_USER') { this.openNoPermissionDialog(); return; }
     const dialogRef = this.dialog.open(CreateAccountPopupComponent, {
       width: '750px',
     });
@@ -71,13 +73,23 @@ export class AccountsComponent {
     });
   }
 
+  openNotificationDialog() {
+    const dialogRef = this.dialog.open(ThisIsYouComponent, {
+      width: '750px',
+    });
+  }
+
 
   deleteUser(id: string) {
+    if (this.dataStorageService.GAccount!.role == 'ROLE_USER') { this.openNoPermissionDialog(); return; }
+    if (this.dataStorageService.GAccount!.id == id) { this.openNotificationDialog(); return; }
     this.dataStorageService.deleteAccount(id);
   }
 
 
   editRole(account: Account, role: string): void {
+    if (this.dataStorageService.GAccount!.role == 'ROLE_USER') { this.openNoPermissionDialog(); return; }
+    if (this.dataStorageService.GAccount!.id == account.id) { this.openNotificationDialog(); return; }
     this.dataStorageService.editRole(account, role);
   }
 
