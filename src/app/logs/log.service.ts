@@ -6,12 +6,13 @@ import { Params } from '@angular/router';
 import { DataStorageService } from '../services/data-storage.service';
 import { Account } from '../interfaces/account.interface';
 import { Time } from '@angular/common';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LogService implements OnInit{
-  private baseurl: string = 'https://vps.ronp.nl/ipsenapi/logs';
+  private baseurl: string = environment.apiUrl+'/logs';
 
   private logList: Log[] = [];
   private logList$: BehaviorSubject<Log[]> = new BehaviorSubject<Log[]>([]);
