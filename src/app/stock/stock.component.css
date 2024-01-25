@@ -62,12 +62,14 @@ button {
     z-index: 998;
 }
 
-.top-bar :first-child {
-}
-
 .filter>input {
     margin-left: 10px;
     height: 20px;
+    border-radius: 5px
+}
+
+select{
+    border-radius: 5px
 }
 
 .sorting-options {

@@ -21,6 +21,7 @@
 
 .filters-container > input{
     height: 20px;
+    border-radius: 5px
 }
 
 .filters-container > :first-child{
@@ -49,6 +50,10 @@
 
 p{
     font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+select{
+    border-radius: 5px
 }
 
 mat-paginator{
