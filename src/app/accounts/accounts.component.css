@@ -95,6 +95,7 @@ td.editable:hover {
 th.header {
     background-color: #f4812b;
     color: white;
+    padding-left: 15px;
 }
 
 .editlocation {
@@ -104,5 +105,6 @@ th.header {
 input {
     height: 20px;
     margin-left: 10px;
+    border-radius: 5px
 }
 

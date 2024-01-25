@@ -14,6 +14,7 @@
 input {
     height: 20px;
     margin-left: 10px;
+    border-radius: 5px
 }
 
 .spacer {
@@ -27,7 +28,10 @@ td, th {
 
 th {
     background-color: #f4812b;
+    color: white;
+    padding-left: 15px;
 }
+
 
 tr:hover td:not(.no-border) {
     background-color: #60c9b3;
