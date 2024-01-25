@@ -201,7 +201,7 @@ export class DataStorageService {
     return this.http.patch(this.baseurl + "/packages/" + id, null, { params }).subscribe();
   }
   updatePackage(packaging: Packaging) {
-    this.http.put(this.baseurl + '/packages/update', packaging);
+    this.http.put(this.baseurl + '/packages/update', packaging).subscribe();
   }
   deletePackage(packaging: Packaging) {
     this.http.delete(this.baseurl + '/packages/' + packaging.id).subscribe();
