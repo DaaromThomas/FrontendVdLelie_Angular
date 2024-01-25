@@ -6,6 +6,7 @@ import {
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
 import { LoginService } from '../login.service';
+import {GlobalErrorHandler} from "../../ErrorHandling/global-error-handler";
 
 describe('AuthInterceptor', () => {
     let httpMock: HttpTestingController;
@@ -14,7 +15,7 @@ describe('AuthInterceptor', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
+            imports: [HttpClientTestingModule, GlobalErrorHandler],
             providers: [
                 LoginService,
                 {

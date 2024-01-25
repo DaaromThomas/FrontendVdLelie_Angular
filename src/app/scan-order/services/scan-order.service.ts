@@ -9,7 +9,7 @@ import {Customer} from "../../models/Customer";
   providedIn: 'root'
 })
 export class ScanOrderService {
-  baseURL = "http://localhost:8080/";
+  private baseURL: string = 'https://vps.ronp.nl/ipsenapi/';
 
   constructor(private http: HttpClient) {
 
@@ -19,7 +19,7 @@ export class ScanOrderService {
     return this.http.get<Order[]>(this.baseURL+"orders");
   }
 
-  getProduct(): Observable<Product[]>{
+  getProducts(): Observable<Product[]>{
     return this.http.get<Product[]>(this.baseURL+"products");
   }
 

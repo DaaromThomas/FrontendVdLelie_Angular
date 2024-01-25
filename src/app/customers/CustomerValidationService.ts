@@ -17,6 +17,15 @@ export class CustomerValidationService {
    });
  }
 
+ createEmptyForm(): FormGroup {
+  return new FormGroup({
+    name: new FormControl('', Validators.required),
+    address: new FormControl('', Validators.required),
+    phonenumber: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email])
+  });
+ }
+
  checkValidCustomer(customer: any): boolean {
    if (!customer.name) {
      return false;

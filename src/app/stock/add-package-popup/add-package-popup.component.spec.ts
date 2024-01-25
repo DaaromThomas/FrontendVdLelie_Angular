@@ -38,6 +38,7 @@ describe('AddPackagePopupComponent', () => {
       minAmount: 50,
       name: 'TestName',
       packagingGroup: 'TestGroup',
+      id: "1"
     }
 
     const result = component.checkAmount(packaging);
@@ -50,7 +51,8 @@ describe('AddPackagePopupComponent', () => {
       amountinstock: 40,
       minAmount: 50,
       name: 'TestName',
-      packagingGroup: 'TestGroup'
+      packagingGroup: 'TestGroup',
+      id: "1"
     }
 
     const result = component.checkAmount(packaging);
@@ -63,7 +65,8 @@ describe('AddPackagePopupComponent', () => {
       amountinstock: 300,
       minAmount: 50,
       name: 'TestName',
-      packagingGroup: 'TestGroup'
+      packagingGroup: 'TestGroup',
+      id: "1"
     }
 
     const result = component.checkNewPackage(packaging);
@@ -76,7 +79,6 @@ describe('AddPackagePopupComponent', () => {
     spyOn(component.addPackage, 'emit');
     spyOn(component, 'savePackage');
 
-    // Set form values to simulate an invalid form (e.g., missing required field)
     component.newPackage.setValue({
       amountinstock: 10,
       minAmount: 5,

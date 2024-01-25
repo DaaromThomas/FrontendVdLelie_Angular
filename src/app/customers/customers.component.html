@@ -1,60 +1,52 @@
-<div *ngIf="applyBlur" class="overlay" (click)="onAddCustomerPopupClosed(true);onChangePrefferedPackagePopupClosed(true)"></div>
-<div class="blur" [ngClass]="{'blur-effect': displayAddCustomer || displayChangePrefferedPackage}">
-    <div class="filter">
-    </div>
-    <div class="container">
-        <div class="spacer"></div>
-        <div [class]="tableWrapperClass">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Address</th>
-                        <th>PhoneNumber</th>
-                        <th>E-Mail</th>
-                        <th>Preffered Package</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let customer of customerList; index as i">
-                        <td>{{customer.name}}</td>
-                        <td>{{customer.address}}</td>
-                        <td>{{customer.phonenumber ? customer.phonenumber : 'No phone number'}}</td>
-                        <td>{{customer.email ? customer.email : 'No e-mail'}}</td>
-                        @if (customer.preferredPackaging === null) {
-                          <td>
-                            -
-                            <img class="edit-button-icon" src="../../assets/edit.png" (click)="displayChangePrefferedPackagePopup(customer.id)">
-                          </td>
-                        } @else{
-                          <td>
-                            {{customer.preferredPackaging!.name}}
-                            <img class="edit-button-icon" src="../../assets/edit.png" (click)="displayChangePrefferedPackagePopup(customer.id)">
-                          </td>
-                        }
-                        <td class="no-border">
-                            <div style="display: flex;" >
-                                <button mat-button (click)="$event.stopPropagation(); editCustomer(customer)">
-                                    <mat-icon>edit</mat-icon>
-                                </button>
-                                <button mat-button (click)="$event.stopPropagation(); deleteCustomer(customer)">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <button (click)="displayAddCustomerPopup()">New Customer</button>
-    </div>
+<div class="top-bar">
+    <input type="text" placeholder="Customer name" [(ngModel)]="nameFilter" (input)="applyFilters()">
+    <input type="text" placeholder="Address" [(ngModel)]="addressFilter" (input)="applyFilters()">
+    <input type="text" placeholder="PhoneNumber" [(ngModel)]="phoneFilter" (input)="applyFilters()">
+    <input type="text" placeholder="E-mail" [(ngModel)]="emailFilter" (input)="applyFilters()">
+    <input type="text" placeholder="preferredPackaging" [(ngModel)]="packageFilter" (input)="applyFilters()">
+    <button class="addCustomer" (click)="addCustomer()">New Customer</button>
 </div>
 
-<div class="add-customer" *ngIf="displayAddCustomer">
-    <app-add-customer-popup class="customer-popup"
-        (popupClosed)="onAddCustomerPopupClosed($event)"></app-add-customer-popup>
-</div>
+<table mat-table [dataSource]="filteredCustomerList" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+        <th class="header" mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let customer"> {{customer.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="address">
+        <th class="header" mat-header-cell *matHeaderCellDef> Address </th>
+        <td mat-cell *matCellDef="let customer"> {{customer.address}} </td>
+    </ng-container>
+    <ng-container matColumnDef="phoneNumber">
+        <th class="header" mat-header-cell *matHeaderCellDef> PhoneNumber </th>
+        <td mat-cell *matCellDef="let customer"> {{customer.phonenumber}} </td>
+    </ng-container>
+    <ng-container matColumnDef="e-mail">
+        <th class="header" mat-header-cell *matHeaderCellDef> E-mail </th>
+        <td mat-cell *matCellDef="let customer"> {{customer.email}} </td>
+    </ng-container>
+    <ng-container matColumnDef="preferredPackaging">
+        <th class="header" mat-header-cell *matHeaderCellDef> Preferred Package </th>
+        <td mat-cell *matCellDef="let customer"> {{customer.preferredPackaging?.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="customerOptions">
+        <th class="header" mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let customer">
+            @if (customer.name) {
+            <mat-icon class="options_icon" [matMenuTriggerFor]="customer_options">more_vert</mat-icon>
+            <mat-menu class="options_menu" #customer_options="matMenu">
+                <p class="edit" mat-menu-item (click)="editCustomer(customer)">edit <mat-icon>edit</mat-icon> </p>
+                <p class="delete" mat-menu-item (click)="deleteCustomer(customer)">delete <mat-icon>delete</mat-icon>
+                </p>
+            </mat-menu>
+            } @else {
+            <mat-icon class="options_icon" (click)="addCustomer()">add</mat-icon>
+            }
+        </td>
+    </ng-container>
 
-<div class="change-preffered-package" *ngIf="displayChangePrefferedPackage">
-    <app-change-customer-preffered-package-popup class="preffered-package-popup" [customerId]="selectedCustomerId" (popupClosed)="onChangePrefferedPackagePopupClosed($event)"></app-change-customer-preffered-package-popup>
-</div>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator #paginator [pageSize]="customersPerPage" showFirstLastButtons></mat-paginator>

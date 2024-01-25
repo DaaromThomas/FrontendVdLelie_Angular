@@ -1,49 +1,59 @@
 <div id="customer-add-dialog" class="container">
-    <div class="title">
-      <img src='assets/Customer.png' style="width: 100px; height: 100px;" class="image-box">
+  <div class="image-section">
+    <img src="assets/Customer.png" class="centered-image"/>
+  </div>
+  <div class="right-section">
+    <div class="header">
+      <h1 class="title-text">Add Customer</h1>
+      <h3 class="error-message">{{ error }}</h3>
     </div>
-    <div class="values">
-        <div class="grid-row1">
-          <h1 class="title-text">New Customer</h1>
-        <h3 class="error-message">{{ error }}</h3>
-        </div>
-        <div class="grid-row-2">
-          <form [formGroup]="newCustomerForm" class="form">
-            <div class="form-group">
-                <div class="label-input">
-                    <label for="name-input" class="label">Name: </label>
-                    <input class="input" id="name-input" formControlName="name" placeholder="Name">
-                </div>
-            </div>
-  
-            <div class="form-group">
-                <div class="label-input">
-                    <label for="address-input" class="label">Address: </label>
-                    <input class="input" id="address-input" formControlName="address" placeholder="Address">
-                </div>
-            </div>
-  
-            <div class="form-group">
-                <div class="label-input">
-                    <label for="phonenumber" class="label">PhoneNumber: </label>
-                    <input id="phonenumber-input" formControlName="phonenumber" placeholder="PhoneNumber" class="input" appNumericInput>
-                </div>
-            </div>
-  
-            <div class="form-group">
-                <div class="label-input">
-                    <label for="email-input" class="label">E-Mail: </label>
-                    <input class="input" id="email-input" formControlName="email" placeholder="E-Mail">
-                </div>
-            </div>
-        </form>
-        </div>
-        <div class="grid-row3">
-          <div class="button-group">
-            <button class="done-button" (click)="submitForm()">✔ Done</button>
-            <button class="close-button" (click)="discardForm()">❌ Discard</button>
+    <div class="body">
+      <form [formGroup]="newCustomerForm" class="form">
+        <div class="form-group">
+          <div class="label-input">
+            <label for="name-input" class="label">Name: </label>
+            <input class="input" id="name-input" formControlName="name" placeholder="Name">
           </div>
-        </div> 
+        </div>
+
+        <div class="form-group">
+          <div class="label-input">
+              <label for="address-input" class="label">Address: </label>
+              <input class="input" id="address-input" formControlName="address" placeholder="Address">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="label-input">
+              <label for="phonenumber" class="label">PhoneNumber: </label>
+              <input id="phonenumber-input" formControlName="phonenumber" placeholder="PhoneNumber" class="input" appNumericInput>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="label-input">
+              <label for="email-input" class="label">E-Mail: </label>
+              <input class="input" id="email-input" formControlName="email" placeholder="E-Mail">
+          </div>
+        </div>
+      </form>
+      <div class="footer">
+        <div class="package-input">
+          <label for="package-input" class="label">Preferred Package</label>
+          <mat-form-field class="select" id="package-input">
+            <mat-label>Select a package</mat-label>
+            <mat-select [(ngModel)]="preferredPackage">
+              <mat-option *ngFor="let package of packageList" [value]="package.id">
+                {{ package.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="button-group">
+          <button class="done-button" (click)="submitForm()">✔ Done</button>
+          <button class="close-button" (click)="discardForm()">❌ Discard</button>
+        </div>
+      </div>
     </div>
   </div>
-  
+</div>

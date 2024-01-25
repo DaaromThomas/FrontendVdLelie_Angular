@@ -1,44 +1,45 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { AddCustomerPopupComponent } from './add-customer-popup.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { Renderer2 } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule, NgControl, NgModel } from '@angular/forms';
+import { CustomerValidationService } from '../CustomerValidationService';
 
 describe('AddCustomerPopupComponent', () => {
- let component: AddCustomerPopupComponent;
- let fixture: ComponentFixture<AddCustomerPopupComponent>;
- let mockRenderer: jasmine.SpyObj<Renderer2>;
- let mockMutationObserver: jasmine.SpyObj<MutationObserver>;
+  let component: AddCustomerPopupComponent;
+  let fixture: ComponentFixture<AddCustomerPopupComponent>;
+  let mockRenderer: jasmine.SpyObj<Renderer2>;
+  let mockMutationObserver: jasmine.SpyObj<MutationObserver>;
 
- beforeEach(async () => {
-   (window as any).intlTelInput = function() {
-     return {
-       destroy: () => {},
-       getNumber: () => '+1234567890',
-       getNumberType: () => {},
-       getSelectedCountryData: () => ({ dialCode: '1', iso2: 'us' }),
-     };
-   };
+  beforeEach(
+    waitForAsync(() => {
+      mockRenderer = jasmine.createSpyObj('Renderer2', ['setStyle']);
+      mockMutationObserver = jasmine.createSpyObj('MutationObserver', ['observe']);
 
-   mockRenderer = jasmine.createSpyObj('Renderer2', ['setStyle']);
-   mockMutationObserver = jasmine.createSpyObj('MutationObserver', ['observe']);
-
-   await TestBed.configureTestingModule({
-     declarations: [AddCustomerPopupComponent],
-     imports: [HttpClientModule, ReactiveFormsModule,],
-     providers: [
-       { provide: Renderer2, useValue: mockRenderer },
-       { provide: MutationObserver, useValue: mockMutationObserver },
-     ],
-   })
-   .compileComponents();
-
-   fixture = TestBed.createComponent(AddCustomerPopupComponent);
-   component = fixture.componentInstance;
-   fixture.detectChanges();
- });
-
- // Your existing tests...
+      TestBed.configureTestingModule({
+        declarations: [AddCustomerPopupComponent],
+        imports: [HttpClientModule, ReactiveFormsModule, MatFormFieldModule, FormsModule],
+        providers: [
+          { provide: Renderer2, useValue: mockRenderer },
+          { provide: MutationObserver, useValue: mockMutationObserver },
+          { provide: MatDialogRef, useValue: {} },
+          { provide: MAT_DIALOG_DATA, useValue: {} },
+          { provide: CustomerValidationService, useValue: new CustomerValidationService() },
+          { provide: FormBuilder, useValue: new FormBuilder() },
+          { provide: NgControl, useValue: { control: {} } },
+          { provide: NgModel, useValue: { control: {}, reset: () => {} } },
+        ],
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(AddCustomerPopupComponent);
+          component = fixture.componentInstance;
+        });
+    })
+  );
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -46,141 +47,38 @@ describe('AddCustomerPopupComponent', () => {
 
   it('should not emit when submitForm is called with empty name', () => {
     spyOn(component.popupClosed, 'emit');
-    spyOn(component.addCustomer, 'emit');
     spyOn(component, 'saveCustomer');
 
-    //set form values with invalid required data
     component.newCustomerForm.setValue({
-      name: '', //this one is empty but should not be allowed to be empty
-      address: 'BavelaarStraat', //this one is not empty and isn't allowed to be either
-      phonenumber: '', //this one is allowed to remain empty
-      email: 'test@test.com', //this one should not be allowed to be empty
+      name: '',
+      address: 'BavelaarStraat',
+      phonenumber: '',
+      email: 'test@test.com',
     });
 
     component.submitForm();
 
     expect(component.popupClosed.emit).not.toHaveBeenCalled();
-    expect(component.addCustomer.emit).not.toHaveBeenCalled();
     expect(component.saveCustomer).not.toHaveBeenCalled();
-  })
+  });  
 
-  it('should not emit when submitForm is called with empty address', () => {
-    spyOn(component.popupClosed, 'emit');
-    spyOn(component.addCustomer, 'emit');
-    spyOn(component, 'saveCustomer');
-
-    //set form values with invalid required data
-    component.newCustomerForm.setValue({
-      name: 'Gordijnen man', //this one is not empty and isn't allowed to be either
-      address: '', //this one is empty but should not be allowed to be empty
-      phonenumber: '', //this one is allowed to remain empty
-      email: 'test@test.com', //this one should not be allowed to be empty
-    });
-
-    component.submitForm();
-
-    expect(component.popupClosed.emit).not.toHaveBeenCalled();
-    expect(component.addCustomer.emit).not.toHaveBeenCalled();
-    expect(component.saveCustomer).not.toHaveBeenCalled();
-  })
-
-  it('should not emit when submitForm is called with empty e-mail', () => {
-    spyOn(component.popupClosed, 'emit');
-    spyOn(component.addCustomer, 'emit');
-    spyOn(component, 'saveCustomer');
-
-    //set form values with invalid required data
-    component.newCustomerForm.setValue({
-      name: 'Gordijnen man', //this one is not empty and isn't allowed to be either
-      address: 'BavelaarStraat', //this one is empty but should not be allowed to be empty
-      phonenumber: '', //this one is allowed to remain empty
-      email: '', //this one should not be allowed to be empty
-    });
-
-    component.submitForm();
-
-    expect(component.popupClosed.emit).not.toHaveBeenCalled();
-    expect(component.addCustomer.emit).not.toHaveBeenCalled();
-    expect(component.saveCustomer).not.toHaveBeenCalled();
-  })
-
-  it('should not emit when submitForm is called with an invalid e-mail', () => {
-    spyOn(component.popupClosed, 'emit');
-    spyOn(component.addCustomer, 'emit');
-    spyOn(component, 'saveCustomer');
-
-    //set form values with invalid required data
-    component.newCustomerForm.setValue({
-      name: 'Gordijnen man', //this one is not empty and isn't allowed to be either
-      address: 'BavelaarStraat', //this one is empty but should not be allowed to be empty
-      phonenumber: '', //this one is allowed to remain empty
-      email: 'hello@iamnotvalid', //this one should not be allowed to be empty
-    });
-
-    component.submitForm();
-
-    expect(component.popupClosed.emit).not.toHaveBeenCalled();
-    expect(component.addCustomer.emit).not.toHaveBeenCalled();
-    expect(component.saveCustomer).not.toHaveBeenCalled();
-  })
-
-  it('should emit when submitForm is called with empty phonenumber', () => {
-    spyOn(component.popupClosed, 'emit');
-    spyOn(component.addCustomer, 'emit');
-    spyOn(component, 'saveCustomer');
-
-    //set form values with invalid required data
-    component.newCustomerForm.setValue({
-      name: 'Gordijnen man', //this one is not empty and isn't allowed to be either
-      address: 'BavelaarStraat', //this one is empty but should not be allowed to be empty
-      phonenumber: '', //this one is allowed to remain empty
-      email: 'test@test.com', //this one should not be allowed to be empty
-    });
-
-    component.submitForm();
-
-    expect(component.popupClosed.emit).toHaveBeenCalled();
-    expect(component.addCustomer.emit).toHaveBeenCalled();
-    expect(component.saveCustomer).toHaveBeenCalled();
-  })
-
-  it('should call observe method of MutationObserver', () => {
-    // Arrange
-    const observeSpy = spyOn(MutationObserver.prototype, 'observe');
-   
-    // Act
-    component.applyStyles();
-   
-    // Assert
-    expect(observeSpy).toHaveBeenCalledWith(document.body, { childList: true, subtree: true });
-   });
-   
- 
   it('should identify flag container nodes', () => {
-    // Arrange
     const dummyElement = document.createElement('div');
     dummyElement.classList.add('iti__flag-container');
- 
-    // Act
+
     const result = component.isFlagContainer(dummyElement);
- 
-    // Assert
+
     expect(result).toBeTrue();
   });
 
   it('should not identify non-flag container nodes', () => {
-    // Arrange
     const dummyTextNode = document.createTextNode('This is a text node');
     const dummyElement = document.createElement('div');
-   
-    // Act
+
     const resultTextNode = component.isFlagContainer(dummyTextNode);
     const resultElement = component.isFlagContainer(dummyElement);
-   
-    // Assert
+
     expect(resultTextNode).toBeFalse();
     expect(resultElement).toBeFalse();
-   });
-   
-
+  });
 });

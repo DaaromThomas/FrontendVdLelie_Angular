@@ -1,5 +1,4 @@
 import {
-  AfterViewChecked,
   AfterViewInit,
   Component,
   EventEmitter,
@@ -11,10 +10,11 @@ import {
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Customer } from '../../../interfaces/customer.interface';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { CustomerValidationService } from '../../CustomerValidationService';
 import { HttpParams } from '@angular/common/http';
 import { DataStorageService } from '../../../services/data-storage.service';
+import { Packaging } from '../../../interfaces/packaging';
 
 declare var intlTelInput: any;
 
@@ -30,12 +30,15 @@ export class EditCustomerComponent implements AfterViewInit, OnDestroy, OnInit {
   phoneInput: any;
   mutationObserver!: MutationObserver;
   phoneNumberWithCountry!: string;
+  subscription: any;
+  packageList: Packaging[] = [];
+  preferredPackage!: string;
+
   @Output() popupClosed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     public dialogRef: MatDialogRef<EditCustomerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: FormBuilder,
     private customerValidationService: CustomerValidationService,
     private renderer: Renderer2,
     private dataStorageService: DataStorageService
@@ -50,6 +53,17 @@ export class EditCustomerComponent implements AfterViewInit, OnDestroy, OnInit {
     if (this.customer.phonenumber) {
       this.phoneNumberWithCountry = this.customer.phonenumber;
     }
+    this.dataStorageService.getPackagesAndLocations();
+    this.populatePackageList();
+    if (this.customer.preferredPackaging?.id) {
+      this.preferredPackage = this.customer.preferredPackaging.id
+    }
+  }
+
+  populatePackageList(): void {
+    this.subscription = this.dataStorageService.allInventoryData$.subscribe((inventoryData) => {
+      this.packageList = inventoryData.packageList;
+    })
   }
 
   ngAfterViewInit() {
@@ -97,6 +111,9 @@ export class EditCustomerComponent implements AfterViewInit, OnDestroy, OnInit {
       params = params.set('email', customerData.email);
       if (customerData.phonenumber) {
         params = params.set('phonenumber', customerData.phonenumber);
+      }
+      if (this.preferredPackage) {
+        params = params.set('prefferedPackageId', this.preferredPackage);
       }
       if (this.customer.id) {
         this.dataStorageService

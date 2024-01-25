@@ -1,0 +1,51 @@
+table {
+  width: 100%;
+}
+
+input {
+  border: none; 
+  border-bottom: 1px solid #000; 
+}
+input:focus {
+  outline: none;
+}
+.button-container {
+ width: 10px;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  width: 150px; 
+}
+
+.input-container input{
+  font-family: inherit; 
+  font-size: inherit;
+}
+.input-container span {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+}
+
+
+button {
+  border-radius: 10px;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  margin-right: 1%;
+  background-color: #60c9b3;
+}
+
+button:hover {
+  background-color: #f4812b;
+}
+
+.mat-header-cell {
+  background-color: #f4812b;
+}

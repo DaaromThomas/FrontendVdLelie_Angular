@@ -1,62 +1,29 @@
-.container {
-    width: 100%;
-    height: 100vh;
-    background-color: #eeeeee;
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2c636c;
+    height: 100px;
+
 }
 
-.spacer {
-    padding-top: 5%;
+button {
+    border-radius: 10px;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    margin-right: 1%;
+    padding: 12px 24px;
+    font-size: 16px;
 }
 
-.table-wrapper {
-    width: fit-content;
-    max-height: 75vh;
-    height: fit-content;
-    overflow: auto;
-    display: block;
-    margin: auto;
+button:hover {
+    background-color: #f4812b;
 }
 
-th {
-    background-color: #4a5b73;
-    color: white;
-    padding: 0 15px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-td, th {
-    text-align: left;
-    padding: 5px 5px;
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-
-table {
-    width: 1300px;
-    border-collapse: collapse;
-    display: table;
-    margin: auto;
-}
-
-tbody {
-    max-height: 80%;
-    overflow: auto;
-}
-
-tr {
-    background-color: #ffffff;
-}
-
-tr:hover {
+button {
     background-color: #60c9b3;
 }
 
-td.editable:hover {
-    background-color: #2c636c;
-    color: white;
-}
 
 button {
     float: right;
@@ -79,15 +46,6 @@ button {
     z-index: 999;
 }
 
-.filter {
-    margin-top: 1%;
-    margin-right: 1%;
-    float: right;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .blur-effect {
     filter: blur(1.5px);
     pointer-events: none;
@@ -102,4 +60,32 @@ button {
     background-color: rgba(168, 168, 168, 0.268);
     filter: blur(5px);
     z-index: 998;
+}
+
+.filter>input {
+    margin-left: 10px;
+    height: 20px;
+    border-radius: 5px
+}
+
+select{
+    border-radius: 5px
+}
+
+.sorting-options {
+    text-align: start;
+}
+
+.sorting-options>label {
+    color: white;
+    margin-left: 10px;
+}
+
+.addPackageButton {
+    height: 40px;
+    border-color: rgba(168, 168, 168, 0.0);
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

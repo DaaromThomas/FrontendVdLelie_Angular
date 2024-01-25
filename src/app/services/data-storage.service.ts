@@ -2,29 +2,34 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Location } from '../interfaces/location';
 import { Packaging } from '../interfaces/packaging';
-import { Subject, forkJoin, Observable } from 'rxjs';
+import { Subject, forkJoin, Observable, BehaviorSubject, takeUntil } from 'rxjs';
 import { Stock } from '../interfaces/stock';
 import { InventoryData } from '../interfaces/InventoryData.interface';
 import { Account } from '../interfaces/account.interface';
 import { ChangeIsPackedRequestData } from '../models/ChangeIsPackedRequestData';
 import { Customer } from '../interfaces/customer.interface';
+
 import { CookieService } from '../login/cookie.service';
+import { Log } from '../models/Log';
+
+import { Signup } from '../interfaces/signup.interface';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataStorageService {
-  private baseurl: string = 'http://localhost:8080';
+  private baseurl: string = 'https://vps.ronp.nl/ipsenapi';
   allInventoryData$: Subject<InventoryData> = new Subject<InventoryData>();
   locationList$: Subject<Location[]> = new Subject<Location[]>();
   private locationList: Location[] = [];
-  private currentUser: string = '';
   private currentAccount: Account | undefined;
-  private currentStock: Stock | undefined;
   private currentStockId: string = '';
+  isDataLoaded$ = new BehaviorSubject<boolean>(false);
   customerList$: Subject<Customer[]> = new Subject<Customer[]>();
+  accountList$: Subject<Account[]> = new Subject<Account[]>();
 
-  constructor(private http: HttpClient, private cookieService: CookieService) {}
+  constructor(private http: HttpClient) { }
 
   storePackage(newPackage: Packaging) {
     const httpOptions = {
@@ -51,6 +56,10 @@ export class DataStorageService {
       params = params.set('phonenumber', newCustomer.phonenumber);
     }
 
+    if (newCustomer.preferredPackaging != null) {
+      params = params.set('preferredPackageId', newCustomer.preferredPackaging.id!);
+    }
+
 
     const httpOptions = {
       params: params
@@ -59,7 +68,12 @@ export class DataStorageService {
     return this.http.post(this.baseurl + '/customers', {}, httpOptions);
   }
 
+  public getAccountsByCurrentLocation() {
+    return this.http.get<Account[]>(this.baseurl + '/accountsbylocation/' + this.currentAccount?.location.id);
+  }
+
   getPackagesAndLocations() {
+    this.isDataLoaded$.next(false);
     forkJoin([
       this.http.get<Packaging[]>(this.baseurl + '/packages'),
       this.http.get<Location[]>(this.baseurl + '/locations'),
@@ -81,6 +95,7 @@ export class DataStorageService {
         locationNames,
       };
       this.allInventoryData$.next(inventoryData);
+      this.isDataLoaded$.next(true);
     });
   }
 
@@ -88,18 +103,6 @@ export class DataStorageService {
     this.http.get<Customer[]>(this.baseurl + '/customers').subscribe((customers: Customer[]) => {
       this.customerList$.next(customers);
     })
-  }
-
-  setCustomerPrefferedPackage(CustomerId: string, prefferedPackageId: string){
-    console.log(CustomerId);
-    console.log(prefferedPackageId);
-    let params = new HttpParams();
-    // params = params.set('id', CustomerId);
-    params = params.set('prefferedPackageId', prefferedPackageId);
-    const httpOptions = {
-      params: params
-    };
-    this.http.patch<Customer>(this.baseurl + '/customers/' + CustomerId, {}, httpOptions).subscribe();
   }
 
   calculateLocation(stockId: string | undefined) {
@@ -121,47 +124,71 @@ export class DataStorageService {
   }
 
   async getCurrentStockId() {
-    await this.getCurrentLocation();
-    await this.delay(1000) // this should probably not be allowed but genuinly cant think of a better fix rn
-    this.getLocationStock();
+    const unsubscribe$ = new Subject<void>();
+    this.allInventoryData$.pipe(takeUntil(unsubscribe$)).subscribe(isLoaded => {
+      if (isLoaded) {
+        this.getLocationStock().then(() => {
+          unsubscribe$.next();
+          unsubscribe$.complete();
+        });
+      }
+    })
   }
 
-  getCurrentLocation(): Promise<Account> {
+  async setCurrentAccount() {
+    let currentUser = await this.getCurrentUser();
     const httpOptions = {
-      params: new HttpParams().set('name', this.cookieService.getCookie('currentUser')),
+      params: new HttpParams().set('name', currentUser),
     };
 
-    return this.http
+    this.http
       .get<Account>(this.baseurl + '/accounts/name', httpOptions)
       .toPromise()
       .then((res) => {
         if (res) {
           this.currentAccount = res;
-          return this.currentAccount;
         } else {
           throw new Error('Failed to get current location');
         }
       });
   }
 
-  getLocationStock() {
-    if (this.currentAccount != undefined) {
-      for (let location of this.locationList) {
-        if (location.id === ((this.currentAccount.location as unknown) as Location).id) {
-          this.currentStockId = location.stock.id
+  getLocationStock(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (this.currentAccount != undefined) {
+        for (let location of this.locationList) {
+          if (location.id === ((this.currentAccount.location as unknown) as Location).id) {
+            this.currentStockId = location.stock.id
+          }
         }
+        resolve();
+      } else {
+        reject("Current account is undefined");
       }
-    }
-  }
+    });
+   }
+
 
   delay(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-
   getStockId() {
     return this.currentStockId;
   }
+
+  async getCurrentUser(): Promise<string> {
+    try {
+      const response = await this.http.get(this.baseurl + '/currentuser', { responseType: 'text' }).toPromise();
+      if (!response) {
+        throw new Error('Failed to get current user');
+      }
+      return response;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+   }
 
   changeIsPackedRequest(isPacked: boolean, productNumber: number) {
     let data: ChangeIsPackedRequestData = new ChangeIsPackedRequestData(isPacked, productNumber);
@@ -172,6 +199,12 @@ export class DataStorageService {
     const params = new HttpParams().set('amount', amount);
 
     return this.http.patch(this.baseurl + "/packages/" + id, null, { params }).subscribe();
+  }
+  updatePackage(packaging: Packaging) {
+    this.http.put(this.baseurl + '/packages/update', packaging).subscribe();
+  }
+  deletePackage(packaging: Packaging) {
+    this.http.delete(this.baseurl + '/packages/' + packaging.id).subscribe();
   }
 
   updateCustomer(params: HttpParams, customerId: string) {
@@ -194,6 +227,50 @@ export class DataStorageService {
 
     return this.http.post(this.baseurl + '/email/lowonstock', null, { params }).subscribe();
   }
+
+
+  get GAccount() {
+    return this.currentAccount
+  }
+
+  getAccounts() {
+    this.http.get<Account[]>(this.baseurl + '/accounts').subscribe((accounts: Account[]) => {
+      this.accountList$.next(accounts);
+    })
+  }
+
+  getLocations() {
+    this.http.get<Location[]>(this.baseurl + '/locations').subscribe((locations: Location[]) => {
+      this.locationList$.next(locations);
+    })
+  }
+
+  getLocationById(id: String): Observable<Location> {
+    return this.http.get<Location>(this.baseurl + '/locations/' + id);
+  }
+
+  postSignup(signup: Signup) {
+    this.http.post(this.baseurl + '/signup', signup).subscribe(
+      (res) => {
+        this.getAccounts();
+      },
+      (error) => {
+        console.log(error)
+      }
+    );
+  }
+
+  deleteAccount(id: string) {
+    return this.http.delete(this.baseurl + "/accounts/" + id).subscribe(() => { this.getAccounts(); });
+  }
+
+  editRole(account: Account, role: string) {
+    const params = new HttpParams()
+      .set('role', role);
+
+    return this.http.patch(this.baseurl + "/accounts/" + account.id, null, { params }).subscribe(() => { this.getAccounts(); });
+  }
 }
+
 
 

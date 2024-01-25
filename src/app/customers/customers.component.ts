@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Customer } from '../interfaces/customer.interface';
 import { DataStorageService } from '../services/data-storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditCustomerComponent } from './edit-customer/edit-customer/edit-customer.component';
 import { DeleteCustomerComponent } from './delete-customer/delete-customer.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { AddCustomerPopupComponent } from './add-customer-popup/add-customer-popup.component';
 
 @Component({
   selector: 'app-customers',
@@ -11,29 +15,44 @@ import { DeleteCustomerComponent } from './delete-customer/delete-customer.compo
   styleUrls: ['./customers.component.css'],
 })
 export class CustomersComponent {
+  nameFilter!: string;
+  addressFilter!: string;
+  phoneFilter!: string;
+  emailFilter!: string;
+  packageFilter!: string;
+
   subscription: any;
   customerList: Customer[] = [];
+  filteredCustomerList!: MatTableDataSource<Customer>;
   displayAddCustomer: boolean = false;
-  displayChangePrefferedPackage: boolean = false;
-  applyBlur: boolean = false;
   tableWrapperClass: string = 'table-wrapper';
-  selectedCustomerId : string = "";
+  selectedCustomerId: string = "";
+  displayedColumns: string[] = ['name', 'address', 'phoneNumber', 'e-mail', 'preferredPackaging', "customerOptions"];
+  customersPerPage: number = 13;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
 
 
   constructor(
     private dataStorageService: DataStorageService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
+    this.filteredCustomerList = new MatTableDataSource();
     this.dataStorageService.getCustomers();
     this.populateCustomerData();
   }
 
   populateCustomerData(): void {
     this.subscription = this.dataStorageService.customerList$.subscribe(
-      (customerData) => {
-        this.customerList = customerData;
+      async (customerData) => {
+        this.customerList = (customerData);
+        this.filteredCustomerList.data = customerData.slice().reverse();
+        this.filteredCustomerList.data = await this.appendNullObjects(this.filteredCustomerList.data);
+        this.filteredCustomerList.paginator = this.paginator;
       }
     );
   }
@@ -42,30 +61,8 @@ export class CustomersComponent {
     this.subscription.unsubscribe();
   }
 
-  displayAddCustomerPopup() {
-    this.displayAddCustomer = true;
-    this.applyBlur = true;
-  }
-  displayChangePrefferedPackagePopup(customerId: any) {
-    this.selectedCustomerId = customerId;
-    this.displayChangePrefferedPackage = true;
-    this.applyBlur = true;
-  }
-
-  onAddCustomerPopupClosed(isClosed: boolean) {
-    this.displayAddCustomer = !isClosed;
-    this.applyBlur = !isClosed;
-  }
-
-  onChangePrefferedPackagePopupClosed(isClosed: boolean) {
-    this.displayChangePrefferedPackage = !isClosed;
-    this.applyBlur = !isClosed;
-    this.dataStorageService.getCustomers();
-    this.populateCustomerData();
-  }
-
-  trackByFn(index: number, customer: Customer) {
-    return customer.id; // unique id corresponding to the customer
+  addCustomer() {
+    this.dialog.open(AddCustomerPopupComponent)
   }
 
   editCustomer(customer: Customer) {
@@ -81,6 +78,45 @@ export class CustomersComponent {
       data: {
         customer: customer,
       },
+      autoFocus: false
     });
+  }
+
+  applyFilters() {
+    let filteredCustomerList = this.customerList.slice().reverse();
+
+    if (this.nameFilter || this.addressFilter || this.phoneFilter || this.emailFilter || this.packageFilter) {
+      filteredCustomerList = filteredCustomerList.filter(customer => {
+        if (customer === null) {
+          return false;
+        }
+
+        const nameMatches = !this.nameFilter || customer.name.toLowerCase().includes(this.nameFilter.toLowerCase());
+        const addressMatches = !this.addressFilter || customer.address.toLowerCase().includes(this.addressFilter.toLowerCase());
+        const phoneMatches = !this.phoneFilter || customer.phonenumber?.toLowerCase().includes(this.phoneFilter.toLowerCase());
+        const emailMatches = !this.emailFilter || customer.email.toLowerCase().includes(this.emailFilter.toLowerCase());
+        const packageMatches = !this.packageFilter || customer.preferredPackaging?.name.toLowerCase().includes(this.packageFilter.toLowerCase());
+
+        return nameMatches && addressMatches && phoneMatches && emailMatches && packageMatches
+      });
+    }
+
+    filteredCustomerList = this.appendNullObjects(filteredCustomerList);
+    this.filteredCustomerList.data = filteredCustomerList;
+  }
+
+  appendNullObjects(filteredCustomerList: Customer[]): Customer[] {
+    const emptyItem = Object.create(null);
+    if (filteredCustomerList.length === 0) {
+      for (let i = 0; i < 1; i++) {
+        filteredCustomerList.push(emptyItem);
+      }
+    } else {
+      if (filteredCustomerList.length % this.customersPerPage !== 0) {
+        filteredCustomerList.push(emptyItem);
+      }
+    }
+
+    return filteredCustomerList
   }
 }

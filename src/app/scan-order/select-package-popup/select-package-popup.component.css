@@ -11,12 +11,20 @@
     justify-content: center;
 }
 
-.content-container {
+.Customer-filter-container {
     flex: 1;
     padding: 20px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+}
+
+.Customer-product-container {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 button {

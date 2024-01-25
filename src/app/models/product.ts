@@ -8,6 +8,7 @@ export class Product {
   public name: string;
   public productnumber: number;
   public productType: string;
+  public packed: boolean;
 
   constructor(
     id: string,
@@ -15,7 +16,8 @@ export class Product {
     order: Order,
     name: string,
     productNumber: number,
-    productType: string
+    productType: string,
+    packed: boolean
   ){
     this.id = id;
     this.prefferedpackage = preferredPackage;
@@ -23,5 +25,6 @@ export class Product {
     this.name = name;
     this.productnumber = productNumber;
     this.productType = productType;
+    this.packed = packed;
   }
 }

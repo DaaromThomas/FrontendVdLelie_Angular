@@ -21,9 +21,9 @@ export class NavBarComponent {
 let params = new HttpParams().set("refreshToken",token);
     this.http
       .delete(
-        'http://localhost:8080/refreshtoken',
+        'https://vps.ronp.nl/ipsenapi/refreshtoken',
         {params: params}
-      ).subscribe(data => console.log(data))
+      ).subscribe()
     this.router.navigateByUrl('/login');
     this.loginService.Jwttoken = undefined;
   }

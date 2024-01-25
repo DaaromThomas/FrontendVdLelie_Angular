@@ -33,7 +33,7 @@ describe('LoginService', () => {
     spyOn(loginService, 'handleRes');
     const login: Login = { username: 'test', password: 'test' };
     loginService.loginRequest(login);
-    const req = httpTestingController.expectOne('http://localhost:8080/login');
+    const req = httpTestingController.expectOne('https://vps.ronp.nl/ipsenapi/login');
     req.flush({ status: 200, token: 'jwtToken' });
     expect(loginService.handleRes).toHaveBeenCalledWith({
       status: 200,
@@ -48,7 +48,7 @@ describe('LoginService', () => {
     const login: Login = { username: 'test', password: 'wrongPassword' };
 
     loginService.loginRequest(login);
-    const req = httpTestingController.expectOne('http://localhost:8080/login');
+    const req = httpTestingController.expectOne('https://vps.ronp.nl/ipsenapi/login');
     req.flush(null, { status: 401, statusText: 'Unauthorized' });
 
     expect(loginService.handleError).toHaveBeenCalled();
@@ -65,19 +65,27 @@ describe('LoginService', () => {
     spyOn(cookieService, 'getCookie').and.returnValue('refreshToken');
     loginService.askJwtTokenFromRequestToken();
   
-    const req = httpTestingController.expectOne('http://localhost:8080/refreshtoken');
+    const req = httpTestingController.expectOne('https://vps.ronp.nl/ipsenapi/refreshtoken');
     expect(req.request.method).toEqual('POST');
     expect(req.request.body).toEqual({ refreshToken: 'refreshToken' });
   
     req.flush({});
+
+    const reqCurrentUser = httpTestingController.expectOne('https://vps.ronp.nl/ipsenapi/currentuser');
+    expect(reqCurrentUser.request.method).toEqual('GET');
+    reqCurrentUser.flush({});
   });
   it('should set Jwttoken and navigate to /scan-order if response data is not null', () => {
     spyOn(cookieService, 'getCookie').and.returnValue('refreshToken');
     spyOn(TestBed.inject(Router), 'navigateByUrl');
     loginService.askJwtTokenFromRequestToken();
   
-    const req = httpTestingController.expectOne('http://localhost:8080/refreshtoken');
+    const req = httpTestingController.expectOne('https://vps.ronp.nl/ipsenapi/refreshtoken');
     req.flush({ accessToken: 'accessToken' });
+
+    const reqCurrentUser = httpTestingController.expectOne('https://vps.ronp.nl/ipsenapi/currentuser');
+    expect(reqCurrentUser.request.method).toEqual('GET');
+    reqCurrentUser.flush({});
   
     expect(cookieService.getCookie).toHaveBeenCalledWith('refreshToken');
     expect(loginService.Jwttoken).toBe('accessToken');
@@ -88,7 +96,7 @@ describe('LoginService', () => {
     spyOn(TestBed.inject(Router), 'navigateByUrl');
     loginService.askJwtTokenFromRequestToken();
   
-    const req = httpTestingController.expectOne('http://localhost:8080/refreshtoken');
+    const req = httpTestingController.expectOne('https://vps.ronp.nl/ipsenapi/refreshtoken');
     req.flush(null);
   
     expect(cookieService.getCookie).toHaveBeenCalledWith('refreshToken');
