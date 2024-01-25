@@ -45,7 +45,6 @@ export class LogsComponent implements OnInit {
     this.logService.logs().subscribe((logs) => {
       this.logs = logs;
       this.filteredLogs.data = logs.slice().reverse();
-      this.appendNullObjects();      
       this.filteredLogs.paginator = this.paginator;
     });
 
@@ -133,12 +132,6 @@ export class LogsComponent implements OnInit {
   revertLog(log: Log) {
     log.reverted = true;
     this.logService.revertLog(log);
-  }
-
-  private appendNullObjects() {
-    while (this.filteredLogs.data.length % this.pageSize !== 0) {
-      this.filteredLogs.data.push(Object.create(null))
-    }
   }
 
   

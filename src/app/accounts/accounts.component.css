@@ -108,3 +108,7 @@ input {
     border-radius: 5px
 }
 
+mat-paginator{
+    box-shadow: none;
+}
+

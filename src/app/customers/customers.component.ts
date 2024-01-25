@@ -108,11 +108,11 @@ export class CustomersComponent {
   appendNullObjects(filteredCustomerList: Customer[]): Customer[] {
     const emptyItem = Object.create(null);
     if (filteredCustomerList.length === 0) {
-      for (let i = 0; i < this.customersPerPage; i++) {
+      for (let i = 0; i < 1; i++) {
         filteredCustomerList.push(emptyItem);
       }
     } else {
-      while (filteredCustomerList.length % this.customersPerPage !== 0) {
+      if (filteredCustomerList.length % this.customersPerPage !== 0) {
         filteredCustomerList.push(emptyItem);
       }
     }
