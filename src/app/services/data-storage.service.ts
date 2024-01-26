@@ -13,13 +13,14 @@ import { CookieService } from '../login/cookie.service';
 import { Log } from '../models/Log';
 
 import { Signup } from '../interfaces/signup.interface';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataStorageService {
-  private baseurl: string = 'https://vps.ronp.nl/ipsenapi';
+  private baseurl: string = environment.apiUrl;
   allInventoryData$: Subject<InventoryData> = new Subject<InventoryData>();
   locationList$: Subject<Location[]> = new Subject<Location[]>();
   private locationList: Location[] = [];
