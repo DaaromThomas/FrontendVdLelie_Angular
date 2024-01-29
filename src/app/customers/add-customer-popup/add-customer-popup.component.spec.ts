@@ -7,6 +7,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, NgControl, NgModel } from '@angular/forms';
 import { CustomerValidationService } from '../CustomerValidationService';
+import { MatMenuModule } from '@angular/material/menu';
 
 describe('AddCustomerPopupComponent', () => {
   let component: AddCustomerPopupComponent;
@@ -21,7 +22,7 @@ describe('AddCustomerPopupComponent', () => {
 
       TestBed.configureTestingModule({
         declarations: [AddCustomerPopupComponent],
-        imports: [HttpClientModule, ReactiveFormsModule, MatFormFieldModule, FormsModule],
+        imports: [HttpClientModule, ReactiveFormsModule, MatFormFieldModule, FormsModule, MatMenuModule],
         providers: [
           { provide: Renderer2, useValue: mockRenderer },
           { provide: MutationObserver, useValue: mockMutationObserver },
@@ -31,6 +32,7 @@ describe('AddCustomerPopupComponent', () => {
           { provide: FormBuilder, useValue: new FormBuilder() },
           { provide: NgControl, useValue: { control: {} } },
           { provide: NgModel, useValue: { control: {}, reset: () => {} } },
+          { provide: MatMenuModule, useValue: {}}
         ],
       })
         .compileComponents()

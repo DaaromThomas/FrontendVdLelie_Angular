@@ -1,28 +1,36 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
-import { LogsComponent } from './logs.component';
-import { HttpTestingController } from '@angular/common/http/testing';
-import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LogsComponent } from './logs.component';
+import { LogService } from './log.service';
+import { DataStorageService } from '../services/data-storage.service';
+import { MatMenuModule } from '@angular/material/menu';
+
 describe('LogsComponent', () => {
   let component: LogsComponent;
   let fixture: ComponentFixture<LogsComponent>;
-  let httpTestClient: HttpTestingController;
+  beforeEach(() => {
+    const logServiceSpyObj = jasmine.createSpyObj('LogService', ['getLogs', 'logs', 'revertLog']);
+    const dataStorageServiceSpyObj = jasmine.createSpyObj('DataStorageService', ['allInventoryData$']);
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       declarations: [LogsComponent],
-      imports: [HttpClientModule, MatMenuModule, MatTableModule, MatPaginatorModule],
-      providers: [HttpTestingController],
+      imports: [MatTableModule, MatPaginatorModule, FormsModule, BrowserAnimationsModule, MatMenuModule],
+      providers: [
+        { provide: LogService, useValue: logServiceSpyObj },
+        { provide: DataStorageService, useValue: dataStorageServiceSpyObj },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LogsComponent);
     component = fixture.componentInstance;
-    httpTestClient = TestBed.inject(HttpTestingController);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  
 });
