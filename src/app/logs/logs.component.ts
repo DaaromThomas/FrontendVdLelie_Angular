@@ -19,8 +19,7 @@ import { Time } from '@angular/common';
 export class LogsComponent implements OnInit {
   pageSize: number = 13;
   logs: Log[] = [];
-  filteredLogs!: MatTableDataSource<Log>;
-  private packageList: Packaging[] = [];
+  filteredLogs: MatTableDataSource<Log> = new MatTableDataSource<Log>([]);
 
   accounts!: Account[];
   filteredAccount!: Account;
@@ -34,24 +33,19 @@ export class LogsComponent implements OnInit {
   displayedColumns: string[] = ['account', 'product', 'packaging', 'amount', 'dateTime', 'reverted']
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   constructor(
-    private logService: LogService,
-    private dataStorageService: DataStorageService,
+    public logService: LogService,
+    public dataStorageService: DataStorageService,
   ) {}
 
   ngOnInit() {
-    this.filteredLogs = new MatTableDataSource();
-
     this.logService.getLogs();
     this.logService.logs().subscribe((logs) => {
       this.logs = logs;
       this.filteredLogs.data = logs.slice().reverse();
       this.filteredLogs.paginator = this.paginator;
     });
-
-    this.dataStorageService.allInventoryData$.subscribe((inventoryData) => {
-      this.packageList = inventoryData.packageList;
-    });
   }
+  
 
   applyFilters() {
     let filteredLogs = this.logs.slice().reverse();
@@ -100,7 +94,7 @@ export class LogsComponent implements OnInit {
 
   private timeMatches(timeArray: number[]): boolean {
     if (this.beginTime && this.endTime) {
-      const logTime = this.convertLogTimeToString(timeArray);
+      const logTime = this.convertTimeToShowableString(timeArray);
       return logTime >= this.beginTime && logTime <= this.endTime;
     }
     return true;
@@ -114,38 +108,23 @@ export class LogsComponent implements OnInit {
     this.endTime = null;
   }
 
-  private convertLogTimeToString(timeArray: number[]): string {
-    if (timeArray.length >= 3) {
-      const hoursStr = this.padZero(timeArray[0]);
-      const minutesStr = this.padZero(timeArray[1]);
-      return `${hoursStr}:${minutesStr}`;
-    } else {
-      console.error('Invalid time format:', timeArray);
-      return '';
-    }
-  }
-
-  private padZero(value: number): string {
-    return value < 10 ? `0${value}` : `${value}`;
-  }
-
   revertLog(log: Log) {
     log.reverted = true;
     this.logService.revertLog(log);
   }
 
   
-  convertDateToShowableString(log: Log): string{
-    const year: string = log.date[0].toString();
-    const month: string = log.date[1].toString().padStart(2, '0');
-    const day: string = log.date[2].toString().padStart(2, '0');
+  convertDateToShowableString(date: number[]): string{
+    const year: string = date[0].toString();
+    const month: string = date[1].toString().padStart(2, '0');
+    const day: string = date[2].toString().padStart(2, '0');
     const string: string = year + " - " + month + " - " + day
     return string;
   }
 
-  convertTimeToShowableString(log: Log): string {
-    const hour: string = log.time[0].toString().padStart(2, '0');
-    const minute: string = log.time[1].toString().padStart(2, '0');
+  convertTimeToShowableString(time: number[]): string {
+    const hour: string = time[0].toString().padStart(2, '0');
+    const minute: string = time[1].toString().padStart(2, '0');
     
     return hour + ":" + minute;
   }
