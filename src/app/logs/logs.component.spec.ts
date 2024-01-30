@@ -7,8 +7,7 @@ import { LogsComponent } from './logs.component';
 import { LogService } from './log.service';
 import { DataStorageService } from '../services/data-storage.service';
 import { MatMenuModule } from '@angular/material/menu';
-import { Log } from '../models/Log';
-import { Packaging } from '../interfaces/packaging';
+
 
 describe('LogsComponent', () => {
   let component: LogsComponent;
@@ -90,4 +89,5 @@ describe('LogsComponent', () => {
     expect(component.beginTime).toEqual(null);
     expect(component.endTime).toEqual(null);
   });
+
 });
