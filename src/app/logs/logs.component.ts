@@ -33,8 +33,7 @@ export class LogsComponent implements OnInit {
   displayedColumns: string[] = ['account', 'product', 'packaging', 'amount', 'dateTime', 'reverted']
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   constructor(
-    public logService: LogService,
-    public dataStorageService: DataStorageService,
+    private logService: LogService
   ) {}
 
   ngOnInit() {
