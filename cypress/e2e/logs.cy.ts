@@ -7,12 +7,12 @@ describe('log screen tests', () => {
 
   it('should filter correctly on account', () => {
     navigateToLogscreen();
-    filterAndClickPaginator('name', 0, 1, 1); // Added an extra number at the end
+    filterAndClickPaginator('name', 0, 1, 1);
   });
 
   it('should filter correctly on product', () => {
     navigateToLogscreen();
-    filterAndClickPaginator('Groen', 1, 1, 2); // Added an extra number at the end
+    filterAndClickPaginator('Groen', 1, 1, 2);
   });
 });
 
