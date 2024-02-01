@@ -4,7 +4,7 @@ describe('scan-order screen tests', () => {
     login();
   });
   it('is connected', () => {
-    cy.visit('https://vps.ronp.nl');
+    cy.visit('http://localhost:4200/');
   });
 
   it('navigates to scan-order screen', () => {
