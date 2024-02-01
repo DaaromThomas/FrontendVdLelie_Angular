@@ -37,7 +37,7 @@ describe('scan-order screen tests', () => {
 });
 
 function login() {
-  cy.visit('https://vps.ronp.nl');
+  cy.visit('http://localhost:4200/');
 
   cy.get('.login-form .form-group input').eq(0).type('name');
   cy.get('.login-form .form-group input').eq(1).type('admin');
