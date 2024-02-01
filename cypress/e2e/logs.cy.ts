@@ -1,10 +1,6 @@
 /// <reference types="cypress" />
 
 describe('log screen tests', () => {
-  it('passes', () => {
-    cy.visit('https://vps.ronp.nl');
-  });
-
   it('should filter correctly on account', () => {
     navigateToLogscreen();
     filterAndClickPaginator('name', 0, 1, 1);
