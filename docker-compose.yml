@@ -1,0 +1,18 @@
+services:
+ frontend-vd-lelie-angular:
+    container_name: frontend-vd-lelie-container
+    build: 
+      context: .
+      args:
+        API_URL: https://yourapi.com/endpoint
+    image: frontend-vd-lelie-angular:latest
+    ports:
+      - 80:80
+    expose:
+      - 80
+    networks:
+      - internalnetwork
+
+networks:
+ internalnetwork:
+    driver: bridge

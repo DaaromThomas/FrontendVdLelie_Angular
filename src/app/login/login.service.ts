@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Login } from '../interfaces/login.interface';
 import { CookieService } from './cookie.service';
 import { DataStorageService } from '../services/data-storage.service';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
@@ -13,7 +14,7 @@ import { DataStorageService } from '../services/data-storage.service';
 export class LoginService {
   Jwttoken: any;
   wrongPassWordChange: Subject<boolean> = new Subject<boolean>();
-  baseurl: string = 'https://vps.ronp.nl/ipsenapi';
+  baseurl: string = environment.apiUrl;
   expirationTimeInDays: number = 1;
   constructor(
     private http: HttpClient,

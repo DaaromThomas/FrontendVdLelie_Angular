@@ -8,6 +8,7 @@ import {
 import { Login } from '../interfaces/login.interface';
 import { CookieService } from './cookie.service';
 import { of } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 describe('LoginService', () => {
   let loginService: LoginService;
@@ -33,7 +34,7 @@ describe('LoginService', () => {
     spyOn(loginService, 'handleRes');
     const login: Login = { username: 'test', password: 'test' };
     loginService.loginRequest(login);
-    const req = httpTestingController.expectOne('https://vps.ronp.nl/ipsenapi/login');
+    const req = httpTestingController.expectOne(environment.apiUrl+'/login');
     req.flush({ status: 200, token: 'jwtToken' });
     expect(loginService.handleRes).toHaveBeenCalledWith({
       status: 200,
@@ -48,7 +49,7 @@ describe('LoginService', () => {
     const login: Login = { username: 'test', password: 'wrongPassword' };
 
     loginService.loginRequest(login);
-    const req = httpTestingController.expectOne('https://vps.ronp.nl/ipsenapi/login');
+    const req = httpTestingController.expectOne(environment.apiUrl+'/login');
     req.flush(null, { status: 401, statusText: 'Unauthorized' });
 
     expect(loginService.handleError).toHaveBeenCalled();
@@ -65,13 +66,13 @@ describe('LoginService', () => {
     spyOn(cookieService, 'getCookie').and.returnValue('refreshToken');
     loginService.askJwtTokenFromRequestToken();
   
-    const req = httpTestingController.expectOne('https://vps.ronp.nl/ipsenapi/refreshtoken');
+    const req = httpTestingController.expectOne(environment.apiUrl+'/refreshtoken');
     expect(req.request.method).toEqual('POST');
     expect(req.request.body).toEqual({ refreshToken: 'refreshToken' });
   
     req.flush({});
 
-    const reqCurrentUser = httpTestingController.expectOne('https://vps.ronp.nl/ipsenapi/currentuser');
+    const reqCurrentUser = httpTestingController.expectOne(environment.apiUrl+'/currentuser');
     expect(reqCurrentUser.request.method).toEqual('GET');
     reqCurrentUser.flush({});
   });
@@ -80,10 +81,10 @@ describe('LoginService', () => {
     spyOn(TestBed.inject(Router), 'navigateByUrl');
     loginService.askJwtTokenFromRequestToken();
   
-    const req = httpTestingController.expectOne('https://vps.ronp.nl/ipsenapi/refreshtoken');
+    const req = httpTestingController.expectOne(environment.apiUrl+'/refreshtoken');
     req.flush({ accessToken: 'accessToken' });
 
-    const reqCurrentUser = httpTestingController.expectOne('https://vps.ronp.nl/ipsenapi/currentuser');
+    const reqCurrentUser = httpTestingController.expectOne(environment.apiUrl+'/currentuser');
     expect(reqCurrentUser.request.method).toEqual('GET');
     reqCurrentUser.flush({});
   
@@ -96,7 +97,7 @@ describe('LoginService', () => {
     spyOn(TestBed.inject(Router), 'navigateByUrl');
     loginService.askJwtTokenFromRequestToken();
   
-    const req = httpTestingController.expectOne('https://vps.ronp.nl/ipsenapi/refreshtoken');
+    const req = httpTestingController.expectOne(environment.apiUrl+'/refreshtoken');
     req.flush(null);
   
     expect(cookieService.getCookie).toHaveBeenCalledWith('refreshToken');

@@ -3,6 +3,7 @@ import { CookieService } from '../login/cookie.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { LoginService } from '../login/login.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-nav-bar',
@@ -21,7 +22,7 @@ export class NavBarComponent {
 let params = new HttpParams().set("refreshToken",token);
     this.http
       .delete(
-        'https://vps.ronp.nl/ipsenapi/refreshtoken',
+        environment.apiUrl+'/refreshtoken',
         {params: params}
       ).subscribe()
     this.router.navigateByUrl('/login');
